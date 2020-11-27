@@ -2,124 +2,112 @@ package fogTraelast.web;
 
 public class User {
 
+    int mailNr;
+    String role;
+    int id;
+    String password;
+    String name;
+    String address;
+    String city;
+    String phoneNumber;
+    String email;
 
-    public User(String navn, String adresse, String by, String telefonnummer, String email, String password, int postnummer, String rolle) {
-    }
-
-    public String getRolle() {
-        return rolle;
-    }
-
-    public User(String navn, String adresse, String by, String telefon, String email, int id,
-                String password, int postnr , String rolle) {
-        this.navn = navn;
-        this.adresse = adresse;
-        this.by = by;
-        this.telefon = telefon;
+    public User(String name, String address, String city, String phoneNumber, String email, String password, int mailNr, String role)
+    {
+        this.name = name;
+        this.address = address;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.id = id;
         this.password = password;
-        this.rolle = rolle;
-        this.postnr = postnr;
+        this.role = role;
+        this.mailNr = mailNr;
     }
 
-    public int getPostnr() {
-        return postnr;
-    }
-
-    int postnr;
-    String rolle;
-    int id;
-    String password;
-    String navn;
-    String adresse;
-    String by;
-    String telefon;
-    String email;
-
-    public String getNavn() {
-        return navn;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public String getBy() {
-        return by;
-    }
-
-    public String getTelefon() {
-        return telefon;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail( String email ) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword( String password ) {
-        this.password = password;
+    public int getMailNr() {
+        return mailNr;
     }
 
     public String getRole() {
-        return rolle;
-    }
-
-    public void setRole( String role ) {
-        this.rolle = role;
+        return role;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId( int id ) {
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setMailNr(int mailNr) {
+        this.mailNr = mailNr;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setPostnr(int postnr) {
-        this.postnr = postnr;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setRolle(String rolle) {
-        this.rolle = rolle;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setNavn(String navn) {
-        this.navn = navn;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public void setBy(String by) {
-        this.by = by;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "postnr=" + postnr +
-                ", rolle='" + rolle + '\'' +
+                "postnr=" + mailNr +
+                ", rolle='" + role + '\'' +
                 ", id=" + id +
                 ", password='" + password + '\'' +
-                ", navn='" + navn + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", by='" + by + '\'' +
-                ", telefon='" + telefon + '\'' +
+                ", navn='" + name + '\'' +
+                ", adresse='" + address + '\'' +
+                ", by='" + city + '\'' +
+                ", telefon='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
