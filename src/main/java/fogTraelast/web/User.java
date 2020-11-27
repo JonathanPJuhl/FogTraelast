@@ -3,6 +3,9 @@ package fogTraelast.web;
 public class User {
 
 
+    public User(String navn, String adresse, String by, String telefonnummer, String email, String password, int postnummer, String rolle) {
+    }
+
     public String getRolle() {
         return rolle;
     }
