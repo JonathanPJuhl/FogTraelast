@@ -7,11 +7,11 @@ public class UserLogin {
         }
 
 
-        public static User createBruger(String email, String password, String telefonnummer,
-                                        String adresse, String navn, int postnummer, String by, String rolle ) {
+        public static User createBruger(String email, String password, String phoneNumber,
+                                        String address, String name, int mailNr, String city, String role ) {
 
 
-            User user = new User(navn, adresse, by, telefonnummer, email, password, postnummer, rolle);
+            User user = new User(name, address, city, phoneNumber, email, password, mailNr, role);
             return user;
         }
 }
