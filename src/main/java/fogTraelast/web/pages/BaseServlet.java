@@ -17,10 +17,6 @@ public class BaseServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/pages/base.jsp").forward(req,resp);
     }
 
-   /* protected void setup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-    }*/
 
     protected void log(HttpServletRequest req, String message) {
         System.err.println("(" + LocalDateTime.now() + "): " + this.getClass() + ": \"" + req.getRequestURI() + "\": " + message);
