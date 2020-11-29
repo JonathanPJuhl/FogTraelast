@@ -1,0 +1,26 @@
+/*TODO Employee pitctures?*/
+.logo-image{
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: -6px;
+}
+
+.bg-light{
+    background-color: #0C2069 !important;
+}
+
+.navbar-light .navbar-brand {
+    color: rgb(255 255 255);
+    font-weight: 500;
+}
+
+.blog-header {
+    line-height: 1;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.nav-menu a:hover{
+opacity: 50%;
+}
