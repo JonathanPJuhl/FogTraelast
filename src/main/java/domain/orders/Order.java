@@ -2,6 +2,7 @@ package domain.orders;
 
 public class Order {
 
+    private final int orderID;
     private final String orderStatus;
     private final double length;
     private final double width;
@@ -12,7 +13,8 @@ public class Order {
 
 
 
-    public Order(String orderStatus, double length, double width, String customerPhone, String customerEmail, double price, int salesmanID) {
+    public Order(int orderID, String orderStatus, double length, double width, String customerPhone, String customerEmail, double price, int salesmanID) {
+        this.orderID = orderID;
         this.orderStatus = orderStatus;
         this.length = length;
         this.width = width;
@@ -22,4 +24,35 @@ public class Order {
         this.salesmanID = salesmanID;
     }
 
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getSalesmanID() {
+        return salesmanID;
+    }
 }
