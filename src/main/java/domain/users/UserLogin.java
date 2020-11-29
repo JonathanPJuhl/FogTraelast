@@ -1,4 +1,4 @@
-package fogTraelast.web;
+package domain.users;
 
 public class UserLogin {
 

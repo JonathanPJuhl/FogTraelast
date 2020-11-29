@@ -1,4 +1,6 @@
+Drop DATABASE fogtraelast;
 CREATE DATABASE IF NOT EXISTS fogtraelast;
+USE fogtraelast;
 CREATE USER IF NOT EXISTS 'fogtraelast'@'localhost';
 GRANT ALL PRIVILEGES on fogtraelast.* to 'fogtraelast'@'localhost';
 
@@ -12,7 +14,6 @@ CREATE TABLE IF NOT EXISTS salesmen(
 );
 INSERT INTO salesmen (phone, email, password) VALUES('+4512345678', 'test@test.dk', '1234');
 INSERT INTO salesmen (phone, email, password) VALUES('12345678', 'test2@test.dk', '56789');
-
 
 DROP TABLE IF EXISTS orders;
 

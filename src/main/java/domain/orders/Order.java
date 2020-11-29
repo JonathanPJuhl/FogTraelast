@@ -1,18 +1,58 @@
 package domain.orders;
 
-import domain.construction.Construction;
-
 public class Order {
 
-    private Status orderStatus = Status.New;
+    private final int orderID;
+    private final String orderStatus;
+    private final int length;
+    private final int width;
+    private final String customerPhone;
+    private final String customerEmail;
+    private final double price;
+    private final int salesmanID;
 
 
 
-    //private Construction construction = new Construction()
+    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID) {
+        this.orderID = orderID;
+        this.orderStatus = orderStatus;
+        this.length = length;
+        this.width = width;
+        this.customerPhone = customerPhone;
+        this.customerEmail = customerEmail;
+        this.price = price;
+        this.salesmanID = salesmanID;
+    }
 
-    enum Status {
-        New,
-        Processing,
-        Done
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getSalesmanID() {
+        return salesmanID;
     }
 }
