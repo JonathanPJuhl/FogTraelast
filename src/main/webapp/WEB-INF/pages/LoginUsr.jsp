@@ -12,6 +12,17 @@
 </head>
 <body>
 
+<form method="post">
+    <h1>Welcome, please sign in:</h1>
+    <label for="emailName">Email address</label>
+    <input type="email" class="form-control" id="emailName" aria-describedby="emailNameHelp" name="email">
+    <small id="emailNameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <label for="passName">Password</label>
+    <input type="password" class="form-control" id="passName" name="pass">
+    <button type="submit" class="btn btn-primary">Login</button>
+
+</form>
+<!--
 <div class="container">
     <div class="row card hoverable">
         <div class="card-content ">
@@ -37,6 +48,6 @@
             </form>
         </div>
     </div>
-</div>
+</div>-->
 </body>
 </html>

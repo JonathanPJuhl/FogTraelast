@@ -6,11 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 @WebServlet("")
-public class Index extends HttpServlet {
+public class Index extends BaseServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
-        resp.setContentType("text/html");
-        resp.getWriter().println("<h1>Hello, World</h1>");
+        render("Fog Trælast", "/WEB-INF/pages/index.jsp", req, resp);
     }
 }

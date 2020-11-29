@@ -1,4 +1,4 @@
-package fogTraelast.web;
+package fogTraelast.web.pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

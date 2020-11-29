@@ -1,7 +1,5 @@
 package fogTraelast.web.pages;
 
-import fogTraelast.web.BaseServlet;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
