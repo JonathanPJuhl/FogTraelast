@@ -10,8 +10,5 @@
         <module name="Fog_Traelast" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="FogTraelast" target="14" />
-    </bytecodeTargetLevel>
   </component>
 </project>
