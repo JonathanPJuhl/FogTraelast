@@ -9,5 +9,10 @@
 
 <body>
 <h1> Hello </h1>
+<form id="create_order_button" action="CreateOrder">
+
+    <input type="submit" value="Opret ordre! " />
+
+</form>
 </body>
 </html>
