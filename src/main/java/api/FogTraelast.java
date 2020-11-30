@@ -7,6 +7,8 @@ import domain.users.NoSuchUserExists;
 import domain.users.User;
 import domain.users.UserRepository;
 
+import java.util.List;
+
 public class FogTraelast {
     private String VERSION = "0.1";
     private final UserRepository userLists;
@@ -43,4 +45,8 @@ public class FogTraelast {
     public User findSalesman(int id) throws NoSuchUserExists{
         return userLists.findUser(id);
     }
- }
+
+    public List<Order> findAllOrders() throws NoSuchOrderExists {
+        return orderLists.findAllOrders();
+    }
+}

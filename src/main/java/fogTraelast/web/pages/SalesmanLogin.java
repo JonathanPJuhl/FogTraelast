@@ -2,7 +2,7 @@ package fogTraelast.web.pages;
 
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
-//import domain.users.CostumerUser;
+
 import domain.users.NoSuchUserExists;
 import domain.users.User;
 
@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/SalesmanLogin/*")
@@ -21,6 +22,8 @@ public class SalesmanLogin  extends BaseServlet {
         } else {
             int userID = Integer.parseInt(req.getPathInfo().substring(1));
             log(req, "Accessing user: " + " : " + userID);
+            HttpSession session = req.getSession(true);
+            session.setAttribute("sessionID", userID);
             try {
                 User userList = api.findSalesman(userID);
                 req.setAttribute("list", userList.getName());

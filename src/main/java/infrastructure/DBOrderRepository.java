@@ -1,5 +1,6 @@
 package infrastructure;
 
+import com.mysql.cj.protocol.Resultset;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
@@ -8,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBOrderRepository implements OrderRepository {
     private final Database db;
@@ -67,6 +70,28 @@ public class DBOrderRepository implements OrderRepository {
             throw new NoSuchOrderExists();
         }
 
+    }
+
+    @Override
+    public List<Order> findAllOrders() throws NoSuchOrderExists {
+        ArrayList<Order> list = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM orders;";
+            var smt = conn.prepareStatement(sql);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            if(set.next()) {
+                list.add(parseOrderList(set));
+            }else {
+                throw new RuntimeException("Unexpected er ror");
+            }
+
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new NoSuchOrderExists();
+        }
+
+        return list;
     }
 //SKAL RETTES TIL
 
