@@ -1,6 +1,5 @@
 package infrastructure;
 
-import com.mysql.cj.protocol.Resultset;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
@@ -43,7 +42,7 @@ public class DBOrderRepository implements OrderRepository {
         try {
             System.out.println("ID: " + newID);
             return findSpecificOrder(newID);
-            //Put no such order exception into order package
+
         } catch (NoSuchOrderExists e) {
             throw new RuntimeException();
         }
