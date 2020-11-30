@@ -21,7 +21,8 @@ public class CreateOrder extends BaseServlet {
             try {
                 Order orderList = api.findOrder(userID);
                 req.setAttribute("list", orderList);
-                render("Olsker Cupcakes: " + orderList.getOrderID(), "/WEB-INF/pages/displayUserPage.jsp", req, resp);
+
+                render("Fog Trælast" + orderList.toString(), "/WEB-INF/pages/displayOrderPage.jsp", req, resp);
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 resp.sendError(404, "User does not exist");
             }

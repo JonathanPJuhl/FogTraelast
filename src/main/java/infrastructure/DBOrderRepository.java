@@ -80,7 +80,6 @@ public class DBOrderRepository implements OrderRepository {
                 set.getString("orders.customerEmail"),
                 set.getDouble("orders.price"),
                 set.getInt("orders.salesmanID")
-               // 2.0, 1
         );
     }
 }

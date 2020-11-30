@@ -55,4 +55,18 @@ public class Order {
     public int getSalesmanID() {
         return salesmanID;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderID=" + orderID +
+                ", orderStatus='" + orderStatus + '\'' +
+                ", length=" + length +
+                ", width=" + width +
+                ", customerPhone='" + customerPhone + '\'' +
+                ", customerEmail='" + customerEmail + '\'' +
+                ", price=" + price +
+                ", salesmanID=" + salesmanID +
+                '}';
+    }
 }
