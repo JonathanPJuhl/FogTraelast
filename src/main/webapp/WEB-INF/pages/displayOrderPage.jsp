@@ -13,9 +13,6 @@
 
 <body>
 
-
-<jsp:include page="/WEB-INF/contains/navbar.jsp" flush="true"/>
-
 <main role="main" class="container">
 
     <div class="content">

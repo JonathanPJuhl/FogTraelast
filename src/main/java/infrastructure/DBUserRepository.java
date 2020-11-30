@@ -46,30 +46,30 @@ public class DBUserRepository implements UserRepository {
     }
 
     @Override
-    public User loginUsr(String email, String password) throws NoSuchUserExists {
-        SHA256 encrypt = new SHA256();
-        String encryptedPass = encrypt.sha256(password);
+    public User loginSalesman(String email, String password) throws NoSuchUserExists {
+        //SHA256 encrypt = new SHA256();
+        //String encryptedPass = encrypt.sha256(password);
         String passCheck = "";
         boolean isAdmin = false;
         int id = 0;
-/*
+
         try (Connection conn = db.connect()) {
-            String sql = "SELECT * FROM user WHERE email = ?";
+            String sql = "SELECT * FROM salesmen WHERE email = ?";
             var smt = conn.prepareStatement(sql);
             smt.setString(1, email);
             ResultSet set = smt.executeQuery();
             System.out.println(smt.toString());
             if (set.next()) {
-                id = parseUsrList(set).getId();
+                id = parseUsrList(set).getSalesmanID();
                 passCheck = parseUsrList(set).getPassword();
                 System.out.println("pass: " + passCheck);
             }
             System.out.println("ID: " + id);
         } catch (SQLException e) {
             e.printStackTrace();
-        } */
-        System.out.println(encryptedPass + "Comparrison: " + passCheck);
-        if (encryptedPass.equals(passCheck)) {
+        }
+        System.out.println(password + "Comparrison: " + passCheck);
+        if (password.equals(passCheck)) {
             try {
                 return findUser(id);
             } catch (NoSuchUserExists e) {
@@ -81,18 +81,18 @@ public class DBUserRepository implements UserRepository {
         }
     }
     private User parseUsrList(ResultSet set) throws SQLException {
-        /*return new User(set.getInt("user.id"),
-                set.getString("user.email"),
-                set.getString("user.password"),
-                set.getDouble("user.balance"),
-                set.getBoolean("user.isAdmin")
-        );*/
-        return null;
+        return new User(set.getInt("salesmen.salesmanID"),
+                set.getString("salesmen.name"),
+                set.getString("salesmen.phone"),
+                set.getString("salesmen.email"),
+                set.getString("salesmen.password")
+        );
+
     }
     @Override
     public User findUser(int id) throws NoSuchUserExists {
-        /*try (Connection conn = db.connect()){
-            String sql = "SELECT * FROM user WHERE id=?";
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM salesmen WHERE salesmanID=?";
             var smt = conn.prepareStatement(sql);
             smt.setInt(1, id);
             smt.executeQuery();
@@ -106,7 +106,6 @@ public class DBUserRepository implements UserRepository {
         }catch (SQLException throwables) {
             throwables.printStackTrace();
             throw new NoSuchUserExists();
-        }*/
-        return null;
+        }
     }
 }

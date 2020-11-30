@@ -1,4 +1,4 @@
-package domain.users;
+/*package domain.users;
 
 public class CostumerUser extends User{
 
@@ -8,7 +8,7 @@ public class CostumerUser extends User{
 
 
     public CostumerUser(String name, String phone, String email, String password, String role, String address, String city) {
-        super(name, phone, email, password, role);
+        super(salesmanID, name, phone, email, password, role);
         this.address = address;
         this.city = city;
 
@@ -30,7 +30,6 @@ public class CostumerUser extends User{
 
 
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -39,3 +38,5 @@ public class CostumerUser extends User{
                 '}';
     }
 }
+
+        */

@@ -26,10 +26,6 @@ public class FogTraelast {
         return userLists.createUsr(name, password);
     }
 
-    public User loginUser(String email, String pass) throws NoSuchUserExists {
-        return userLists.loginUsr(email, pass);
-    }
-
 
 
     public Order findOrder(int id) throws NoSuchOrderExists {
@@ -39,4 +35,12 @@ public class FogTraelast {
     public Order createOrder(double length, double width, String customerPhone, String customerEmail) {
         return orderLists.insertOrderIntoDB(length, width, customerPhone, customerEmail);
     }
-}
+
+    public User loginSalesman(String salesmanEmail, String password) throws NoSuchUserExists {
+        return userLists.loginSalesman(salesmanEmail, password);
+    }
+
+    public User findSalesman(int id) throws NoSuchUserExists{
+        return userLists.findUser(id);
+    }
+ }

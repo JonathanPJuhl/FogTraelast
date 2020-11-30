@@ -6,3 +6,8 @@
 
 </form>
 
+<form id="login_salesman_button" action="SalesmanLogin">
+
+    <input type="submit" value="login " />
+
+</form>
