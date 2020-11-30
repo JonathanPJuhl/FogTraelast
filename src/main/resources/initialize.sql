@@ -22,12 +22,12 @@ CREATE TABLE IF NOT EXISTS orders(
     orderStatus  ENUM ('New', 'Processing','Done')DEFAULT 'New',
     length FLOAT NOT NULL,
     width FLOAT NOT NULL,
-    costumerPhone varchar(45) NOT NULL,
+    customerPhone varchar(45) NOT NULL,
     customerEmail varchar(70) NOT NULL,
     price float,
     salesmanID int,
     FOREIGN KEY (salesmanID) REFERENCES salesmen(salesmanID)
 );
-INSERT INTO orders (length, width, costumerPhone, customerEmail) VALUES(500, 500, '+4512345678', 'test@test.dk');
-INSERT INTO orders (length, width, costumerPhone, customerEmail) VALUES(600, 600, '12345678', 'test2@test.dk');
+INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES(500, 500, '+4512345678', 'test@test.dk');
+INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES(600, 600, '12345678', 'test2@test.dk');
 

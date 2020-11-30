@@ -21,13 +21,12 @@ public class DBOrderRepository implements OrderRepository {
         System.out.println("l: " + length + "w: " + width + customerPhone + customerEmail);
         int newID;
         try(Connection conn = db.connect()){
-            String sql = "INSERT INTO orders (length, width, costumerPhone, customerEmail) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES (?, ?, ?, ?);";
             var smt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             smt.setDouble(1, length);
             smt.setDouble(2, width);
             smt.setString(3, customerPhone);
             smt.setString(4, customerEmail);
-            System.out.println(sql);
             smt.executeUpdate();
             ResultSet set = smt.getGeneratedKeys();
             if(set.next()) {
@@ -52,7 +51,7 @@ public class DBOrderRepository implements OrderRepository {
     @Override
     public Order findSpecificOrder(int id) throws NoSuchOrderExists {
         try (Connection conn = db.connect()){
-            String sql = "SELECT orderID FROM orders WHERE orderID=?";
+            String sql = "SELECT * FROM orders WHERE orderID=?;";
             var smt = conn.prepareStatement(sql);
             smt.setInt(1, id);
             smt.executeQuery();
@@ -77,11 +76,11 @@ public class DBOrderRepository implements OrderRepository {
                 set.getString("orders.orderStatus"),
                 set.getInt("orders.length"),
                 set.getInt("orders.width"),
-                set.getString("orders.costumerPhone"),
-                set.getString("orders.costumerEmail"),
-                //set.getDouble("orders.price"),
-                //set.getInt("orders.salesmanID")
-                2.0, 1
+                set.getString("orders.customerPhone"),
+                set.getString("orders.customerEmail"),
+                set.getDouble("orders.price"),
+                set.getInt("orders.salesmanID")
+               // 2.0, 1
         );
     }
 }
