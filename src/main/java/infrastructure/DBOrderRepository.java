@@ -79,10 +79,9 @@ public class DBOrderRepository implements OrderRepository {
             var smt = conn.prepareStatement(sql);
             smt.executeQuery();
             ResultSet set = smt.getResultSet();
-            if(set.next()) {
+
+            while(set.next()) {
                 list.add(parseOrderList(set));
-            }else {
-                throw new RuntimeException("Unexpected er ror");
             }
 
         }catch (SQLException throwables) {
@@ -92,7 +91,7 @@ public class DBOrderRepository implements OrderRepository {
 
         return list;
     }
-//SKAL RETTES TIL
+
 
     private Order parseOrderList(ResultSet set) throws SQLException {
         return new Order(

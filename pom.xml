@@ -41,6 +41,16 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <artifactId>mybatis</artifactId>
             <version>3.4.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.5.6</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>FogTraelast</finalName>
