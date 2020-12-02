@@ -8,12 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
-<html>
-<head>
-    <title>Ordrer</title>
-</head>
-<body>
 <div align="center">
     <table border="1" cellpadding="5">
         <caption><h2>List of orders</h2></caption>
@@ -41,5 +35,3 @@
         </c:forEach>
     </table>
 </div>
-</body>
-</html>

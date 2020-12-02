@@ -6,11 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+
 <h1>Velkommen til: ${requestScope.list.toString()}!</h1>
 Hvad har du lyst til at gøre nu?
 
@@ -18,5 +14,3 @@ Hvad har du lyst til at gøre nu?
     <%--<input type="number" placeholder="Vælg en specifik ordre" name="id"/>--%>
     <input type="submit" value="Vis alle ordre" />
 </form>
-</body>
-</html>

@@ -16,17 +16,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <!-- TODO In case det ikke virker på andres computere
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- Style css -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css"/>
 
     <!--Icon in tab -->
-    <link rel="icon" href="<c:url value="images/FogLogo.png"/>">
+    <link rel="icon" href="${pageContext.request.contextPath}/images/FogLogo.png"/>
+
 
     <title>${requestScope.title}</title>
 
@@ -41,11 +43,11 @@
         <header class="blog-header py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">
                 <div class="col-4 pt-1">
-                    <p class="text-white">Velkommen til <!--TODO ${user.name} --></p>
+                    <p class="text-white">Velkommen til <h6 class="reset-anchor text-primary"> ${requestScope.list.toString()}</h6> </p>
                 </div>
                 <div class="col-4 text-center">
                     <a class="navbar-brand" href="${Index}">
-                        <img src="<c:url value="images/FogLogo.png"/>" style="width:5vw" class="d-inline-block">
+                        <img src="${pageContext.request.contextPath}/images/FogLogo.png" style="width:5vw" class="d-inline-block">
                         Byggemarked
                     </a>
                 </div>
@@ -69,7 +71,7 @@
 <jsp:include page="${requestScope.content}" flush="true"/>
 <!--footer-->
 <footer class="fixed-footer">
-    <div class="container bg-light">
+    <div class="container bg-light pl-10">
         <div class="row text-white">
             <div class="col pt-2 ">
                 <h6 class="mb-1"><p class="reset-anchor text-primary mb-0">Kontakt kundeservice: </p></h6>
