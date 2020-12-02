@@ -10,7 +10,7 @@
 
 <div align="center">
     <table border="1" cellpadding="5">
-        <caption><h2>List of orders</h2></caption>
+        <h2>List of orders</h2>
         <tr>
             <th>orderID</th>
             <th>orderStatus</th>

@@ -24,9 +24,11 @@ public class SalesmanLogin  extends BaseServlet {
             log(req, "Accessing user: " + " : " + userID);
             HttpSession session = req.getSession(true);
             session.setAttribute("sessionID", userID);
+
             try {
                 User userList = api.findSalesman(userID);
                 req.setAttribute("list", userList.getName());
+                session.setAttribute("userName", userList.getName());
                 render("Fog Trælast" + userList.getName(), "/WEB-INF/pages/salesmanPage.jsp", req, resp);
             } catch (NoSuchUserExists noSuchUserExists) {
                 resp.sendError(404, "User does not exist");

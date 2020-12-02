@@ -40,5 +40,14 @@ opacity: 50%;
 
 .column{
     display: inline-block;
+}
 
+.my-video {
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+}
+.bluring{
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
 }

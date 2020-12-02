@@ -33,21 +33,30 @@
     <title>${requestScope.title}</title>
 
 </head>
+
+
 <body>
+<!--- TODO Backgroundvideo
+<div class="my-video">
+    <iframe scr="https://youtu.be/NG45Zhhp8x8?t=7?autoplay=1&mute=1&loop=1&controls=0" type="video/mp4">
+    </iframe>
+</div>
 <main>
+    -->
 
 
     <!--navbar-->
-
     <nav class="container navbar-dark bg-light">
         <header class="blog-header py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">
                 <div class="col-4 pt-1">
-                    <p class="text-white">Velkommen til <h6 class="reset-anchor text-primary"> <!--${requestScope.list.toString()}--></h6> </p>
+                    <p class="text-white">Velkommen til <h6 class="reset-anchor text-primary">
+                    ${sessionScope.userName}</h6> </p>
                 </div>
                 <div class="col-4 text-center">
                     <a class="navbar-brand" href="${Index}">
-                        <img src="${pageContext.request.contextPath}/images/FogLogo.png" style="width:5vw" class="d-inline-block">
+                        <img src="${pageContext.request.contextPath}/images/FogLogo.png" style="width:5vw"
+                             class="d-inline-block">
                         Byggemarked
                     </a>
                 </div>
