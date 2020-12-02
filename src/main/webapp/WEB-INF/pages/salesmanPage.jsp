@@ -15,8 +15,14 @@
 Hvad har du lyst til at gøre nu?
 
 <form method="post" id="display_all_orders_button" action="${pageContext.request.contextPath}/DisplayAllOrders">
-    <%--<input type="number" placeholder="Vælg en specifik ordre" name="id"/>--%>
     <input type="submit" value="Vis alle ordre" />
 </form>
+    <form method="get" id="NewButton" action="${pageContext.request.contextPath}/Orders/new">
+        <input type="submit" value="Opret ny ordre"/>
+    </form>
+        <form method="post" id="vis specifik ordre">
+            <input type="number" placeholder="Indtast ordreID" name="orderID"/>
+            <input type="submit" value="Vis ordre" />
+        </form>
 </body>
 </html>
