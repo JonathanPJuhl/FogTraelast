@@ -55,10 +55,10 @@
         </div>
     </div>
 
-
+<main role="main" class="container">
+    <div class="content">
     <jsp:include page="${requestScope.content}" flush="true"/>
-
-
+    </div>
 </main>
 </body>
 

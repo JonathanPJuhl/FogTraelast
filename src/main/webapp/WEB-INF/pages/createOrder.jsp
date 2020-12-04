@@ -12,7 +12,7 @@
 </head>
 <body>
 Vælg dine mål!
-<form method="post">
+<form method="post" action="${pageContext.request.contextPath}/Orders/create">
 
     <label for="lengthName">Længde </label>
     <input type="number" class="form-control" id="lengthName" aria-describedby="lengthNameHelp" name="length">

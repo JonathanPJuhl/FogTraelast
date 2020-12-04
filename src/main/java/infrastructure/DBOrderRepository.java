@@ -58,15 +58,13 @@ public class DBOrderRepository implements OrderRepository {
             smt.setInt(1, id);
             smt.executeQuery();
             ResultSet set = smt.getResultSet();
-            if(set.next()) {
+            if (set.next()) {
                 return parseOrderList(set);
-            }else {
-                throw new RuntimeException("Unexpected error");
+            } else {
+                throw new NoSuchOrderExists();
             }
-
-        }catch (SQLException throwables) {
-            throwables.printStackTrace();
-            throw new NoSuchOrderExists();
+        } catch (SQLException throwables) {
+            throw new UnexpectedDBError(throwables);
         }
 
     }
