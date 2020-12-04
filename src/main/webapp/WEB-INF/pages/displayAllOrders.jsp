@@ -23,7 +23,7 @@
         </tr>
         <c:forEach var="orders" items="${requestScope.list}">
             <tr>
-                <td><c:out value="${orders.orderID}" /></td>
+                <td><a href="<c:url value="/Orders/${orders.orderID}"/>">#<c:out value="${orders.orderID}" /></a> </td>
                 <td><c:out value="${orders.orderStatus}" /></td>
                 <td><c:out value="${orders.length}" /></td>
                 <td><c:out value="${orders.width}" /></td>

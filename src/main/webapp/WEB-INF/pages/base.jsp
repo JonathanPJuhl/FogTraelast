@@ -75,6 +75,7 @@
 
             </ul>
         </div>
+
     </nav>
 </main>
 <jsp:include page="${requestScope.content}" flush="true"/>
@@ -112,6 +113,7 @@
     </div>
 
 </footer>
+
 
 </body>
 
