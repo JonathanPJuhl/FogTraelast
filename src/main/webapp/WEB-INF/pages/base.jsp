@@ -24,11 +24,10 @@
 
     <!-- Style css -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css"/>
+    <link rel="stylesheet" href="<c:url value="/style.css"></c:url>">
 
     <!--Icon in tab -->
-    <link rel="icon" href="${pageContext.request.contextPath}/images/FogLogo.png"/>
-
+    <link rel="icon" href="<c:url value="/images/FogLogo.png"></c:url>"/>
 
     <title>${requestScope.title}</title>
 
@@ -54,8 +53,8 @@
                     ${sessionScope.userName}</h6> </p>
                 </div>
                 <div class="col-4 text-center">
-                    <a class="navbar-brand" href="${Index}">
-                        <img src="${pageContext.request.contextPath}/images/FogLogo.png" style="width:5vw"
+                    <a class="navbar-brand" href="${navBar.findUrl("Index")}">
+                        <img src="<c:url value="/images/FogLogo.png"></c:url>" style="width:5vw"
                              class="d-inline-block">
                         Byggemarked
                     </a>
@@ -69,15 +68,22 @@
     <nav class="container navbar-dark bg-light">
         <div class="py-1 mb-2">
             <ul class="nav d-flex justify-content-center nav-menu">
-                <a class="p-2 px-4 nav-link text-white " href="${CustomMeasures}">Start Byg!</a>
-                <a class="p-2 px-4 nav-link text-white" href="#">Ordre</a>
-                <a class="p-2 px-4 nav-link text-white" href="#">Status</a>
+                <a class="p-2 px-4 nav-link text-white " href="${navBar.findUrl("CreateOrder")}">Start Byg!</a>
+                <!--- TODO Få hentet rollen eller navn + rolle på bruge-->
+                <c:if test="${sessionScope.user.role == 'salesman'}">
+                    <a class="p-2 px-4 nav-link text-white" href="<c:url value="displayAllOrders.jsp"></c:url>">Nye ordre</a><!-- TODO viser lige nu alle ordrer -->
+                <a class="p-2 px-4 nav-link text-white" href="#">Mine ordre</a>
+                    <a class="p-2 px-4 nav-link text-white" href="#">Færdige ordre</a>
+                </c:if>
 
             </ul>
         </div>
     </nav>
-</main>
+<main class="container">
+
 <jsp:include page="${requestScope.content}" flush="true"/>
+
+</main>
 <!--footer-->
 <footer class="fixed-footer">
     <div class="container bg-light pl-10">
