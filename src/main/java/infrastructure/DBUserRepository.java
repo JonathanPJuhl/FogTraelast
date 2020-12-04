@@ -5,7 +5,6 @@ import domain.users.User;
 import domain.users.UserRepository;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -60,7 +59,7 @@ public class DBUserRepository implements UserRepository {
             ResultSet set = smt.executeQuery();
             System.out.println(smt.toString());
             if (set.next()) {
-                id = parseUsrList(set).getSalesmanID();
+                id = parseUsrList(set).getID();
                 passCheck = parseUsrList(set).getPassword();
                 System.out.println("pass: " + passCheck);
             }
@@ -85,8 +84,8 @@ public class DBUserRepository implements UserRepository {
                 set.getString("salesmen.name"),
                 set.getString("salesmen.phone"),
                 set.getString("salesmen.email"),
-                set.getString("salesmen.password")
-        );
+                set.getString("salesmen.password"),
+                set.getInt("salesmen.role"));
 
     }
     @Override

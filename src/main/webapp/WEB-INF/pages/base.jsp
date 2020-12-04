@@ -35,11 +35,10 @@
 
 
 <body>
-
 <!--navbar-->
 <jsp:include page="../contains/navbar.jsp" flush="true"/><!-- TODO hvad gør flush ? -->
 
-<main class="container">
+<main class="container"> <!-- TODO LAV CATHRINE -->
     <jsp:include page="${requestScope.content}" flush="true"/>
 </main>
 

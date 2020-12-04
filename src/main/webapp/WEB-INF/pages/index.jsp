@@ -15,7 +15,7 @@
 </form>-->
 <div class="vertical-center"><p class="pb-4"><strong>
     <h1 style="color:blue;" >Mangler du en splinter ny carport?</h1>
-    <h3 class="text-white" >Så er du det helt rigtige sted!</h3>
+    <h3 style="color: cornflowerblue" >Så er du det helt rigtige sted!</h3>
 <!-- <iframe class="logo-image" width="420" height="315" src="https://www.youtube.com/embed/Reha9g4meBs?autoplay=1&mute=1"></iframe>
 --></strong></p>
 </div>

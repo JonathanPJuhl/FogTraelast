@@ -11,8 +11,7 @@
 body{
     background-image: url("images/BackgroundFOG.jpeg");
     background-repeat: no-repeat;
-    /*min-height: 100vh; TODO på telefon tilstand*/
-    background-size: 100vw;
+    background-size: cover;
 }
 
 .vertical-center{

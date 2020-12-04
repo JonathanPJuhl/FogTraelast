@@ -13,7 +13,7 @@
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-4 pt-1">
                 <p class="text-white">Velkommen til <h6 class="reset-anchor text-primary">
-                ${sessionScope.userName}</h6> </p>
+                ${sessionScope.user.name}</h6> </p>
             </div>
             <div class="col-4 text-center">
                 <a class="navbar-brand" href="${navBar.findUrl("Index")}">

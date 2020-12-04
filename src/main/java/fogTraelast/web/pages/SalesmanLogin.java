@@ -54,7 +54,7 @@ public class SalesmanLogin  extends BaseServlet {
             try {
                 list = api.loginSalesman(salesmanEmail, password);
                 HttpSession session = req.getSession(true);
-                session.setAttribute("userID", list.getSalesmanID());
+                session.setAttribute("user", list);
             } catch (NoSuchUserExists noSuchUserExists) {
                 noSuchUserExists.printStackTrace();
             }
