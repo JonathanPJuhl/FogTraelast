@@ -6,11 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
 
-</head>
-<body>
 Vælg dine mål!
 <form method="post" action="${pageContext.request.contextPath}/Orders/create">
 
@@ -29,6 +25,3 @@ Vælg dine mål!
     <small id="phoneNameHelp" class="form-text text-muted">Vi giver aldrig dit nummer ud til andre!</small>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
-</body>
-</html>

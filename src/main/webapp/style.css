@@ -1,3 +1,4 @@
+
 /*TODO Employee pitctures?*/
 .logo-image{
     width: 46px;
@@ -18,9 +19,35 @@
 
 .blog-header {
     line-height: 1;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #ffffff;
 }
 
 .nav-menu a:hover{
 opacity: 50%;
+}
+
+.container {
+    min-width: 50vw;
+    max-width: 70vw;
+    }
+
+.fixed-footer{
+    position: fixed;
+    bottom: 0;
+    margin-left: 13.8vw;
+    width: 71vw;
+}
+
+.column{
+    display: inline-block;
+}
+
+.my-video {
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+}
+.bluring{
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
 }

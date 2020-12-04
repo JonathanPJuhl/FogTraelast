@@ -6,12 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-<input type="hidden" name="id">
 
 <form method="post">
     <h1>Welcome, please sign in:</h1>
@@ -23,6 +17,3 @@
     <button type="submit" class="btn btn-primary">Login</button>
 
 </form>
-
-</body>
-</html>
