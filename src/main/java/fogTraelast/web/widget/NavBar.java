@@ -3,7 +3,7 @@ package fogTraelast.web.widget;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-//TODO HVORDAN VIRKER DENNE ???!!!!!! HILSEN CATH
+//TODO Note til Cath - få 100% styr på hvordan dette virker
 public class NavBar {
 
     private final HttpServletRequest req;

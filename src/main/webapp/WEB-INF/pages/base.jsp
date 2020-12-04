@@ -35,14 +35,6 @@
 
 
 <body>
-<!--- TODO Backgroundvideo
-<div class="my-video">
-    <iframe scr="https://youtu.be/NG45Zhhp8x8?t=7?autoplay=1&mute=1&loop=1&controls=0" type="video/mp4">
-    </iframe>
-</div>
-<main>
-    -->
-
 
     <!--navbar-->
     <nav class="container navbar-dark bg-light">
