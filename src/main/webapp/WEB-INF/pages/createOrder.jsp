@@ -19,11 +19,11 @@
 
             <label for="emailName">Email </label>
             <input type="email" class="form-control" id="emailName" aria-describedby="emailNameHelp" name="email">
-            <small id="emailNameHelp" class="form-text">Vi giver aldrig din email ud til andre!</small>
+            <small id="emailNameHelp" class="form-text text-muted">Vi giver aldrig din email ud til andre!</small>
 
             <label for="phoneName">Tlf</label>
             <input type="text" class="form-control" id="phoneName" name="phone">
-            <small id="phoneNameHelp" class="form-text">Vi giver aldrig dit nummer ud til andre!</small>
+            <small id="phoneNameHelp" class="form-text text-muted">Vi giver aldrig dit nummer ud til andre!</small>
 <br>
                 <button type="submit" class="btn btn-primary">Bestil carport!</button>
 
