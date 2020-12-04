@@ -15,8 +15,12 @@ body{
     background-size: 100vw;
 }
 
-.scrollbar
-{
+.vertical-center{
+    position: fixed;
+    top: 30vh;
+}
+
+.scrollbar{
     height: 50vh;
     width: 68vw;
     float: right;
