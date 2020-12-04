@@ -14,4 +14,4 @@
 
 </form>-->
 <br>
-<h1 class="text-blue align="center">Tør du bygge en carport?</h1>
+<h1 class="text-blue" align="center">Tør du bygge en carport?</h1>
