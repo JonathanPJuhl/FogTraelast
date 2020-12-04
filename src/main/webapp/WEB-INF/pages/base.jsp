@@ -60,7 +60,7 @@
                     </a>
                 </div>
                 <div class="col-4 d-flex justify-content-end align-items-center">
-                    <a class="btn btn-sm btn-outline-secondary" href="#">Login</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="${navBar.findUrl("SalesmanLogin")}">Login</a>
                 </div>
             </div>
         </header>

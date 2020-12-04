@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 
+<!-- TODO lave vide forelavede carporte?
+
 <form id="create_order_button" action="CreateOrder">
 
     <input type="submit" value="Opret ordre! " />
@@ -10,4 +12,6 @@
 
     <input type="submit" value="login " />
 
-</form>
+</form>-->
+<br>
+<h1 class="text-blue align="center">Tør du bygge en carport?</h1>

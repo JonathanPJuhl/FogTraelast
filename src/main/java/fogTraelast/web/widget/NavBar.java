@@ -18,7 +18,7 @@ public class NavBar {
             "CreateOrder", "/CreateOrder",
             "DisplayOrderPage", "/DisplayOrderPage",
             "Orderhandling", "/Orderhandling",
-            "SalesmanLogin", "/SalsmanLogin"
+            "SalesmanLogin", "/SalesmanLogin"
     );
 
     public String findUrl(String name) {

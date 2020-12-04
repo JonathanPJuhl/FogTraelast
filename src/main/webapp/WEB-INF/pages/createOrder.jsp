@@ -7,9 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="scrollbar" id="styleFog">
-    <div class="text-white">
-        <div align="center">
-            <h4 >Vælg dine mål</h4>
+    <div class="text-white" align="center">
+            <h1 >Vælg dine mål</h1>
         <form method="post">
 
             <label for="lengthName">Længde </label>
@@ -25,10 +24,9 @@
             <label for="phoneName">Tlf</label>
             <input type="text" class="form-control" id="phoneName" name="phone">
             <small id="phoneNameHelp" class="form-text">Vi giver aldrig dit nummer ud til andre!</small>
-
+<br>
                 <button type="submit" class="btn btn-primary">Bestil carport!</button>
 
         </form>
-        </div>
         </div>
 </div>
