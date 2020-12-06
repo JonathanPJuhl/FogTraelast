@@ -1,6 +1,7 @@
 package fogTraelast.web.pages;
 
 import api.FogTraelast;
+import fogTraelast.web.widget.NavBar;
 import infrastructure.DBOrderRepository;
 import infrastructure.DBUserRepository;
 import infrastructure.Database;
@@ -33,6 +34,7 @@ public class BaseServlet extends HttpServlet {
             ServletException, IOException {
         req.setAttribute("title",title);
         req.setAttribute("content",content);
+        req.setAttribute("navBar", new NavBar(req));
         req.getRequestDispatcher("/WEB-INF/pages/base.jsp").forward(req,resp);
     }
 

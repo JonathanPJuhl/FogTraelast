@@ -1,12 +1,57 @@
 
 /*TODO Employee pitctures?*/
 .logo-image{
-    width: 46px;
-    height: 46px;
+    width: 46vw;
+    height: 46vh;
     border-radius: 50%;
     overflow: hidden;
     margin-top: -6px;
 }
+
+body{
+    background-image: url("images/BackgroundFOG.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.vertical-center{
+    position: fixed;
+    top: 30vh;
+}
+
+.scrollbar{
+    height: 50vh;
+    width: 68vw;
+    float: right;
+    background: #0C2069;
+    opacity: 80%;
+    overflow: scroll;
+}
+
+.force-overflow
+{
+    min-height: 10px;
+}
+
+#styleFog::-webkit-scrollbar {
+    width: 20px;
+}
+
+#styleFog::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px blue;
+    border-radius: 10px;
+}
+
+#styleFog::-webkit-scrollbar-thumb {
+    background: #004687;
+    border-radius: 10px;
+}
+
+
+#styleFog::-webkit-scrollbar-thumb:hover {
+    background:  #0C2069;
+}
+
 
 .bg-light{
     background-color: #0C2069 !important;
@@ -42,12 +87,6 @@ opacity: 50%;
     display: inline-block;
 }
 
-.my-video {
-    position: fixed;
-    min-width: 100%;
-    min-height: 100%;
-}
-.bluring{
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
+.form-control{
+    max-width: 30vw;
 }

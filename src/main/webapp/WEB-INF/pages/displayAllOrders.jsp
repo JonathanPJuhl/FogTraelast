@@ -7,10 +7,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<div align="center">
-    <table border="1" cellpadding="5">
-        <h2>List of orders</h2>
+<div class="scrollbar" id="styleFog">
+<div align="center" >
+    <table class="text-white" border="1" cellpadding="5">
+        <h2 class="text-white">List of orders</h2>
         <tr>
             <th>orderID</th>
             <th>orderStatus</th>
@@ -34,4 +34,5 @@
             </tr>
         </c:forEach>
     </table>
+</div>
 </div>

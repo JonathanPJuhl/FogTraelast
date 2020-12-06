@@ -13,17 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/SalesmanLogin/*")
+@WebServlet({"/SalesmanLogin","/SalesmanLogin/*"})
 public class SalesmanLogin  extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() == null) {
             render("Fog Trælast", "/WEB-INF/pages/loginSalesman.jsp", req, resp);
         } else {
-            int userID = Integer.parseInt(req.getPathInfo().substring(1));
-            log(req, "Accessing user: " + " : " + userID);
             HttpSession session = req.getSession(true);
-            session.setAttribute("sessionID", userID);
+            int userID = Integer.parseInt((String)session.getAttribute("userID"));
+            log(req, "Accessing user: " + " : " + userID);
 
             try {
                 User userList = api.findSalesman(userID);
@@ -54,10 +53,12 @@ public class SalesmanLogin  extends BaseServlet {
             User list = null;
             try {
                 list = api.loginSalesman(salesmanEmail, password);
+                HttpSession session = req.getSession(true);
+                session.setAttribute("user", list);
             } catch (NoSuchUserExists noSuchUserExists) {
                 noSuchUserExists.printStackTrace();
             }
-            resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/" + list.getSalesmanID());
+            resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/");
         }
     }
 }
