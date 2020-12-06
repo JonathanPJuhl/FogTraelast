@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS orders;
 
 CREATE TABLE IF NOT EXISTS orders(
     orderID int PRIMARY KEY AUTO_INCREMENT,
-    orderStatus  ENUM ('New', 'Processing','Done')DEFAULT 'New',
+    orderStatus  ENUM ('New', 'Processing','Done') DEFAULT 'New',
     length FLOAT NOT NULL,
     width FLOAT NOT NULL,
     customerPhone varchar(45) NOT NULL,

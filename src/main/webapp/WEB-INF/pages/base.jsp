@@ -38,12 +38,14 @@
 <!--navbar-->
 <jsp:include page="../contains/navbar.jsp" flush="true"/><!-- TODO hvad gør flush ? -->
 
-<main class="container"> <!-- TODO LAV CATHRINE -->
+<main class="container">
     <jsp:include page="${requestScope.content}" flush="true"/>
+
 </main>
 
 <!--footer-->
 <jsp:include page="../contains/footer.jsp" flush="true"/>
+
 
 </body>
 
