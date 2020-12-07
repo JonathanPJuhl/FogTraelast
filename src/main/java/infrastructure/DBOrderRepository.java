@@ -49,7 +49,7 @@ public class DBOrderRepository implements OrderRepository {
 
     }
 
-//SKAL RETTES TIL
+
     @Override
     public Order findSpecificOrder(int id) throws NoSuchOrderExists {
         try (Connection conn = db.connect()){
@@ -90,6 +90,20 @@ public class DBOrderRepository implements OrderRepository {
         return list;
     }
 
+
+    @Override
+    public void editOrder(String columnName, String columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set ? = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setString(1, columnName);
+            smt.setString(2, columnValue);
+            smt.setInt(3, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     private Order parseOrderList(ResultSet set) throws SQLException {
         return new Order(

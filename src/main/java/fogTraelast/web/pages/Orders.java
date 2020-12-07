@@ -62,6 +62,14 @@ public class Orders extends BaseServlet {
             } else {
                 api.createOrder(length, width, customerPhone, customerEmail);
             }
+        } else if (req.getPathInfo().substring(1).equals("edit")) {
+            //Bruger indtaster orderId på den øsnkede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil
+            //og variablerne gives dermed værdier, der ændres i db'en
+            String status = req.getParameter("orderStatus");
+            Integer salesmanID = Integer.parseInt(req.getParameter("salesmanID"));
+            double price = Double.parseDouble(req.getParameter("price"));
+
+
         }
         else if (req.getParameter("newButton").equals(null) || req.getParameter("newButton").equals("")
                 || req.getParameter("orderID").equals(null) || req.getParameter("orderID").equals("")) {
@@ -69,7 +77,7 @@ public class Orders extends BaseServlet {
         } else if (req.getParameter("newButton").equals("new")) {
 
             resp.sendRedirect(req.getContextPath() + "/Orders/new");
-        } else if (!(req.getParameter("orderID") == null) && !(req.getParameter("orderID").equals(""))) {
+        }else if (!(req.getParameter("orderID") == null) && !(req.getParameter("orderID").equals(""))) {
             int orderID = Integer.parseInt(req.getParameter("orderID"));
             resp.sendRedirect(req.getContextPath() + "/Orders/" + orderID);
         }

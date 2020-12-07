@@ -8,4 +8,6 @@ public interface OrderRepository {
     Order findSpecificOrder(int id) throws NoSuchOrderExists;
 
     List<Order>  findAllOrders() throws NoSuchOrderExists;
+
+    void editOrder(String columnName, String columnValue, int orderID) throws NoSuchOrderExists;
 }
