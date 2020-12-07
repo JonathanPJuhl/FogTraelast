@@ -14,7 +14,7 @@ public class NavBar {
 
     private static final Map<String, String> SITES = Map.of(
             "Index", "/",
-            "DisplayAllOrders", "/DisplayAllOrders",
+            "DisplayAllOrders", "/Orders",
             "CreateOrder", "/CreateOrder",
             "DisplayOrderPage", "/DisplayOrderPage",
             "Orderhandling", "/Orderhandling",
