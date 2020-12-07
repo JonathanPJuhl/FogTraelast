@@ -8,10 +8,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<a class="btn-primary btn" href="<c:url value="/Orders"/>">Vis alle ordre</a>
 
-<h1>Velkommen til: ${requestScope.list.toString()}!</h1>
-Hvad har du lyst til at gøre nu?
-
-<form method="post" id="display_all_orders_button" action="${pageContext.request.contextPath}/DisplayAllOrders">
-    <input type="submit" value="Vis alle ordre" />
+<form method="get" id="NewButton" action="${pageContext.request.contextPath}/Orders/new">
+    <input type="submit" value="Opret ny ordre"/>
 </form>
