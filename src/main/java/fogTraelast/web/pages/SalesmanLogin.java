@@ -21,14 +21,13 @@ public class SalesmanLogin  extends BaseServlet {
             render("Fog Trælast", "/WEB-INF/pages/loginSalesman.jsp", req, resp);
         } else {
             HttpSession session = req.getSession(true);
-            int userID = Integer.parseInt((String)session.getAttribute("userID"));
+            int userID = (int) session.getAttribute("userID");
             log(req, "Accessing user: " + " : " + userID);
 
             try {
                 User userList = api.findSalesman(userID);
-                req.setAttribute("list", userList.getName());
                 session.setAttribute("userName", userList.getName());
-                render("Fog Trælast" + userList.getName(), "/WEB-INF/pages/salesmanPage.jsp", req, resp);
+                render("Fog Trælast", "/WEB-INF/pages/salesmanPage.jsp", req, resp);
             } catch (NoSuchUserExists noSuchUserExists) {
                 resp.sendError(404, "User does not exist");
             }
@@ -50,11 +49,12 @@ public class SalesmanLogin  extends BaseServlet {
         } else if(password == null || password.equals("")){
             resp.sendError(400, "Mangler tlf");
         } else{
-            User list = null;
+            User list;
             try {
                 list = api.loginSalesman(salesmanEmail, password);
                 HttpSession session = req.getSession(true);
                 session.setAttribute("user", list);
+                session.setAttribute("userID", list.getID());
             } catch (NoSuchUserExists noSuchUserExists) {
                 noSuchUserExists.printStackTrace();
             }

@@ -3,7 +3,6 @@ package infrastructure;
 import domain.users.NoSuchUserExists;
 import domain.users.User;
 import domain.users.UserRepository;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
