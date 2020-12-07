@@ -31,7 +31,7 @@
 <nav class="container navbar-dark bg-light">
     <div class="py-1 mb-2">
         <ul class="nav d-flex justify-content-center nav-menu">
-            <a class="p-2 px-4 nav-link text-white " href="${navBar.findUrl("CreateOrder")}">Start Byg!</a>
+            <a class="p-2 px-4 nav-link text-white " href="${navBar.findUrl("Orders/new")}">Start Byg!</a>
             <!--- TODO Få hentet rollen eller navn + rolle på bruge-->
             <c:if test="${sessionScope.user.role == 'salesman'}">
                 <a class="p-2 px-4 nav-link text-white" href="<c:url value="../pages/displayAllOrders.jsp"></c:url>">Nye ordre</a><!-- TODO viser forhåbentlig alle ordrer -->
