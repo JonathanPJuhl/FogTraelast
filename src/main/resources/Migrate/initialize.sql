@@ -11,10 +11,11 @@ CREATE TABLE IF NOT EXISTS salesmen(
                                        name varchar (70) NOT NULL,
                                        phone varchar(45) NOT NULL,
                                        email varchar(70) NOT NULL,
-                                       password varchar(70) NOT NULL
+                                       password varchar(70) NOT NULL,
+                                       role int
 );
-INSERT INTO salesmen (name, phone, email, password) VALUES('bo','+4512345678', 'test@test.dk', '1234');
-INSERT INTO salesmen (name, phone, email, password) VALUES('ib', '12345678', 'test2@test.dk', '56789');
+INSERT INTO salesmen (name, phone, email, password, role) VALUES('bo','+4512345678', 'test@test.dk', '1234', 2);
+INSERT INTO salesmen (name, phone, email, password, role) VALUES('ib', '12345678', 'test2@test.dk', '56789', 2);
 
 DROP TABLE IF EXISTS orders;
 
