@@ -20,13 +20,19 @@ public class SalesmanLogin  extends BaseServlet {
         if (req.getPathInfo() == null) {
             render("Fog Trælast", "/WEB-INF/pages/loginSalesman.jsp", req, resp);
         } else {
-            HttpSession session = req.getSession(true);
-            int userID = (int) session.getAttribute("userID");
+            HttpSession session = req.getSession();
+
+             Integer userID = (Integer)session.getAttribute("userID");
+            if(userID==null){
+                resp.sendError(403);
+                return;
+            }
             log(req, "Accessing user: " + " : " + userID);
 
             try {
                 User userList = api.findSalesman(userID);
                 session.setAttribute("userName", userList.getName());
+                log(req, "user: " + userList);
                 render("Fog Trælast", "/WEB-INF/pages/salesmanPage.jsp", req, resp);
             } catch (NoSuchUserExists noSuchUserExists) {
                 resp.sendError(404, "User does not exist");
