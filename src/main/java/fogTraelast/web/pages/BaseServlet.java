@@ -2,6 +2,7 @@ package fogTraelast.web.pages;
 
 import api.FogTraelast;
 import fogTraelast.web.widget.NavBar;
+import infrastructure.DBConstructionRepository;
 import infrastructure.DBOrderRepository;
 import infrastructure.DBUserRepository;
 import infrastructure.Database;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class BaseServlet extends HttpServlet {
@@ -26,8 +26,8 @@ public class BaseServlet extends HttpServlet {
         api = createOrder();
     }
     private static FogTraelast createOrder() {
-        Database db = new Database();
-        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db));
+        Database db = new Database(); //TODO Hvorfor instansierer vi en ny db hver gang vi opretter en ordre?
+        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBConstructionRepository(db));
     }
 
     protected void render(String title, String content, HttpServletRequest req, HttpServletResponse resp) throws

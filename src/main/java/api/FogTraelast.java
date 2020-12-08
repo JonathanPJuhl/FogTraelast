@@ -1,5 +1,9 @@
 package api;
 
+import domain.construction.ConstructionRepository;
+import domain.construction.Material;
+import domain.construction.NoSuchMaterialExists;
+import domain.construction.Roof.Roof;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
@@ -13,10 +17,12 @@ public class FogTraelast {
     private String VERSION = "0.1";
     private final UserRepository userLists;
     private final OrderRepository orderLists;
+    private final ConstructionRepository constructionLists;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, ConstructionRepository constructionLists) {
         this.userLists = userLists;
         this.orderLists = orderLists;
+        this.constructionLists = constructionLists;
     }
 
     public Object getVERSION() {
@@ -27,8 +33,6 @@ public class FogTraelast {
 
         return userLists.createUsr(name, password);
     }
-
-
 
     public Order findOrder(int id) throws NoSuchOrderExists {
         return orderLists.findSpecificOrder(id);
@@ -48,5 +52,17 @@ public class FogTraelast {
 
     public List<Order> findAllOrders() throws NoSuchOrderExists {
         return orderLists.findAllOrders();
+    }
+
+    public List<Material> findMaterialsForRoof (Roof roof) throws NoSuchMaterialExists{
+        return constructionLists.findMaterialsForRoof(roof);
+    }
+
+    public List<Material> setRoofBOM (Material material, int quantity){
+        return constructionLists.setRoofBOM(material, quantity);
+    }
+
+    public void insertRoofBOM (List<Material> roofBOM){
+        constructionLists.insertRoofBOM(roofBOM);
     }
 }

@@ -1,10 +1,8 @@
 package fogTraelast.web.widget;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-//TODO Note til Cath - få 100% styr på hvordan dette virker
 public class NavBar {
     private final HttpServletRequest req;
 
