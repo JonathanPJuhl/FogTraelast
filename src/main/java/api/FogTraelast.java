@@ -49,4 +49,13 @@ public class FogTraelast {
     public List<Order> findAllOrders() throws NoSuchOrderExists {
         return orderLists.findAllOrders();
     }
+    public void editPrice(double columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editPrice(columnValue, orderID);
+    }
+    public void editSalesman(int columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editSalesman(columnValue, orderID);
+    }
+    public void editStatus(String columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editStatus(columnValue, orderID);
+    }
 }

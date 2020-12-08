@@ -9,5 +9,10 @@ public interface OrderRepository {
 
     List<Order>  findAllOrders() throws NoSuchOrderExists;
 
-    void editOrder(String columnName, String columnValue, int orderID) throws NoSuchOrderExists;
+    void editSalesman(int columnValue, int orderID) throws NoSuchOrderExists;
+
+    void editStatus(String columnValue, int orderID) throws NoSuchOrderExists;
+
+    void editPrice(double columnValue, int orderID) throws NoSuchOrderExists;
+
 }
