@@ -58,4 +58,7 @@ public class FogTraelast {
     public void editStatus(String columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editStatus(columnValue, orderID);
     }
+    public List<User> findAllSalesmen() throws NoSuchUserExists {
+        return userLists.findAllSalesmen();
+    }
 }

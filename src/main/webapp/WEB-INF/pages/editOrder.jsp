@@ -38,9 +38,14 @@
                     <td><c:out value="${orders.customerEmail}" /></td>
                     <td><input type="number" name="price"></td>
                     <td><select name="salesmanID">
+                        <c:forEach var="salesman" items="${requestScope.salesmen}" >
+                            <option value="${salesman.ID}">${salesman.name}</option>
+                        </c:forEach> </td>
+                    <%--</select>
+                        <select name="salesmanID">
                         <option value="1">Bo</option>
                         <option value="2">Ib</option>
-                    </select></td>
+                    </select>--%>
                     <td><input type="submit" value="Ret til"></td>
                 </tr>
             </c:forEach>

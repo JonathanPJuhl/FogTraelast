@@ -2,6 +2,8 @@ package fogTraelast.web.pages;
 
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
+import domain.users.NoSuchUserExists;
+import domain.users.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +41,12 @@ public class Orders extends BaseServlet {
                     order = api.findOrder(orderID);
                     List<Order> orderList = new ArrayList<>();
                     orderList.add(order);
+                    try {
+                        List<User> salesmen = api.findAllSalesmen();
+                        req.setAttribute("salesmen", salesmen);
+                    } catch (NoSuchUserExists noSuchUserExists) {
+                        noSuchUserExists.printStackTrace();
+                    }
                     req.setAttribute("orderList", orderList);
                     render("Fog Trælast", "/WEB-INF/pages/editOrder.jsp", req, resp);
                 } catch (NoSuchOrderExists noSuchOrderExists) {
