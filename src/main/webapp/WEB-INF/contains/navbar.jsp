@@ -34,8 +34,9 @@
         <ul class="nav d-flex justify-content-center nav-menu">
             <a class="p-2 px-4 nav-link text-white " href="${navBar.findUrl("Orders/new")}">Start Byg!</a>
             <!--- TODO Få hentet rollen eller navn + rolle på bruge-->
-            <c:if test="${sessionScope.user.role == 'salesman'}">
-                <a class="p-2 px-4 nav-link text-white" href="${navBar.findUrl("DisplayAllOrders")}">Nye ordre</a><!-- TODO viser forhåbentlig alle ordrer -->
+            <c:if test="${sessionScope.user.roleID == \"2\"}">
+                <a class="p-2 px-4 nav-link text-white" href="#">Nye
+                    ordre</a><!-- TODO viser forhåbentlig alle ordrer -->
                 <a class="p-2 px-4 nav-link text-white" href="#">Mine ordre</a>
                 <a class="p-2 px-4 nav-link text-white" href="#">Færdige ordre</a>
             </c:if>
