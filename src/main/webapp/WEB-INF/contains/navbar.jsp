@@ -23,7 +23,13 @@
                 </a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary" href="${navBar.findUrl("SalesmanLogin")}">Login</a>
+<c:if test="${sessionScope.userID == null}">
+<a class="btn btn-sm btn-outline-secondary" href="${navBar.findUrl("SalesmanLogin")}">Login</a>
+</c:if>
+                <!--TODO SKAL RETTES TIL-->
+                <c:if test="${sessionScope.userID != null}">
+                    <a class="btn btn-sm btn-outline-secondary" href="${navBar.findUrl("SalesmanLogin/Logout")}">Logout</a>
+                </c:if>
                 <!--TODO vi skal finde en bedre måde angående login og URL-->
             </div>
         </div>
@@ -35,10 +41,10 @@
             <a class="p-2 px-4 nav-link text-white " href="${navBar.findUrl("Orders/new")}">Start Byg!</a>
             <!--- TODO Få hentet rollen eller navn + rolle på bruge-->
             <c:if test="${sessionScope.user.roleID == \"2\"}">
-                <a class="p-2 px-4 nav-link text-white" href="#">Nye
-                    ordre</a><!-- TODO viser forhåbentlig alle ordrer -->
-                <a class="p-2 px-4 nav-link text-white" href="#">Mine ordre</a>
-                <a class="p-2 px-4 nav-link text-white" href="#">Færdige ordre</a>
+                <a class="p-2 px-4 nav-link text-white" href="${navBar.findUrl("Orders/SortByNew")}">Nyoprettede ordre</a>
+                <a class="p-2 px-4 nav-link text-white" href="${navBar.findUrl("Orders/SortByProcessing")}">Igangværende ordre</a>
+                <a class="p-2 px-4 nav-link text-white" href="${navBar.findUrl("Orders/SortByDone")}">Færdiggjorte ordre</a>
+                <a class="p-2 px-4 nav-link text-white" href="${navBar.findUrl("Orders/SortBySalesman")}">Mine ordre</a>
             </c:if>
 
         </ul>

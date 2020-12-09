@@ -13,7 +13,3 @@
 <form method="get" id="NewButton" action="${pageContext.request.contextPath}/Orders/new">
     <input type="submit" value="Opret ny ordre"/>
 </form>
-<form method="post" id="editButton" action="${pageContext.request.contextPath}/Orders/edit">
-    <input type="number" name="orderID" placeholder="Indtast ordre id">
-    <input type="submit" value="Rediger en ordre"/>
-</form>
