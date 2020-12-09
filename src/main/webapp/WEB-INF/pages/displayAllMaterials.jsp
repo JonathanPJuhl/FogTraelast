@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Cathrine
@@ -18,9 +19,9 @@
                 <th>Enhed</th>
                 <th>Beskrivelse</th>
             </tr>
-            <c:forEach var="orders" items="${requestScope.list}">
+            <c:forEach var="material" items="${sessionScope.claddingOptions}">
                 <tr>
-                    <td><c:url value="${}"/></td>
+                    <td></td>
 
                 </tr>
             </c:forEach>

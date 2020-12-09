@@ -1,5 +1,6 @@
 package infrastructure;
 
+import domain.construction.Construction;
 import domain.construction.ConstructionRepository;
 import domain.construction.Material;
 import domain.construction.NoSuchMaterialExists;
@@ -22,7 +23,7 @@ public class DBConstructionRepository implements ConstructionRepository {
     }
 
     @Override
-    public List<Material> findMaterialsForRoof(Roof roof) throws NoSuchMaterialExists {
+    public List<Material> findMaterialsForRoof(Construction construction) throws NoSuchMaterialExists { //TODO
         List<Material> roofItems = null;
         try (Connection conn = db.connect()){
             String sql = "SELECT * FROM fogtraelast.materialer LEFT JOIN fogtraelast.materialer_kategorier mk " +
@@ -30,8 +31,8 @@ public class DBConstructionRepository implements ConstructionRepository {
                     "RIGHT JOIN fogtraelast.kategorier k on k.kategoriID = mk.kategoriID " +
                     "WHERE k.kategori = ?";
             PreparedStatement smt = conn.prepareStatement(sql);
-            if (roof.isFlat()){
-            smt.setString(1, "FLat tag");
+            if (construction.getRoof().isFlat()){
+            smt.setString(1, "Flat tag");
             } else{
                 smt.setString(1, "Skråt tag");
             }
@@ -61,12 +62,29 @@ public class DBConstructionRepository implements ConstructionRepository {
 
     @Override
     public List<Material> setRoofBOM(Material material, int quantity) {
-
+//TODO
         return null;
     }
 
     @Override
     public void insertRoofBOM(List<Material> roofBOM) {
+//TODO
+    }
 
+    @Override
+    public void insertMaterialIntoDB(Material material) {
+//TODO
+    }
+
+    @Override
+    public Material findSpecificMaterial(int MaterialID) throws NoSuchMaterialExists {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public List<Material> findAllMaterails() throws NoSuchMaterialExists {
+        //TODO
+        return null;
     }
 }

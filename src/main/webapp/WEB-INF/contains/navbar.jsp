@@ -32,7 +32,7 @@
 <nav class="container navbar-dark bg-light">
     <div class="py-1 mb-2">
         <ul class="nav d-flex justify-content-center nav-menu">
-            <a class="p-2 px-4 nav-link text-white " href="${navBar.findUrl("Orders/new")}">Start Byg!</a>
+            <a class="p-2 px-4 nav-link text-white " href="${navBar.findUrl("CreateOrder")}">Start Byg!</a>
             <!--- TODO Få hentet rollen eller navn + rolle på bruge-->
             <c:if test="${sessionScope.user.roleID == \"2\"}">
                 <a class="p-2 px-4 nav-link text-white" href="#">Nye

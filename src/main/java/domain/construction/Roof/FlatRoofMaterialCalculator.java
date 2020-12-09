@@ -20,22 +20,16 @@ public class FlatRoofMaterialCalculator {
     private final int roofWidth;
     private final int roofLength;
 
-    private List<Material> flatRoofMaterialList;
-    private List<Material> materialsList;
-
     RoofCalculator roofCalculator;
-    Construction construction;
-    Material material;
 
-    public FlatRoofMaterialCalculator(Construction construction, RoofCalculator roofCalculator) {
-        this.construction = construction;
+    public FlatRoofMaterialCalculator(RoofCalculator roofCalculator) {
         this.roofCalculator = roofCalculator;
         this.roofWidth = roofCalculator.roofWidthSurface();
         this.roofLength = roofCalculator.roofLengthSurface();
     }
 
 
- //TrapezePlates
+ //TrapezePlader
 
     //quantity T600 Trapezplates
     //TODO Cath skal se det igennem in case of forandringer i pladebredde

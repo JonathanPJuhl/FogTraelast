@@ -6,7 +6,7 @@ public class Construction {
 
     private final int width;
     private final int length;
-    private final Roof roof;
+    private Roof roof;
 
 
     public Construction(int width, int length, Roof roof) {
@@ -17,6 +17,10 @@ public class Construction {
 
     public Roof getRoof() {
         return roof;
+    }
+
+    public void setRoof(Roof roof){
+    this.roof = roof;
     }
 
     public int getWidth() {

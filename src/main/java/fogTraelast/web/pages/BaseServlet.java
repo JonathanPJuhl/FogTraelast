@@ -25,6 +25,7 @@ public class BaseServlet extends HttpServlet {
         Database db = new Database();
         api = createOrder();
     }
+
     private static FogTraelast createOrder() {
         Database db = new Database(); //TODO Hvorfor instansierer vi en ny db hver gang vi opretter en ordre?
         return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBConstructionRepository(db));

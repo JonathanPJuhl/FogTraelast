@@ -1,13 +1,13 @@
 package domain.construction.Roof;
 
-import domain.construction.Cover;
+import domain.construction.Material;
 
 public class FlatRoof extends Roof {
 
-    private static final double TILTTODEGREE = (double) Math.round(Math.toDegrees(Math.atan(3.0 / 100.0)));
+    private static final double TILTTODEGREE = (double) Math.round(Math.toDegrees(Math.atan(3.0 / 100.0))); //TODO kunne ændre?
 
-    public FlatRoof(int height, int length, int width, Cover cladding, String color) {
-        super(height, length, width, true, cladding, TILTTODEGREE, color);
+    public FlatRoof(int height, int length, int width, Material cladding) {
+        super(height, length, width, true, cladding, TILTTODEGREE);
     }
 
 }

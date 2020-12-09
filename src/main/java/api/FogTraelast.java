@@ -1,5 +1,6 @@
 package api;
 
+import domain.construction.Construction;
 import domain.construction.ConstructionRepository;
 import domain.construction.Material;
 import domain.construction.NoSuchMaterialExists;
@@ -14,7 +15,7 @@ import domain.users.UserRepository;
 import java.util.List;
 
 public class FogTraelast {
-    private String VERSION = "0.1";
+    private String VERSION = "0.1"; //TODO Rediger db version
     private final UserRepository userLists;
     private final OrderRepository orderLists;
     private final ConstructionRepository constructionLists;
@@ -54,17 +55,17 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    public List<Material> findMaterialsForRoof (Roof roof) throws NoSuchMaterialExists{
-        return constructionLists.findMaterialsForRoof(roof);
+    public List<Material> findMaterialsForRoof (Construction construction) throws NoSuchMaterialExists{
+        return constructionLists.findMaterialsForRoof(construction);
     }
 
-    public List<Material> setRoofBOM (Material material, int quantity){
+    public List<Material> setRoofBOM (Material material, int quantity){ //TODO Cath til Jonathan - linker jeg disse til db?
         return constructionLists.setRoofBOM(material, quantity);
     }
 
     public void insertRoofBOM (List<Material> roofBOM){
         constructionLists.insertRoofBOM(roofBOM);
-    }
+    }//TODO
 
     public void editPrice(double columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editPrice(columnValue, orderID);
