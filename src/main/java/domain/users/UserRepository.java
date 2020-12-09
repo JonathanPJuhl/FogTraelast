@@ -1,5 +1,7 @@
 package domain.users;
 
+import java.util.List;
+
 public interface UserRepository {
     User createUsr(String email, String password);
 
@@ -9,4 +11,5 @@ public interface UserRepository {
 
     User findUser(int id) throws NoSuchUserExists;
 
+    List<User> findAllSalesmen() throws NoSuchUserExists;
 }

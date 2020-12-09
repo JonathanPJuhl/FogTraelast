@@ -23,8 +23,8 @@
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- Style css -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="<c:url value="/style.css"></c:url>">
+
+    <link rel="stylesheet" href="<c:url value="/style.css"></c:url>"/>
 
     <!--Icon in tab -->
     <link rel="icon" href="<c:url value="/images/FogLogo.png"></c:url>"/>

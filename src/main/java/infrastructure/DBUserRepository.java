@@ -1,11 +1,15 @@
 package infrastructure;
 
+import domain.orders.NoSuchOrderExists;
+import domain.orders.Order;
 import domain.users.NoSuchUserExists;
 import domain.users.User;
 import domain.users.UserRepository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DBUserRepository implements UserRepository {
@@ -105,5 +109,27 @@ public class DBUserRepository implements UserRepository {
             throwables.printStackTrace();
             throw new NoSuchUserExists();
         }
+    }
+    @Override
+    public List<User> findAllSalesmen() throws NoSuchUserExists {
+
+        ArrayList<User> list = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM salesmen;";
+            var smt = conn.prepareStatement(sql);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+
+            while(set.next()) {
+                list.add(parseUsrList(set));
+            }
+
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new NoSuchUserExists();
+        }
+
+        return list;
+
     }
 }

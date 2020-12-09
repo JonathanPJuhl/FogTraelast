@@ -20,7 +20,6 @@ public class DBOrderRepository implements OrderRepository {
 
     @Override
     public Order insertOrderIntoDB(double length, double width, String customerPhone, String customerEmail) {
-        System.out.println("l: " + length + "w: " + width + customerPhone + customerEmail);
         int newID;
         try(Connection conn = db.connect()){
             String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES (?, ?, ?, ?);";
@@ -40,7 +39,6 @@ public class DBOrderRepository implements OrderRepository {
             throw new RuntimeException();
         }
         try {
-            System.out.println("ID: " + newID);
             return findSpecificOrder(newID);
 
         } catch (NoSuchOrderExists e) {
@@ -49,7 +47,7 @@ public class DBOrderRepository implements OrderRepository {
 
     }
 
-//SKAL RETTES TIL
+
     @Override
     public Order findSpecificOrder(int id) throws NoSuchOrderExists {
         try (Connection conn = db.connect()){
@@ -90,6 +88,44 @@ public class DBOrderRepository implements OrderRepository {
         return list;
     }
 
+    @Override
+    public void editSalesman(int columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set salesmanID = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setInt(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void editStatus(String columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set orderStatus = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setString(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void editPrice(double columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set price = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setDouble(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     private Order parseOrderList(ResultSet set) throws SQLException {
         return new Order(
