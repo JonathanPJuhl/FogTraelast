@@ -15,4 +15,7 @@ public interface OrderRepository {
 
     void editPrice(double columnValue, int orderID) throws NoSuchOrderExists;
 
+    List<Order> displayOrdersByStatus(String wantedStatus);
+
+    List<Order> displayOrdersBySalesman(int wantedSalesman);
 }

@@ -53,7 +53,30 @@ public class Orders extends BaseServlet {
                     noSuchOrderExists.printStackTrace();
                 }
 
-            } else {
+            } else if(cmd.equals("SortByNew")){
+                    String status = "New";
+                    List<Order> sortedList = api.displayOrderByStatus(status);
+                    req.setAttribute("list", sortedList);
+                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+                }else if(cmd.equals("SortByProcessing")){
+                    String status = "Processing";
+                    List<Order>sortedList = api.displayOrderByStatus(status);
+                    req.setAttribute("list", sortedList);
+                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+                }else if(cmd.equals("SortByDone")){
+                    String status = "Done";
+                    List<Order> sortedList = api.displayOrderByStatus(status);
+                    req.setAttribute("list", sortedList);
+                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+                }
+            else if(cmd.equals("SortBySalesman")){
+                HttpSession session = req.getSession();
+                int salesman = (Integer)session.getAttribute("userID");
+                List<Order> sortedList = api.displayOrderBySalesman(salesman);
+                req.setAttribute("list", sortedList);
+                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+            }
+            else {
                 try {
                     int orderID = Integer.parseInt(req.getPathInfo().substring(1));
                     Order order = api.findOrder(orderID);
