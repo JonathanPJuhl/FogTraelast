@@ -17,6 +17,8 @@ import java.io.IOException;
 @WebServlet("/CreateOrder/*")
 public class CreateOrder extends BaseServlet {
 
+    //BRuger ikke
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() == null) {
