@@ -8,8 +8,4 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<a class="btn-primary btn" href="<c:url value="/Orders"/>">Vis alle ordre</a>
 
-<form method="get" id="NewButton" action="${pageContext.request.contextPath}/Orders/new">
-    <input type="submit" value="Opret ny ordre"/>
-</form>
