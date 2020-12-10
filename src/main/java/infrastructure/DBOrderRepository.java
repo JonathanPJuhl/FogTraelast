@@ -126,6 +126,43 @@ public class DBOrderRepository implements OrderRepository {
             throwables.printStackTrace();
         }
     }
+    @Override
+    public List<Order> displayOrdersByStatus(String wantedStatus){
+        ArrayList<Order> ordersByStatus = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM orders WHERE orderStatus=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setString(1, wantedStatus);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while(set.next()) {
+                ordersByStatus.add(parseOrderList(set));
+            }
+        } catch (SQLException throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+        return ordersByStatus;
+    }
+    @Override
+    public List<Order> displayOrdersBySalesman(int wantedSalesman){
+        ArrayList<Order> ordersBySalesman = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM orders WHERE salesmanID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setInt(1, wantedSalesman);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while(set.next()) {
+                ordersBySalesman.add(parseOrderList(set));
+            }
+        } catch (SQLException throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+        return ordersBySalesman;
+    }
+
+
+
 
     private Order parseOrderList(ResultSet set) throws SQLException {
         return new Order(

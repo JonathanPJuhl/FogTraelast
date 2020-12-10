@@ -31,6 +31,11 @@
                 <td><c:out value="${orders.customerEmail}" /></td>
                 <td><c:out value="${orders.price}" /></td>
                 <td><c:out value="${orders.salesmanID}" /></td>
+                <form method="post" action="${pageContext.request.contextPath}/Orders/edit">
+                    <td>
+                        <button type="submit"  value="${orders.orderID}" name="orderID" >Rediger</button>
+                    </td>
+                </form>
             </tr>
         </c:forEach>
     </table>
