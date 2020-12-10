@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -15,51 +16,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- TODO In case det ikke virker på andres computere
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- Style css -->
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="<c:url value="/style.css"></c:url>"/>
+
+    <!--Icon in tab -->
+    <link rel="icon" href="<c:url value="/images/FogLogo.png"></c:url>"/>
 
     <title>${requestScope.title}</title>
 
-    </head>
-    <body>
+</head>
 
 
-    <!--navbar-->
-    <div class="container navbar-dark bg-light">
-        <header class="blog-header py-3">
-            <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-4 pt-1">
-                    <p class="text-white">Velkommen til <!--TODO ${user.name} --></p>
-                </div>
-                <div class="col-4 text-center">
-                    <a class="navbar-brand" href="${Index}">
-                        <img src="images/FogLogo.png" style="width:5vw" class="d-inline-block">
-                        Byggemarked
-                    </a>
-                </div>
-                <div class="col-4 d-flex justify-content-end align-items-center">
-                    <a class="btn btn-sm btn-outline-secondary" href="#">Login</a>
-                </div>
-            </div>
-        </header>
+<body>
+<!--navbar-->
+<jsp:include page="../contains/navbar.jsp" flush="true"/><!-- TODO hvad gør flush ? -->
 
-        <div class="py-1 mb-2">
-            <nav class="nav d-flex justify-content-center nav-menu">
-                <a class="p-2 px-4 nav-link text-white " href="${CustomMeasures}">Start Byg!</a>
-                <a class="p-2 px-4 nav-link text-white" href="#">Ordre</a>
-                <a class="p-2 px-4 nav-link text-white" href="#">Status</a>
-
-            </nav>
-        </div>
-    </div>
-
-
+<main class="container">
     <jsp:include page="${requestScope.content}" flush="true"/>
 
-
 </main>
+
+<!--footer-->
+<jsp:include page="../contains/footer.jsp" flush="true"/>
+
+
 </body>
 
 </html>

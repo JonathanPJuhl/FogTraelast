@@ -20,7 +20,6 @@ public class DBOrderRepository implements OrderRepository {
 
     @Override
     public Order insertOrderIntoDB(double length, double width, String customerPhone, String customerEmail) {
-        System.out.println("l: " + length + "w: " + width + customerPhone + customerEmail);
         int newID;
         try(Connection conn = db.connect()){
             String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES (?, ?, ?, ?);";
@@ -40,7 +39,6 @@ public class DBOrderRepository implements OrderRepository {
             throw new RuntimeException();
         }
         try {
-            System.out.println("ID: " + newID);
             return findSpecificOrder(newID);
 
         } catch (NoSuchOrderExists e) {
@@ -49,7 +47,7 @@ public class DBOrderRepository implements OrderRepository {
 
     }
 
-//SKAL RETTES TIL
+
     @Override
     public Order findSpecificOrder(int id) throws NoSuchOrderExists {
         try (Connection conn = db.connect()){
@@ -58,15 +56,13 @@ public class DBOrderRepository implements OrderRepository {
             smt.setInt(1, id);
             smt.executeQuery();
             ResultSet set = smt.getResultSet();
-            if(set.next()) {
+            if (set.next()) {
                 return parseOrderList(set);
-            }else {
-                throw new RuntimeException("Unexpected error");
+            } else {
+                throw new NoSuchOrderExists();
             }
-
-        }catch (SQLException throwables) {
-            throwables.printStackTrace();
-            throw new NoSuchOrderExists();
+        } catch (SQLException throwables) {
+            throw new UnexpectedDBError(throwables);
         }
 
     }
@@ -91,6 +87,81 @@ public class DBOrderRepository implements OrderRepository {
 
         return list;
     }
+
+    @Override
+    public void editSalesman(int columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set salesmanID = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setInt(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void editStatus(String columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set orderStatus = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setString(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void editPrice(double columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set price = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setDouble(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public List<Order> displayOrdersByStatus(String wantedStatus){
+        ArrayList<Order> ordersByStatus = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM orders WHERE orderStatus=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setString(1, wantedStatus);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while(set.next()) {
+                ordersByStatus.add(parseOrderList(set));
+            }
+        } catch (SQLException throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+        return ordersByStatus;
+    }
+    @Override
+    public List<Order> displayOrdersBySalesman(int wantedSalesman){
+        ArrayList<Order> ordersBySalesman = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM orders WHERE salesmanID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setInt(1, wantedSalesman);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while(set.next()) {
+                ordersBySalesman.add(parseOrderList(set));
+            }
+        } catch (SQLException throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+        return ordersBySalesman;
+    }
+
+
 
 
     private Order parseOrderList(ResultSet set) throws SQLException {

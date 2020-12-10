@@ -1,13 +1,15 @@
 package infrastructure;
 
+import domain.orders.NoSuchOrderExists;
+import domain.orders.Order;
 import domain.users.NoSuchUserExists;
 import domain.users.User;
 import domain.users.UserRepository;
-
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DBUserRepository implements UserRepository {
@@ -60,7 +62,7 @@ public class DBUserRepository implements UserRepository {
             ResultSet set = smt.executeQuery();
             System.out.println(smt.toString());
             if (set.next()) {
-                id = parseUsrList(set).getSalesmanID();
+                id = parseUsrList(set).getID();
                 passCheck = parseUsrList(set).getPassword();
                 System.out.println("pass: " + passCheck);
             }
@@ -85,8 +87,8 @@ public class DBUserRepository implements UserRepository {
                 set.getString("salesmen.name"),
                 set.getString("salesmen.phone"),
                 set.getString("salesmen.email"),
-                set.getString("salesmen.password")
-        );
+                set.getString("salesmen.password"),
+                set.getInt("salesmen.role"));
 
     }
     @Override
@@ -107,5 +109,27 @@ public class DBUserRepository implements UserRepository {
             throwables.printStackTrace();
             throw new NoSuchUserExists();
         }
+    }
+    @Override
+    public List<User> findAllSalesmen() throws NoSuchUserExists {
+
+        ArrayList<User> list = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM salesmen;";
+            var smt = conn.prepareStatement(sql);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+
+            while(set.next()) {
+                list.add(parseUsrList(set));
+            }
+
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new NoSuchUserExists();
+        }
+
+        return list;
+
     }
 }

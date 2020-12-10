@@ -1,3 +1,4 @@
+/*
 package fogTraelast.web.pages;
 
 import domain.orders.NoSuchOrderExists;
@@ -12,15 +13,22 @@ import java.util.List;
 
 @WebServlet("/DisplayAllOrders/*")
 public class DisplayAllOrders extends BaseServlet {
+
+    //Bruger ikke
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*if (req.getPathInfo() == null) {
+        */
+/*if (req.getPathInfo() == null) {
 
             render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-        } else {*/
-            /*int orderID = Integer.parseInt(req.getPathInfo().substring(1));
+        } else {*//*
+
+            */
+/*int orderID = Integer.parseInt(req.getPathInfo().substring(1));
             log(req, "Accessing order: " + " : " + orderID);
-            if(orderID<=0 || req.getPathInfo().substring(1)==null){*/
+            if(orderID<=0 || req.getPathInfo().substring(1)==null){*//*
+
                 try {
                     List<Order> orderList = api.findAllOrders();
                     System.out.println("str: " + orderList);
@@ -29,7 +37,8 @@ public class DisplayAllOrders extends BaseServlet {
                 } catch (NoSuchOrderExists noSuchOrderExists) {
                     noSuchOrderExists.printStackTrace();
                 }
-            /*} else{
+            */
+/*} else{
                 try {
                     Order orderList = api.findOrder(orderID);
                     req.setAttribute("list", orderList);
@@ -37,7 +46,8 @@ public class DisplayAllOrders extends BaseServlet {
                 } catch (NoSuchOrderExists noSuchOrderExists) {
                     noSuchOrderExists.printStackTrace();
                 }
-            }*/
+            }*//*
+
 
            // }
         }
@@ -46,12 +56,15 @@ public class DisplayAllOrders extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*int id = Integer.parseInt(req.getParameter("id"));
+        */
+/*int id = Integer.parseInt(req.getParameter("id"));
         if(id>0) {
             resp.sendRedirect(req.getContextPath() + "/DisplayAllOrders/" + id);
-        } else {*/
+        } else {*//*
+
             resp.sendRedirect(req.getContextPath() + "/DisplayAllOrders/");
         //}
         }
     }
 
+*/
