@@ -13,6 +13,9 @@ import java.util.List;
 
 @WebServlet("/DisplayAllOrders/*")
 public class DisplayAllOrders extends BaseServlet {
+
+    //Bruger ikke
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         */

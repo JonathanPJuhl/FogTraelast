@@ -9,6 +9,8 @@ import java.io.IOException;
 @WebServlet("/byg_selv_carport")
 public class CustomMeasures extends BaseServlet {
 
+    //BRuger ikke
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {

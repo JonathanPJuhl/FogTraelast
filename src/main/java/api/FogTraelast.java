@@ -1,5 +1,10 @@
 package api;
 
+import domain.construction.Construction;
+import domain.construction.ConstructionRepository;
+import domain.construction.Material;
+import domain.construction.NoSuchMaterialExists;
+import domain.construction.Roof.Roof;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
@@ -10,13 +15,15 @@ import domain.users.UserRepository;
 import java.util.List;
 
 public class FogTraelast {
-    private String VERSION = "0.1";
+    private String VERSION = "0.1"; //TODO Rediger db version
     private final UserRepository userLists;
     private final OrderRepository orderLists;
+    private final ConstructionRepository constructionLists;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, ConstructionRepository constructionLists) {
         this.userLists = userLists;
         this.orderLists = orderLists;
+        this.constructionLists = constructionLists;
     }
 
     public Object getVERSION() {
@@ -27,8 +34,6 @@ public class FogTraelast {
 
         return userLists.createUsr(name, password);
     }
-
-
 
     public Order findOrder(int id) throws NoSuchOrderExists {
         return orderLists.findSpecificOrder(id);
@@ -49,6 +54,19 @@ public class FogTraelast {
     public List<Order> findAllOrders() throws NoSuchOrderExists {
         return orderLists.findAllOrders();
     }
+
+    public List<Material> findMaterialsForRoof (Construction construction) throws NoSuchMaterialExists{
+        return constructionLists.findMaterialsForRoof(construction);
+    }
+
+    public List<Material> setRoofBOM (Material material, int quantity){ //TODO Cath til Jonathan - linker jeg disse til db?
+        return constructionLists.setRoofBOM(material, quantity);
+    }
+
+    public void insertRoofBOM (List<Material> roofBOM){
+        constructionLists.insertRoofBOM(roofBOM);
+    }//TODO
+
     public void editPrice(double columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editPrice(columnValue, orderID);
     }
