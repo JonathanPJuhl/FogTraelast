@@ -19,7 +19,15 @@ public class SalesmanLogin  extends BaseServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() == null) {
             render("Fog Trælast", "/WEB-INF/pages/loginSalesman.jsp", req, resp);
-        } else {
+        } else if (req.getPathInfo().substring(1).equals("Logout")){
+            HttpSession session = req.getSession(true);
+            session.setAttribute("user", null);
+            session.setAttribute("userID", null);
+            render("Fog Trælast", "/WEB-INF/pages/index.jsp", req, resp);
+        }
+
+
+        else {
             HttpSession session = req.getSession();
 
              Integer userID = (Integer)session.getAttribute("userID");
@@ -42,29 +50,28 @@ public class SalesmanLogin  extends BaseServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        String salesmanEmail = req.getParameter("email");
-        String password = req.getParameter("password");
+            String salesmanEmail = req.getParameter("email");
+            String password = req.getParameter("password");
 
-
-
-        if (salesmanEmail == null || salesmanEmail.equals("")) {
-            resp.sendError(400, "Mangler email");
-        } else if(password == null || password.equals("")){
-            resp.sendError(400, "Mangler tlf");
-        } else{
-            User list;
-            try {
-                list = api.loginSalesman(salesmanEmail, password);
-                HttpSession session = req.getSession(true);
-                session.setAttribute("user", list);
-                session.setAttribute("userID", list.getID());
-            } catch (NoSuchUserExists noSuchUserExists) {
-                noSuchUserExists.printStackTrace();
+            if (salesmanEmail == null || salesmanEmail.equals("")) {
+                resp.sendError(400, "Mangler email");
+            } else if (password == null || password.equals("")) {
+                resp.sendError(400, "Mangler tlf");
+            } else {
+                User list;
+                try {
+                    list = api.loginSalesman(salesmanEmail, password);
+                    HttpSession session = req.getSession(true);
+                    session.setAttribute("user", list);
+                    session.setAttribute("userID", list.getID());
+                } catch (NoSuchUserExists noSuchUserExists) {
+                    noSuchUserExists.printStackTrace();
+                }
+                resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/");
             }
-            resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/");
-        }
+
     }
 }
