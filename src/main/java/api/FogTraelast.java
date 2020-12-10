@@ -79,4 +79,10 @@ public class FogTraelast {
     public List<User> findAllSalesmen() throws NoSuchUserExists {
         return userLists.findAllSalesmen();
     }
+    public List<Order> displayOrderByStatus(String wantedStatus){
+        return orderLists.displayOrdersByStatus(wantedStatus);
+    }
+    public List<Order> displayOrderBySalesman(int wantedSalesman){
+        return orderLists.displayOrdersBySalesman(wantedSalesman);
+    }
 }
