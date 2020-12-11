@@ -1,11 +1,5 @@
 package domain.construction.Roof;
 
-import domain.construction.Construction;
-import domain.construction.Material;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class FlatRoofMaterialCalculator {
 
     //TODO ændre bredde

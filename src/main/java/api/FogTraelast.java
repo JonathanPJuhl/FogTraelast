@@ -1,10 +1,10 @@
 package api;
 
-import domain.construction.Construction;
-import domain.construction.ConstructionRepository;
-import domain.construction.Material;
+import domain.construction.Category;
+import domain.material.Material;
 import domain.construction.NoSuchMaterialExists;
-import domain.construction.Roof.Roof;
+import domain.material.MaterialService;
+import domain.material.MaterialType;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
@@ -18,12 +18,12 @@ public class FogTraelast {
     private String VERSION = "0.1"; //TODO Rediger db version
     private final UserRepository userLists;
     private final OrderRepository orderLists;
-    private final ConstructionRepository constructionLists;
+    private final MaterialService materialService;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists, ConstructionRepository constructionLists) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService) {
         this.userLists = userLists;
         this.orderLists = orderLists;
-        this.constructionLists = constructionLists;
+        this.materialService = materialService;
     }
 
     public Object getVERSION() {
@@ -55,17 +55,14 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    public List<Material> findMaterialsForRoof (Construction construction) throws NoSuchMaterialExists{
-        return constructionLists.findMaterialsForRoof(construction);
+    public Material findMaterials (MaterialType type, int width, String color, double price, Category category, int height) throws NoSuchMaterialExists{
+        return materialService.findMaterial(type, width, color, price, category, height);
+        //TODO Cath til Jonathan - linker jeg disse til db?
     }
 
-    public List<Material> setRoofBOM (Material material, int quantity){ //TODO Cath til Jonathan - linker jeg disse til db?
-        return constructionLists.setRoofBOM(material, quantity);
+    public void insertMaterialIntoDB(Material material){
+        materialService.insertMaterialIntoDB(material);
     }
-
-    public void insertRoofBOM (List<Material> roofBOM){
-        constructionLists.insertRoofBOM(roofBOM);
-    }//TODO
 
     public void editPrice(double columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editPrice(columnValue, orderID);

@@ -1,6 +1,6 @@
 package domain.construction.Roof;
 
-import domain.construction.Material;
+import domain.material.Material;
 
 import java.util.ArrayList;
 import java.util.List;

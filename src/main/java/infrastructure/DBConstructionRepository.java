@@ -1,12 +1,11 @@
 package infrastructure;
 
+import domain.construction.Category;
 import domain.construction.Construction;
-import domain.construction.ConstructionRepository;
-import domain.construction.Material;
+import domain.material.Material;
 import domain.construction.NoSuchMaterialExists;
-import domain.construction.Roof.Roof;
-import domain.orders.NoSuchOrderExists;
-import domain.orders.Order;
+import domain.material.MaterialService;
+import domain.material.MaterialType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class DBConstructionRepository implements ConstructionRepository {
+public class DBConstructionRepository implements MaterialService {
 
     final Database db;
 
@@ -22,7 +21,6 @@ public class DBConstructionRepository implements ConstructionRepository {
         this.db = db;
     }
 
-    @Override
     public List<Material> findMaterialsForRoof(Construction construction) throws NoSuchMaterialExists { //TODO
         List<Material> roofItems = null;
         try (Connection conn = db.connect()){
@@ -54,37 +52,25 @@ public class DBConstructionRepository implements ConstructionRepository {
 
     private Material parseMaterialList(ResultSet set) throws SQLException {
         return new Material(
-                set.getDouble("materialer.pris"),
-                set.getString("materialetyper.type"),
-                set.getString("materialer.navn")
+                set.getString("materialer.name"),
+                set.getInt("materialer.width"),
+                set.getString("materialetyper.color"),
+                set.getDouble("materialer.price"),
+                MaterialType.valueOf(set.getString("materialer.type")),
+                Category.valueOf(set.getString("materialer.category")),
+                set.getInt("materialer.height")
         );
+
     }
 
-    @Override
-    public List<Material> setRoofBOM(Material material, int quantity) {
-//TODO
-        return null;
-    }
-
-    @Override
-    public void insertRoofBOM(List<Material> roofBOM) {
-//TODO
-    }
 
     @Override
     public void insertMaterialIntoDB(Material material) {
-//TODO
+
     }
 
     @Override
-    public Material findSpecificMaterial(int MaterialID) throws NoSuchMaterialExists {
-        //TODO
-        return null;
-    }
-
-    @Override
-    public List<Material> findAllMaterails() throws NoSuchMaterialExists {
-        //TODO
+    public Material findMaterial(MaterialType type, int width, String color, double price, Category category, int height) {
         return null;
     }
 }
