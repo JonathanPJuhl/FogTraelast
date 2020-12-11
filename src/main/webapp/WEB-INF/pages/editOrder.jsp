@@ -17,21 +17,43 @@
                 <th>orderStatus</th>
                 <th>length</th>
                 <th>width</th>
+                <th>roofType</th>
+                <th>shedOrNO</th>
+                <th>cladding</th>
                 <th>customerPhone</th>
                 <th>customerEmail</th>
                 <th>price</th>
                 <th>salesmanID</th>
+
             </tr>
-            <c:forEach var="orders" items="${requestScope.orderList}">
+            <c:forEach var="orders" items="${requestScope.list}">
                 <tr>
                     <td><a href="<c:url value="/Orders/${orders.orderID}"/>">#<c:out value="${orders.orderID}" /></a> </td>
                     <td><c:out value="${orders.orderStatus}" /></td>
                     <td><c:out value="${orders.length}" /></td>
                     <td><c:out value="${orders.width}" /></td>
+                    <td><c:out value="${orders.roofType}" /></td>
+                    <c:if test="${orders.shedOrNo == 0}">
+                        <td>Ikke ønsket</td>
+                    </c:if>
+                    <c:if test="${orders.shedOrNo == 1}">
+                        <td>Ønsket</td>
+                    </c:if>
+                    <c:if test="${orders.cladding == 0}">
+                        <td>Ikke ønsket</td>
+                    </c:if>
+                    <c:if test="${orders.cladding == 1}">
+                        <td>Ønsket</td>
+                    </c:if>
                     <td><c:out value="${orders.customerPhone}" /></td>
                     <td><c:out value="${orders.customerEmail}" /></td>
                     <td><c:out value="${orders.price}" /></td>
                     <td><c:out value="${orders.salesmanID}" /></td>
+                    <form method="post" action="${pageContext.request.contextPath}/Orders/edit">
+                        <td>
+                            <button type="submit"  value="${orders.orderID}" name="orderID" >Rediger</button>
+                        </td>
+                    </form>
                 </tr>
             </c:forEach>
         </table>
@@ -45,6 +67,9 @@
                 <th>orderStatus</th>
                 <th>length</th>
                 <th>width</th>
+                <th>roofType</th>
+                <th>shedOrNO</th>
+                <th>cladding</th>
                 <th>customerPhone</th>
                 <th>customerEmail</th>
                 <th>price</th>
@@ -60,9 +85,27 @@
                     </select></td>
                     <td><c:out value="${orders.length}" /></td>
                     <td><c:out value="${orders.width}" /></td>
+                    <td>
+                        <select name="roofType">
+                            <option value="Flat">Fladt tag</option>
+                            <option value="Pitched">Tag med rejsning</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="shedOrNo">
+                        <option value=0>Ikke ønsket</option>
+                        <option value="1">Ønsket</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="cladding">
+                        <option value=0>Ikke ønsket</option>
+                        <option value="1">Ønsket</option>
+                        </select>
+                    </td>
                     <td><c:out value="${orders.customerPhone}" /></td>
                     <td><c:out value="${orders.customerEmail}" /></td>
-                    <td><input type="number" name="price"></td>
+                    <td><input type="number" name="price" value="${orders.price}"></td>
                     <td><select name="salesmanID">
                         <c:forEach var="salesman" items="${requestScope.salesmen}" >
                             <option value="${salesman.ID}">${salesman.name}</option>

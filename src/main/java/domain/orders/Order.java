@@ -61,6 +61,18 @@ public class Order {
         return salesmanID;
     }
 
+    public String getRoofType() {
+        return roofType;
+    }
+
+    public int getShedOrNo() {
+        return shedOrNo;
+    }
+
+    public int getCladding() {
+        return cladding;
+    }
+
     @Override
     public String toString() {
         return "Order{" +

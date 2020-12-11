@@ -104,8 +104,8 @@ public class Orders extends BaseServlet {
             int length = Integer.parseInt(req.getParameter("length"));
             int width = Integer.parseInt(req.getParameter("width"));
             String roofType = req.getParameter("roofType"); //TODO
-            boolean shedOrNo = Boolean.parseBoolean(req.getParameter("shedOrNo"));
-            boolean cladding = Boolean.parseBoolean(req.getParameter("cladding"));
+            int shedOrNo = Integer.parseInt(req.getParameter("shedOrNo"));
+            int cladding = Integer.parseInt(req.getParameter("cladding"));
 
             String customerEmail = req.getParameter("email");
             String customerPhone = req.getParameter("phone");
@@ -116,7 +116,7 @@ public class Orders extends BaseServlet {
                 resp.sendError(400, "Mangler tlf");
             } else{
                 Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
-                resp.sendRedirect("");
+                resp.sendRedirect(req.getContextPath());
 
                 // Create new method
                 Construction construction = new Construction(width, length, null);
@@ -170,6 +170,25 @@ public class Orders extends BaseServlet {
             try {
                 //Edits price field
                 api.editPrice(price, orderID);
+            } catch (NoSuchOrderExists noSuchOrderExists) {
+                noSuchOrderExists.printStackTrace();
+            }
+            String rooftype = req.getParameter("roofType");
+            try {
+                //Edits salesman field
+                api.editRoofType(rooftype, orderID);
+            } catch (NoSuchOrderExists noSuchOrderExists) {
+                noSuchOrderExists.printStackTrace();
+            }int shedOrNo = Integer.parseInt(req.getParameter("shedOrNo"));
+            try {
+                //Edits salesman field
+                api.editShedOrNo(shedOrNo, orderID);
+            } catch (NoSuchOrderExists noSuchOrderExists) {
+                noSuchOrderExists.printStackTrace();
+            }int cladding = Integer.parseInt(req.getParameter("cladding"));
+            try {
+                //Edits salesman field
+                api.editCladding(cladding, orderID);
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 noSuchOrderExists.printStackTrace();
             }

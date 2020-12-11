@@ -39,7 +39,7 @@ public class FogTraelast {
         return orderLists.findSpecificOrder(id);
     }
 
-    public Order createOrder(double length, double width, String customerPhone, String customerEmail, String  roofType, boolean shedOrNo, boolean cladding) {
+    public Order createOrder(double length, double width, String customerPhone, String customerEmail, String  roofType, int shedOrNo, int cladding) {
         return orderLists.insertOrderIntoDB(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
     }
 
@@ -73,6 +73,16 @@ public class FogTraelast {
     public void editStatus(String columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editStatus(columnValue, orderID);
     }
+    public void editRoofType(String columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editRoofType(columnValue, orderID);
+    }
+    public void editShedOrNo(int columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editShedOrNo(columnValue, orderID);
+    }
+    public void editCladding(int columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editCladding(columnValue, orderID);
+    }
+
     public List<User> findAllSalesmen() throws NoSuchUserExists {
         return userLists.findAllSalesmen();
     }
@@ -82,4 +92,5 @@ public class FogTraelast {
     public List<Order> displayOrderBySalesman(int wantedSalesman){
         return orderLists.displayOrdersBySalesman(wantedSalesman);
     }
+
 }

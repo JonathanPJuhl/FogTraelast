@@ -16,12 +16,12 @@
             <th>orderStatus</th>
             <th>length</th>
             <th>width</th>
-            <th>customerPhone</th>
-            <th>customerEmail</th>
-            <th>price</th>
             <th>roofType</th>
             <th>shedOrNO</th>
             <th>cladding</th>
+            <th>customerPhone</th>
+            <th>customerEmail</th>
+            <th>price</th>
             <th>salesmanID</th>
 
         </tr>
@@ -31,12 +31,22 @@
                 <td><c:out value="${orders.orderStatus}" /></td>
                 <td><c:out value="${orders.length}" /></td>
                 <td><c:out value="${orders.width}" /></td>
+                <td><c:out value="${orders.roofType}" /></td>
+                <c:if test="${orders.shedOrNo == 0}">
+                    <td>Ikke ønsket</td>
+                </c:if>
+                <c:if test="${orders.shedOrNo == 1}">
+                    <td>Ønsket</td>
+                </c:if>
+                <c:if test="${orders.cladding == 0}">
+                    <td>Ikke ønsket</td>
+                </c:if>
+                <c:if test="${orders.cladding == 1}">
+                    <td>Ønsket</td>
+                </c:if>
                 <td><c:out value="${orders.customerPhone}" /></td>
                 <td><c:out value="${orders.customerEmail}" /></td>
                 <td><c:out value="${orders.price}" /></td>
-                <td><c:out value="${orders.roofType}" /></td>
-                <td><c:out value="${orders.shedOrNo}" /></td>
-                <td><c:out value="${orders.cladding}" /></td>
                 <td><c:out value="${orders.salesmanID}" /></td>
                 <form method="post" action="${pageContext.request.contextPath}/Orders/edit">
                     <td>

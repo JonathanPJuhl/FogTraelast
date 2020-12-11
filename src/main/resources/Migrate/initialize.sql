@@ -34,5 +34,5 @@ CREATE TABLE IF NOT EXISTS orders(
     FOREIGN KEY (salesmanID) REFERENCES salesmen(salesmanID)
 );
 INSERT INTO orders (length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding) VALUES(500, 500, '+4512345678', 'test@test.dk', 'Pitched', 1,1);
-INSERT INTO orders (length, width, customerPhone, customerEmail, shedOrNo, cladding) VALUES(600, 600, '12345678', 'test2@test.dk', 2,2);
+INSERT INTO orders (length, width, customerPhone, customerEmail, shedOrNo, cladding) VALUES(600, 600, '12345678', 'test2@test.dk', 0,0);
 
