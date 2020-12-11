@@ -27,9 +27,12 @@ CREATE TABLE IF NOT EXISTS orders(
     customerPhone varchar(45) NOT NULL,
     customerEmail varchar(70) NOT NULL,
     price float,
+    roofType ENUM('Pitched', 'Flat') DEFAULT 'Flat' NOT NULL,
+    shedOrNo tinyint(1) NOT NULL,
+    cladding tinyint(1) NOT NULL,
     salesmanID int,
     FOREIGN KEY (salesmanID) REFERENCES salesmen(salesmanID)
 );
-INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES(500, 500, '+4512345678', 'test@test.dk');
-INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES(600, 600, '12345678', 'test2@test.dk');
+INSERT INTO orders (length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding) VALUES(500, 500, '+4512345678', 'test@test.dk', 'Pitched', 1,1);
+INSERT INTO orders (length, width, customerPhone, customerEmail, shedOrNo, cladding) VALUES(600, 600, '12345678', 'test2@test.dk', 0,0);
 
