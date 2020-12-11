@@ -104,8 +104,8 @@ public class Orders extends BaseServlet {
             int length = Integer.parseInt(req.getParameter("length"));
             int width = Integer.parseInt(req.getParameter("width"));
             String roofType = req.getParameter("roofType"); //TODO
-            int shedOrNo = Integer.parseInt(req.getParameter("shedOrNo"));
-            int cladding = Integer.parseInt(req.getParameter("cladding"));
+            Integer shedOrNo = Integer.parseInt((req.getParameter("shedOrNo")));
+            Integer cladding = Integer.parseInt(req.getParameter("cladding"));
 
             String customerEmail = req.getParameter("email");
             String customerPhone = req.getParameter("phone");

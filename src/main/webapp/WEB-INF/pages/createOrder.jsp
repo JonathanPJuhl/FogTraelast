@@ -24,15 +24,15 @@
             </select>
 
             <label for="shedOrNo">Vil du have et skur? </label>
-            <select class="form-control" name="roofType" id="shedOrNo">
-                <option value="1">Ja</option>
-                <option value="0">Nej</option>
+            <select class="form-control" name="shedOrNo" id="shedOrNo">
+                <option value=1>Ja</option>
+                <option value=0>Nej</option>
             </select>
 
             <label for="cladding">Beklædning</label>
             <select class="form-control" name="cladding" id="cladding">
-                <option value="1">Med vægge(3 stk)</option>
-                <option value="0">Uden vægge</option>
+                <option value=1>Med vægge(3 stk)</option>
+                <option value=0>Uden vægge</option>
             </select>
 
 
@@ -45,7 +45,6 @@
             <small id="phoneNameHelp" class="form-text text-muted">Vi giver aldrig dit nummer ud til andre!</small>
             <br>
             <button type="submit" class="btn btn-primary">Bestil carport!</button>
-            , String roofType, boolean shedOrNo, String cladding
         </form>
     </div>
 </div>
