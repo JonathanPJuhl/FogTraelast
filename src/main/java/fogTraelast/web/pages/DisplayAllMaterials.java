@@ -1,7 +1,7 @@
 package fogTraelast.web.pages;
 
 import domain.construction.Construction;
-import domain.construction.Material;
+import domain.material.Material;
 import domain.construction.NoSuchMaterialExists;
 
 import javax.servlet.ServletException;
@@ -18,13 +18,9 @@ public class DisplayAllMaterials extends BaseServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Construction construction = (Construction) req.getSession().getAttribute("construction");
         if (req.getPathInfo() == null && !(construction.equals(null))) {
-            try {
-                List<Material> BOMRoofOptions = api.findMaterialsForRoof(construction);
+                // TODO List<Material> BOMRoofOptions = api.findMaterialsForRoof(construction);
                 render("Fog Trælast", "/WEB-INF/pages/roofOptions.jsp", req, resp);
-                req.setAttribute("claddingOptions", BOMRoofOptions);
-            } catch (NoSuchMaterialExists noSuchMaterialExists) {
-                noSuchMaterialExists.printStackTrace();
-            }
+                //TODO req.setAttribute("claddingOptions", BOMRoofOptions);
 
         } else if (!(req.getPathInfo() == null) && !(construction.equals(null))) {
             String cmd = req.getPathInfo().substring(1);
