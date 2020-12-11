@@ -39,8 +39,8 @@ public class FogTraelast {
         return orderLists.findSpecificOrder(id);
     }
 
-    public Order createOrder(double length, double width, String customerPhone, String customerEmail) {
-        return orderLists.insertOrderIntoDB(length, width, customerPhone, customerEmail);
+    public Order createOrder(double length, double width, String customerPhone, String customerEmail, String  roofType, boolean shedOrNo, boolean cladding) {
+        return orderLists.insertOrderIntoDB(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
     }
 
     public User loginSalesman(String salesmanEmail, String password) throws NoSuchUserExists {

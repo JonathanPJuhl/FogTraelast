@@ -16,10 +16,14 @@
             <th>orderStatus</th>
             <th>length</th>
             <th>width</th>
+            <th>roofType</th>
+            <th>shedOrNO</th>
+            <th>cladding</th>
             <th>customerPhone</th>
             <th>customerEmail</th>
             <th>price</th>
             <th>salesmanID</th>
+
         </tr>
         <c:forEach var="orders" items="${requestScope.list}">
             <tr>
@@ -27,6 +31,9 @@
                 <td><c:out value="${orders.orderStatus}" /></td>
                 <td><c:out value="${orders.length}" /></td>
                 <td><c:out value="${orders.width}" /></td>
+                <td><c:out value="${orders.roofType}" /></td>
+                <td><c:out value="${orders.shedOrNo}" /></td>
+                <td><c:out value="${orders.cladding}" /></td>
                 <td><c:out value="${orders.customerPhone}" /></td>
                 <td><c:out value="${orders.customerEmail}" /></td>
                 <td><c:out value="${orders.price}" /></td>

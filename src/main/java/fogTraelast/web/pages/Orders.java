@@ -1,5 +1,10 @@
 package fogTraelast.web.pages;
 
+import domain.construction.Construction;
+import domain.construction.Roof.FlatRoof;
+import domain.construction.Roof.PitchedRoof;
+import domain.construction.Roof.Roof;
+import domain.construction.Roof.RoofCalculator;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
@@ -98,17 +103,41 @@ public class Orders extends BaseServlet {
         if (req.getPathInfo().substring(1).equals("create")) {
             int length = Integer.parseInt(req.getParameter("length"));
             int width = Integer.parseInt(req.getParameter("width"));
+            String roofType = req.getParameter("roofType"); //TODO
+            boolean shedOrNo = Boolean.parseBoolean(req.getParameter("shedOrNo"));
+            boolean cladding = Boolean.parseBoolean(req.getParameter("cladding"));
+
             String customerEmail = req.getParameter("email");
             String customerPhone = req.getParameter("phone");
 
-
             if (customerEmail == null || customerEmail.equals("")) {
                 resp.sendError(400, "Mangler email");
-            } else if (customerPhone == null || customerPhone.equals("")) {
+            } else if(customerPhone == null || customerPhone.equals("")){
                 resp.sendError(400, "Mangler tlf");
-            } else {
-                api.createOrder(length, width, customerPhone, customerEmail);
+            } else{
+                Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
+                resp.sendRedirect("");
+
+                // Create new method
+                Construction construction = new Construction(width, length, null);
+
+                Roof roof;
+                if (roofType.equals("pitched"))
+                    roof = new PitchedRoof(0, length, width, null, 0); //TODO
+                else if (roofType.equals("flat")){
+                    roof = new FlatRoof(0,length,width, null); //TODO
+                }else{
+                    throw new IllegalArgumentException("Dette er ikke et type tag");
+                }
+                //int roofAngle = Integer.parseInt(req.getParameter("roofangle")); //TODO
+                construction.setRoof(roof);
+                final RoofCalculator roofCalculator = new RoofCalculator(construction);//TODO Fjern parameter
+                int roofHeight = roofCalculator.roofHeight(construction.getRoof().isFlat(),length,width);
+                construction.getRoof().setHeight(roofHeight);
+                req.getSession().setAttribute("construction", construction);
             }
+
+
         } else if (req.getPathInfo().substring(1).equals("edit")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil
             //og variablerne gives dermed værdier, der ændres i db'en

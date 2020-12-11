@@ -10,10 +10,12 @@ public class Order {
     private final String customerEmail;
     private final double price;
     private final int salesmanID;
+    private final String roofType;
+    private final boolean shedOrNo;
+    private final boolean cladding;
 
 
-
-    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID) {
+    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID, String roofType, boolean shedOrNo, boolean cladding) {
         this.orderID = orderID;
         this.orderStatus = orderStatus;
         this.length = length;
@@ -22,6 +24,9 @@ public class Order {
         this.customerEmail = customerEmail;
         this.price = price;
         this.salesmanID = salesmanID;
+        this.roofType = roofType;
+        this.shedOrNo = shedOrNo;
+        this.cladding = cladding;
     }
 
     public int getOrderID() {

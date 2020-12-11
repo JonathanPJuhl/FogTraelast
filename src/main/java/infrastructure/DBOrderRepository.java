@@ -19,15 +19,18 @@ public class DBOrderRepository implements OrderRepository {
     }
 
     @Override
-    public Order insertOrderIntoDB(double length, double width, String customerPhone, String customerEmail) {
+    public Order insertOrderIntoDB(double length, double width, String customerPhone, String customerEmail, String roofType, boolean shedOrNo, boolean cladding) {
         int newID;
         try(Connection conn = db.connect()){
-            String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES (?, ?, ?, ?);";
+            String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding) VALUES (?, ?, ?, ?, ?, ?, ?);";
             var smt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             smt.setDouble(1, length);
             smt.setDouble(2, width);
             smt.setString(3, customerPhone);
             smt.setString(4, customerEmail);
+            smt.setString(5, roofType);
+            smt.setBoolean(6, shedOrNo);
+            smt.setBoolean(7, cladding);
             smt.executeUpdate();
             ResultSet set = smt.getGeneratedKeys();
             if(set.next()) {
@@ -173,8 +176,10 @@ public class DBOrderRepository implements OrderRepository {
                 set.getString("orders.customerPhone"),
                 set.getString("orders.customerEmail"),
                 set.getDouble("orders.price"),
-                set.getInt("orders.salesmanID")
-        );
+                set.getInt("orders.salesmanID"),
+                set.getString("orders.roofType"),
+                set.getBoolean("orders.shedOrNo"),
+                set.getBoolean("orders.cladding"));
     }
 }
 
