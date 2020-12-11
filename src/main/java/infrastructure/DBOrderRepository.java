@@ -168,6 +168,8 @@ public class DBOrderRepository implements OrderRepository {
 
 
     private Order parseOrderList(ResultSet set) throws SQLException {
+        boolean shed =false;
+        boolean cladding = false;
         return new Order(
                 set.getInt("orders.orderID"),
                 set.getString("orders.orderStatus"),

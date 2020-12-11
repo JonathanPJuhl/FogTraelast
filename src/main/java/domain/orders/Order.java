@@ -11,11 +11,11 @@ public class Order {
     private final double price;
     private final int salesmanID;
     private final String roofType;
-    private final boolean shedOrNo;
-    private final boolean cladding;
+    private final int shedOrNo;
+    private final int cladding;
 
 
-    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID, String roofType, boolean shedOrNo, boolean cladding) {
+    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID, String roofType, int shedOrNo, int cladding) {
         this.orderID = orderID;
         this.orderStatus = orderStatus;
         this.length = length;
