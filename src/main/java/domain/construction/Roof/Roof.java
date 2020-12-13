@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Roof {
     private int height;
+
+
+
     private final int length;
     private final int width;
     private List<Material> roofMaterials;
@@ -43,5 +46,16 @@ public class Roof {
 
     public Category getCategory() {
         return category;
+    }
+    public int getLength() {
+        return length;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

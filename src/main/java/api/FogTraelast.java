@@ -1,8 +1,10 @@
 package api;
 
-import domain.bom.BOMItem;
 import domain.construction.Category;
 import domain.construction.Construction;
+import domain.construction.ConstructionRepository;
+import domain.construction.Roof.Roof;
+import domain.construction.Roof.RoofSizeCalculator;
 import domain.material.Material;
 import domain.material.NoSuchMaterialExists;
 import domain.material.MaterialService;
@@ -21,11 +23,13 @@ public class FogTraelast {
     private final UserRepository userLists;
     private final OrderRepository orderLists;
     private final MaterialService materialService;
+    private final ConstructionRepository constructionRepository;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, ConstructionRepository constructionRepository) {
         this.userLists = userLists;
         this.orderLists = orderLists;
         this.materialService = materialService;
+        this.constructionRepository = constructionRepository;
     }
 
     public Object getVERSION() {
@@ -64,6 +68,10 @@ public class FogTraelast {
 
     public List<Material> roofMaterials(Construction construction){
         return materialService.roofMaterials(construction);
+    }
+
+    public Roof createRoof(String choiceTypeRoof, int roofheight, Construction construction,  Material roofCladding, int degree){
+        return constructionRepository.createRoof(choiceTypeRoof , roofheight , construction, roofCladding, degree);
     }
 
     public void insertMaterialIntoDB(Material material){

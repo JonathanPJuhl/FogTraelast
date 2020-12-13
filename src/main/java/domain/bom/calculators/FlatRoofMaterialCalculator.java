@@ -1,5 +1,6 @@
 package domain.bom.calculators;
 
+import domain.construction.Construction;
 import domain.construction.Roof.RoofSizeCalculator;
 
 public class FlatRoofMaterialCalculator {
@@ -18,10 +19,10 @@ public class FlatRoofMaterialCalculator {
 
     RoofSizeCalculator roofSizeCalculator;
 
-    public FlatRoofMaterialCalculator(RoofSizeCalculator roofSizeCalculator) {
+    public FlatRoofMaterialCalculator(RoofSizeCalculator roofSizeCalculator, Construction construction) {
         this.roofSizeCalculator = roofSizeCalculator;
-        this.roofWidth = roofSizeCalculator.roofWidthSurface();
-        this.roofLength = roofSizeCalculator.roofLengthSurface();
+        this.roofWidth = roofSizeCalculator.roofWidthSurface(construction);
+        this.roofLength = roofSizeCalculator.roofLengthSurface(construction);
     }
 
 

@@ -2,11 +2,10 @@ package domain.material;
 
 import domain.construction.Category;
 import domain.construction.Construction;
-import domain.construction.ConstructionRepository;
 
 import java.util.List;
 
-public interface MaterialService extends ConstructionRepository {
+public interface MaterialService {
 
     public void insertMaterialIntoDB(Material material); //TODO
 

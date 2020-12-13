@@ -9,7 +9,7 @@
 <div class="scrollbar" id="styleFog">
     <div class="text-white" align="center">
         <h1>Vælg dine mål</h1>
-        <form method="post" action="${pageContext.request.contextPath}/Orders/create">
+        <form method="post" action="${pageContext.request.contextPath}/Orders/otherOptions">
 
             <label for="lengthName">Længde </label>
             <input type="number" class="form-control" id="lengthName" aria-describedby="lengthNameHelp" name="length">
@@ -44,7 +44,7 @@
             <input type="text" class="form-control" id="phoneName" name="phone">
             <small id="phoneNameHelp" class="form-text text-muted">Vi giver aldrig dit nummer ud til andre!</small>
             <br>
-            <button type="submit" class="btn btn-primary">Bestil carport!</button>
+            <button type="submit" class="btn btn-primary">Bestil videre på carport!</button>
         </form>
     </div>
 </div>

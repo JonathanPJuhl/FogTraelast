@@ -16,7 +16,7 @@ public class Construction {
     private boolean shedOrNo;
     private boolean claddingChoice;
 
-    public Construction(int width, int length, String roofChoice, int shedOrNo, int claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
+    public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
         this.width = width;
         this.length = length;
         this.roofChoice = roofChoice;
@@ -33,11 +33,13 @@ public class Construction {
         this.cladding = cladding;
     }
 
-    public Boolean convert(int digilBoolean){
-        if( digilBoolean == 1)
+    public Boolean convert(Integer digilBoolean){
+        if( digilBoolean.equals(1))
            return true;
-        else{
+        else if (digilBoolean.equals(0))
             return false;
+        else{
+            throw new IllegalArgumentException("Dette kan ikke konverteres til noget der er der eller ikke er (boolean"); //TODO
         }
     }
 
@@ -59,6 +61,10 @@ public class Construction {
 
     public Carport getCarport() {
         return carport;
+    }
+
+    public Shed getShed() {
+        return shed;
     }
 
 }

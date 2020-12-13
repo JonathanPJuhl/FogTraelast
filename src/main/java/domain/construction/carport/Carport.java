@@ -11,19 +11,21 @@ public class Carport {
     private final int height;
     private final List<Material> materials;
     private final Category category;
+    private Construction construction;
 
-    public Carport(List<Material> materials) {
+    public Carport(List<Material> materials, Construction construction) {
         this.category = Category.carport;
         this.height = 3000; //Den er fast - indtilvidere //TODO var det tre meter vi fastsatte?
         this.materials = materials;
+        this.construction = construction;
     }
 
-    private int width(Construction construction) {
+    public int width() {
         //TODO
         return construction.getWidth() - 0;
     }
 
-    private int length(Construction construction) {
+    public int length() {
         //TODO
         return construction.getLength() - 0;
     }
@@ -31,5 +33,6 @@ public class Carport {
     public int getHeight() {
         return height;
     }
+
 
 }

@@ -6,6 +6,7 @@ import domain.construction.Roof.FlatRoof;
 import domain.construction.Roof.PitchedRoof;
 import domain.construction.Roof.Roof;
 import domain.construction.Roof.RoofSizeCalculator;
+import domain.material.Material;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
@@ -26,7 +27,11 @@ public class Orders extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getPathInfo() == null) {
+        User user = (User) req.getSession().getAttribute("user");
+        Construction construction = (Construction) req.getSession().getAttribute("construction");
+        Material materialRoof = (Material) req.getSession().getAttribute("claddingRoof");
+//TODO Lav Swtcih statement for overskuelighedens skyld?
+        if (req.getPathInfo() == null && user.getRoleID() == 2) { //TODO ændre rolleID
             try {
                 List<Order> orderList = api.findAllOrders();
                 req.setAttribute("list", orderList);
@@ -36,9 +41,14 @@ public class Orders extends BaseServlet {
             }
         } else {
             String cmd = req.getPathInfo().substring(1);
-
             if (cmd.equals("new")) {
                 render("Fog Trælast", "/WEB-INF/pages/createOrder.jsp", req, resp);
+            } else if (cmd.equals("viewSVG")) {
+                if (!(construction.equals(null)) && !(materialRoof.equals(null)))
+                    render("Fog Trælast", "/WEB-INF/pages/svg.jsp", req, resp);
+                else {
+                    resp.sendError(403, "Du skal ydfylde alle informationer til en carport før tegning kan vises");
+                }
             } else if (cmd.equals("edit")) {
                 Order order;
 
@@ -59,8 +69,15 @@ public class Orders extends BaseServlet {
                 } catch (NoSuchOrderExists noSuchOrderExists) {
                     noSuchOrderExists.printStackTrace();
                 }
-
-            } else if (cmd.equals("SortByNew")) {
+            } else if (cmd.equals("otherOptions"))
+                if (!(construction.equals(null))) {
+                    List<Material> roofOptionsForCladding = api.roofMaterials(construction);
+                    req.setAttribute("claddingOptionsRoof", roofOptionsForCladding);
+                    render("Fog Trælast", "/WEB-INF/pages/roofOptions.jsp", req, resp);
+                } else {
+                    resp.sendError(403, "Du skal forholde dig til mål, tagtype, skur og beklædning");
+                }
+            else if (cmd.equals("SortByNew")) {
                 String status = "New";
                 List<Order> sortedList = api.displayOrderByStatus(status);
                 req.setAttribute("list", sortedList);
@@ -100,7 +117,8 @@ public class Orders extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getPathInfo().substring(1).equals("create")) {
+        Construction construction = (Construction) req.getSession().getAttribute("construction");
+        if (req.getPathInfo().substring(1).equals("new")) {
             int length = Integer.parseInt(req.getParameter("length"));
             int width = Integer.parseInt(req.getParameter("width"));
             String roofType = req.getParameter("roofType");
@@ -118,20 +136,17 @@ public class Orders extends BaseServlet {
                 //Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
                 //resp.sendRedirect(req.getContextPath());
                 // Create new method
-                Construction construction = new Construction(width, length, roofType, shedOrNo, cladding);
+                construction = new Construction(width, length, roofType, shedOrNo, cladding);
+                construction.setRoof(api.createRoof(roofType, 0/*TODO*/, construction, null, 0));
                 api.roofMaterials(construction);
-                req.getSession().setAttribute("constrution", construction);
+                req.getSession().setAttribute("construction", construction);
                 /*req.getSession().setAttribute("length", length);
                 req.getSession().setAttribute("width", width);
                 req.getSession().setAttribute("roofType", roofType);
                 req.getSession().setAttribute("shedOrNo", shedOrNo);
                 req.getSession().setAttribute("cladding", cladding);*/
                 //TODO skal de hellere være session objekter til en start ?
-                if (!(construction.equals(null))){
-                    render("Fog Trælast", "/WEB-INF/pages/roofOptions.jsp", req, resp);
-                }else {
-                    throw new InvalidPropertiesFormatException("Bestillingen kan ikke går videre, da der mangler egenskaber til carporten");
-                }
+                resp.sendRedirect(req.getContextPath() + "/Orders/otherOptions");
             }
 
         } else if (req.getPathInfo().substring(1).equals("edit")) {
@@ -192,19 +207,22 @@ public class Orders extends BaseServlet {
             }
 
 
-        } else if (req.getParameter("newButton").equals(null) || req.getParameter("newButton").equals("")
+        /*} else if (req.getParameter("newButton").equals(null) || req.getParameter("newButton").equals("")
                 || req.getParameter("orderID").equals(null) || req.getParameter("orderID").equals("")) {
             resp.sendRedirect(req.getContextPath() + "/Orders/");
         } else if (req.getParameter("newButton").equals("new")) {
 
             resp.sendRedirect(req.getContextPath() + "/Orders/new");
-        }/*else if (!(req.getParameter("orderID") == null) && !(req.getParameter("orderID").equals(""))) {
+        *//*}else if (!(req.getParameter("orderID") == null) && !(req.getParameter("orderID").equals(""))) {
             int orderID = Integer.parseInt(req.getParameter("orderID"));
             HttpSession session = req.getSession();
             session.setAttribute("editID", orderID);
             resp.sendRedirect(req.getContextPath() + "/Orders/edit");
         }*/
-
+        } else if (req.getPathInfo().substring(1).equals("viewSVG") && !(construction.equals(null))) {
+            //Material roofCladingChoice = (Material) req.getParameter("claddingRoof");
+            //Roof roof = api.createRoof(roofSizeCalculator, );
+        }
 
     }
 }

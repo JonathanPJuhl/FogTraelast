@@ -29,8 +29,4 @@ public class DummyMaterialSearchService implements MaterialService {
         return null;
     }
 
-    @Override
-    public Roof createRoof(Category category, Construction construction) {
-        return null;
-    }
 }

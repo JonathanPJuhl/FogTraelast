@@ -9,6 +9,7 @@ public class Shed {
     private final int width;
     private final int height;
     private final Cladding cladding;
+    private final int claddingQuanitaty;
     private final Category category;
 
     public Shed(int length, int width, Carport carport, Cladding cladding) {
@@ -16,6 +17,7 @@ public class Shed {
         this.width = width;
         this.height = carport.getHeight();
         this.cladding = cladding;
+        this.claddingQuanitaty = 4;
         this.category = Category.shed;
     }
 }

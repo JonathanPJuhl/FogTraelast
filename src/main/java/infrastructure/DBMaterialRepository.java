@@ -90,8 +90,4 @@ public class DBMaterialRepository implements MaterialService {
         }
     }
 
-    @Override
-    public Roof createRoof(Category category, Construction construction) {
-        return null;
-    }
 }
