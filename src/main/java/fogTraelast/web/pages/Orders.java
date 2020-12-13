@@ -1,10 +1,11 @@
 package fogTraelast.web.pages;
 
+import domain.construction.Category;
 import domain.construction.Construction;
 import domain.construction.Roof.FlatRoof;
 import domain.construction.Roof.PitchedRoof;
 import domain.construction.Roof.Roof;
-import domain.construction.Roof.RoofCalculator;
+import domain.construction.Roof.RoofSizeCalculator;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 
 @WebServlet({"/Orders", "/Orders/*"})
@@ -58,30 +60,28 @@ public class Orders extends BaseServlet {
                     noSuchOrderExists.printStackTrace();
                 }
 
-            } else if(cmd.equals("SortByNew")){
-                    String status = "New";
-                    List<Order> sortedList = api.displayOrderByStatus(status);
-                    req.setAttribute("list", sortedList);
-                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-                }else if(cmd.equals("SortByProcessing")){
-                    String status = "Processing";
-                    List<Order>sortedList = api.displayOrderByStatus(status);
-                    req.setAttribute("list", sortedList);
-                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-                }else if(cmd.equals("SortByDone")){
-                    String status = "Done";
-                    List<Order> sortedList = api.displayOrderByStatus(status);
-                    req.setAttribute("list", sortedList);
-                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-                }
-            else if(cmd.equals("SortBySalesman")){
+            } else if (cmd.equals("SortByNew")) {
+                String status = "New";
+                List<Order> sortedList = api.displayOrderByStatus(status);
+                req.setAttribute("list", sortedList);
+                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+            } else if (cmd.equals("SortByProcessing")) {
+                String status = "Processing";
+                List<Order> sortedList = api.displayOrderByStatus(status);
+                req.setAttribute("list", sortedList);
+                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+            } else if (cmd.equals("SortByDone")) {
+                String status = "Done";
+                List<Order> sortedList = api.displayOrderByStatus(status);
+                req.setAttribute("list", sortedList);
+                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+            } else if (cmd.equals("SortBySalesman")) {
                 HttpSession session = req.getSession();
-                int salesman = (Integer)session.getAttribute("userID");
+                int salesman = (Integer) session.getAttribute("userID");
                 List<Order> sortedList = api.displayOrderBySalesman(salesman);
                 req.setAttribute("list", sortedList);
                 render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            }
-            else {
+            } else {
                 try {
                     int orderID = Integer.parseInt(req.getPathInfo().substring(1));
                     Order order = api.findOrder(orderID);
@@ -103,7 +103,7 @@ public class Orders extends BaseServlet {
         if (req.getPathInfo().substring(1).equals("create")) {
             int length = Integer.parseInt(req.getParameter("length"));
             int width = Integer.parseInt(req.getParameter("width"));
-            String roofType = req.getParameter("roofType"); //TODO
+            String roofType = req.getParameter("roofType");
             Integer shedOrNo = Integer.parseInt((req.getParameter("shedOrNo")));
             Integer cladding = Integer.parseInt(req.getParameter("cladding"));
 
@@ -112,31 +112,27 @@ public class Orders extends BaseServlet {
 
             if (customerEmail == null || customerEmail.equals("")) {
                 resp.sendError(400, "Mangler email");
-            } else if(customerPhone == null || customerPhone.equals("")){
+            } else if (customerPhone == null || customerPhone.equals("")) {
                 resp.sendError(400, "Mangler tlf");
-            } else{
-                Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
-                resp.sendRedirect(req.getContextPath());
-
+            } else {
+                //Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
+                //resp.sendRedirect(req.getContextPath());
                 // Create new method
-                Construction construction = new Construction(width, length, null);
-
-                Roof roof;
-                if (roofType.equals("pitched"))
-                    roof = new PitchedRoof(0, length, width, null, 0); //TODO
-                else if (roofType.equals("flat")){
-                    roof = new FlatRoof(0,length,width, null); //TODO
-                }else{
-                    throw new IllegalArgumentException("Dette er ikke et type tag");
+                Construction construction = new Construction(width, length, roofType, shedOrNo, cladding);
+                api.roofMaterials(construction);
+                req.getSession().setAttribute("constrution", construction);
+                /*req.getSession().setAttribute("length", length);
+                req.getSession().setAttribute("width", width);
+                req.getSession().setAttribute("roofType", roofType);
+                req.getSession().setAttribute("shedOrNo", shedOrNo);
+                req.getSession().setAttribute("cladding", cladding);*/
+                //TODO skal de hellere være session objekter til en start ?
+                if (!(construction.equals(null))){
+                    render("Fog Trælast", "/WEB-INF/pages/roofOptions.jsp", req, resp);
+                }else {
+                    throw new InvalidPropertiesFormatException("Bestillingen kan ikke går videre, da der mangler egenskaber til carporten");
                 }
-                //int roofAngle = Integer.parseInt(req.getParameter("roofangle")); //TODO
-                construction.setRoof(roof);
-                final RoofCalculator roofCalculator = new RoofCalculator(construction);//TODO Fjern parameter
-                int roofHeight = roofCalculator.roofHeight(construction.getRoof().isFlat(),length,width);
-                construction.getRoof().setHeight(roofHeight);
-                req.getSession().setAttribute("construction", construction);
             }
-
 
         } else if (req.getPathInfo().substring(1).equals("edit")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil
@@ -179,13 +175,15 @@ public class Orders extends BaseServlet {
                 api.editRoofType(rooftype, orderID);
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 noSuchOrderExists.printStackTrace();
-            }int shedOrNo = Integer.parseInt(req.getParameter("shedOrNo"));
+            }
+            int shedOrNo = Integer.parseInt(req.getParameter("shedOrNo"));
             try {
                 //Edits salesman field
                 api.editShedOrNo(shedOrNo, orderID);
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 noSuchOrderExists.printStackTrace();
-            }int cladding = Integer.parseInt(req.getParameter("cladding"));
+            }
+            int cladding = Integer.parseInt(req.getParameter("cladding"));
             try {
                 //Edits salesman field
                 api.editCladding(cladding, orderID);

@@ -2,7 +2,7 @@ package domain.construction.Roof;
 
 import domain.construction.Construction;
 
-public class RoofCalculator {
+public class RoofSizeCalculator {
 
     private final Construction construction;
     private double roofHeigth;
@@ -10,7 +10,7 @@ public class RoofCalculator {
     private final int MAXPITCHDEGREEOPTION = 45 - 1; //TODO Admin skal kunne indsætte andre tal
 
 
-    public RoofCalculator(Construction construction) {
+    public RoofSizeCalculator(Construction construction) {
         this.construction = construction;
     }
 

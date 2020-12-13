@@ -1,8 +1,10 @@
 package api;
 
+import domain.bom.BOMItem;
 import domain.construction.Category;
+import domain.construction.Construction;
 import domain.material.Material;
-import domain.construction.NoSuchMaterialExists;
+import domain.material.NoSuchMaterialExists;
 import domain.material.MaterialService;
 import domain.material.MaterialType;
 import domain.orders.NoSuchOrderExists;
@@ -55,9 +57,13 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    public Material findMaterials (MaterialType type, int width, String color, double price, Category category, int height) throws NoSuchMaterialExists{
-        return materialService.findMaterial(type, width, color, price, category, height);
+    public Material findMaterial (int id, String typeName, MaterialType type, int width, String color, double price, Category category, int height) throws NoSuchMaterialExists{
+        return materialService.findMaterial(id, typeName, color, price, type, category, height);
         //TODO Cath til Jonathan - linker jeg disse til db?
+    }
+
+    public List<Material> roofMaterials(Construction construction){
+        return materialService.roofMaterials(construction);
     }
 
     public void insertMaterialIntoDB(Material material){

@@ -2,7 +2,7 @@ package fogTraelast.web.pages;
 
 import api.FogTraelast;
 import fogTraelast.web.widget.NavBar;
-import infrastructure.DBConstructionRepository;
+import infrastructure.DBMaterialRepository;
 import infrastructure.DBOrderRepository;
 import infrastructure.DBUserRepository;
 import infrastructure.Database;
@@ -28,7 +28,7 @@ public class BaseServlet extends HttpServlet {
 
     private static FogTraelast createOrder() {
         Database db = new Database(); //TODO Hvorfor instansierer vi en ny db hver gang vi opretter en ordre?
-        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBConstructionRepository(db));
+        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db));
     }
 
     protected void render(String title, String content, HttpServletRequest req, HttpServletResponse resp) throws

@@ -17,8 +17,8 @@ public class BOMService {
         BOM bom = new BOM();
 
         //Dette er bare for at teste
-        bom.addItem(materials.findMaterial(MaterialType.Wood, 200, "blue", 01.01, Category.carport,
-                1), 2, 3000, "Dummy beskrivelse");
+        bom.addItem(new BOMItem(materials.findMaterial(-1 , "Din mor", "blue", 01.01,
+                MaterialType.wood, Category.carport, -1), 2, 3000, "Dummy beskrivelse"));
 
         return bom;
     }
