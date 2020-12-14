@@ -69,7 +69,7 @@ public class DBMaterialRepository implements MaterialService {
     }
 
     @Override
-    public List<Material> roofMaterials(Construction construction) {
+    public List<Material> roofMaterials(String roofType) {
         List<Material> roofItems = new ArrayList();
         try (Connection conn = db.connect()) {
             String sql = "SELECT * FROM fogtraelast.materialer LEFT JOIN fogtraelast.materialer_kategorier mk " +
@@ -77,7 +77,7 @@ public class DBMaterialRepository implements MaterialService {
                     "RIGHT JOIN fogtraelast.kategorier k on k.kategoriID = mk.kategoriID " +
                     "WHERE k.kategori = ?";
             PreparedStatement smt = conn.prepareStatement(sql);
-            smt.setString(1, construction.getRoof().getCategory().getDanishName());
+            smt.setString(1, roofType);
             smt.executeQuery();
             ResultSet set = smt.getResultSet();
             while (set.next()) {

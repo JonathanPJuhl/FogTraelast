@@ -66,8 +66,8 @@ public class FogTraelast {
         //TODO Cath til Jonathan - linker jeg disse til db?
     }
 
-    public List<Material> roofMaterials(Construction construction){
-        return materialService.roofMaterials(construction);
+    public List<Material> roofMaterials(String roofType){
+        return materialService.roofMaterials(roofType);
     }
 
     public Roof createRoof(String choiceTypeRoof, int roofheight, Construction construction,  Material roofCladding, int degree){

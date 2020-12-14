@@ -25,7 +25,7 @@ public class DummyMaterialSearchService implements MaterialService {
     }
 
     @Override
-    public List<Material> roofMaterials(Construction construction) {
+    public List<Material> roofMaterials(String roofType) {
         return null;
     }
 

@@ -11,7 +11,7 @@ public interface MaterialService {
 
     public Material findMaterial(int id, String nametype, String color, double price, MaterialType type, Category category, int height);
 
-    public List<Material> roofMaterials(Construction construction);
+    public List<Material> roofMaterials(String roofType);
 
 
 }

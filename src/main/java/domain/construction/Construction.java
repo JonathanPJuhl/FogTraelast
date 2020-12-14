@@ -4,29 +4,25 @@ import domain.construction.Roof.Roof;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
 
-public class Construction {
+public class Construction extends UsersChoice {
 
-    private final int width;
-    private final int length;
+
     private Roof roof;
     private Carport carport;
     private Shed shed;
     private Cladding cladding;
-    private String roofChoice;
-    private boolean shedOrNo;
-    private boolean claddingChoice;
 
-    public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
+
+    /*public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
         this.width = width;
         this.length = length;
         this.roofChoice = roofChoice;
         this.shedOrNo = convert(shedOrNo);
         this.claddingChoice = convert(claddingChoice);
-    }
+    }*/
 
-    public Construction(int width, int length, Roof roof, Carport carport, Shed shed, Cladding cladding) {
-        this.width = width;
-        this.length = length;
+    public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice, Roof roof, Carport carport, Shed shed, Cladding cladding) {
+        super(width, length, roofChoice, shedOrNo, claddingChoice);
         this.roof = roof;
         this.carport = carport;
         this.shed = shed;
@@ -51,13 +47,6 @@ public class Construction {
     this.roof = roof;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getLength() {
-        return length;
-    }
 
     public Carport getCarport() {
         return carport;

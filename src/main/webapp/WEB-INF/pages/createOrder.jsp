@@ -9,7 +9,7 @@
 <div class="scrollbar" id="styleFog">
     <div class="text-white" align="center">
         <h1>Vælg dine mål</h1>
-        <form method="post" action="${pageContext.request.contextPath}/Orders/otherOptions">
+        <form method="post" action="${pageContext.request.contextPath}/Orders/constructionOverview">
 
             <label for="lengthName">Længde </label>
             <input type="number" class="form-control" id="lengthName" aria-describedby="lengthNameHelp" name="length">
