@@ -23,6 +23,33 @@ public class Material {
         this.height = height;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getNametype() {
+        return nametype;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 /*
     private String nameConstructor(String nameType, int width, String color, String enhed) throws IllegalFormatException {
         if (enhed.equals("mm") && color.equals(null)) {

@@ -11,8 +11,9 @@
     <div class="text-white" align="center">
         <h1>Vælg dine tag og beklædnings egenskaber</h1>
         <form method="post" action="${pageContext.request.contextPath}/Orders/viewSVG}">
+            <select name="materialOption">
             <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
-            <option id="roofMaterial" value="${materialOption.name}">${materialOption.name}</option>
+            <option id="roofMaterial" value="${materialOption.nametype}">${materialOption.nametype} - ${materialOption.color}</option>
         </c:forEach>
             <c:if test = "${requestScope.userChoice.roofChoice=='Pitched'}">
             <label for="roofMaterial">Tagbeklædning </label>
@@ -22,18 +23,12 @@
                 </c:forEach>
             </seclect>
             </c:if>
-
-            <c:if test = "${requestScope.userChoice.roofChoice=='Flat'}">
-                <label for="roofMaterial">Tagbeklædning </label>
-                <select name="claddingRoof">
-
-                </select>
-                <seclect name = "degreeOption">
-                    <c:forEach var="i" begin="45" end="4" step="-5">
-                        <option value="${i}">${i}</option>
-                    </c:forEach>
-                </seclect>
-            </c:if>
+                <c:if test = "${requestScope.userChoice.shedOrNo==true}">
+                <label for="shedLength">skurlængde </label>
+                <input type="number" name="shedLength" id="shedLength">
+                <label for="shedWidth">skurbredde </label>
+                <input type="number" name="shedWidth" id="shedWidth">
+                </c:if>
 
         </form>
     </div>

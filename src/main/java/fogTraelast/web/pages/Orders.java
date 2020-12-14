@@ -47,6 +47,7 @@ public class Orders extends BaseServlet {
 
                 if(!(usersChoice ==null)){
                     List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
+                    System.out.println("Size: " + claddingOpts.size());
                     req.setAttribute("claddingOptionsRoof", claddingOpts);
                     req.setAttribute("userChoice", usersChoice);
                     render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);

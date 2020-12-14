@@ -23,6 +23,7 @@
                 <option value="Pitched">Tag med rejsning</option>
             </select>
 
+
             <label for="shedOrNo">Vil du have et skur? </label>
             <select class="form-control" name="shedOrNo" id="shedOrNo">
                 <option value=1>Ja</option>
