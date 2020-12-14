@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS materials(
 
 INSERT INTO materials(name, color, price, height, type) VALUES('Plastmo', 'blåtonet', 60.0, 10, 'Tagplade');
 INSERT INTO materials(name, color, price, height, type) VALUES('Plastmo', 'klar', 60.0, 10, 'Tagplade');
+INSERT INTO materials(name, color, price, height, type) VALUES('Plastmo3', 'blåtonet', 60.0, 10, 'Tagplade');
+INSERT INTO materials(name, color, price, height, type) VALUES('Plastmo4', 'klar', 60.0, 10, 'Tagplade');
 
 
 
@@ -50,6 +52,8 @@ CREATE TABLE IF NOT EXISTS materials_By_Category(
 
 INSERT INTO materials_By_Category(materialID, categoryID) VALUES(1,1);
 INSERT INTO materials_By_Category(materialID, categoryID) VALUES(2,1);
+INSERT INTO materials_By_Category(materialID, categoryID) VALUES(3,2);
+INSERT INTO materials_By_Category(materialID, categoryID) VALUES(4,2);
 
 
 CREATE TABLE IF NOT EXISTS bom(

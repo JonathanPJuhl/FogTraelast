@@ -15,21 +15,28 @@
             <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
             <option id="roofMaterial" value="${materialOption.nametype}">${materialOption.nametype} - ${materialOption.color}</option>
         </c:forEach>
+            </select>
+    <br>
+
             <c:if test = "${requestScope.userChoice.roofChoice=='Pitched'}">
-            <label for="roofMaterial">Tagbeklædning </label>
+            <label for="degreeOption">Tagbeklædning </label>
             <seclect name = "degreeOption">
-                <c:forEach var="i" begin="45" end="4" step="-5">
-                    <option value="${i}">${i}</option>
+                <c:forEach var="i" begin="5" end="45" step="5">
+                    <option id="degreeOption" value=${i}>${i}</option>
                 </c:forEach>
-            </seclect>
+                </seclect>
             </c:if>
-                <c:if test = "${requestScope.userChoice.shedOrNo==true}">
+
+
+
+                <c:if test = "${requestScope.userChoice.shedOrNo==1}">
                 <label for="shedLength">skurlængde </label>
                 <input type="number" name="shedLength" id="shedLength">
                 <label for="shedWidth">skurbredde </label>
                 <input type="number" name="shedWidth" id="shedWidth">
                 </c:if>
 
-        </form>
+
     </div>
+    </form>
 </div>
