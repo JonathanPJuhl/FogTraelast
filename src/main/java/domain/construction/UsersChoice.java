@@ -7,7 +7,7 @@ public class UsersChoice {
     private int shedOrNo;
     private int claddingChoice;
 
-    public UsersChoice(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
+    public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
         this.width = width;
         this.length = length;
         this.roofChoice = roofChoice;
@@ -39,7 +39,7 @@ public class UsersChoice {
         return roofChoice;
     }
 
-    public int isShedOrNo() {
+    public int shedOrNo() {
         return shedOrNo;
     }
 

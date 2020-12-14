@@ -47,9 +47,14 @@ public class Orders extends BaseServlet {
 
                 if(!(usersChoice ==null)){
                     List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
+                    ArrayList<Integer> degreeOpts = new ArrayList<>();
+                    for (int i=5; i<50; i+=5){
+                        degreeOpts.add(i);
+                    }
                     System.out.println("Size: " + claddingOpts.size());
                     req.setAttribute("claddingOptionsRoof", claddingOpts);
                     req.setAttribute("userChoice", usersChoice);
+                    req.setAttribute("degrees", degreeOpts);
                     render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
                } else {
                     resp.sendError(400, "Badly formated request");
@@ -133,9 +138,10 @@ public class Orders extends BaseServlet {
                 resp.sendError(400, "Mangler tlf");
             } else {
                 //CREATE LATER ON
-                //Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
+                Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
                 // Create new method
                 UsersChoice tempConstruction = new UsersChoice(width, length, roofType, shedOrNo, cladding);
+                System.out.println("Shed: " + shedOrNo.toString());
                 HttpSession session = req.getSession();
                 session.setAttribute("tempConstruction", tempConstruction);
                 resp.sendRedirect(req.getContextPath() + "/Orders/constructionOverview");
