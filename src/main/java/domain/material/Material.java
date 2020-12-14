@@ -2,23 +2,20 @@ package domain.material;
 
 import domain.construction.Category;
 
-import java.util.IllegalFormatException;
-
 public class Material {
 
+    private final int id;
     private String nametype;
-    private int width;
     private String color;
     private final double price;
     private final MaterialType type;
     private Category category;
     private int height;
 
-    //TODO Må man lave to constructors ?
 
-    public Material(String nametype, int width, String color, double price, MaterialType type, Category category, int height) {
+    public Material(int id, String nametype, String color, double price, MaterialType type, Category category, int height) {
+        this.id = id;
         this.nametype = nametype;
-        this.width = width;
         this.color = color;
         this.price = price;
         this.type = type;
@@ -40,4 +37,17 @@ public class Material {
     }
 
  */
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "id=" + id +
+                ", nametype='" + nametype + '\'' +
+                ", color='" + color + '\'' +
+                ", price=" + price +
+                ", type=" + type +
+                ", category=" + category +
+                ", height=" + height +
+                '}';
+    }
 }

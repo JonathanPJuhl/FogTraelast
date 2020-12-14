@@ -1,8 +1,12 @@
 package api;
 
 import domain.construction.Category;
+import domain.construction.Construction;
+import domain.construction.ConstructionRepository;
+import domain.construction.Roof.Roof;
+import domain.construction.Roof.RoofSizeCalculator;
 import domain.material.Material;
-import domain.construction.NoSuchMaterialExists;
+import domain.material.NoSuchMaterialExists;
 import domain.material.MaterialService;
 import domain.material.MaterialType;
 import domain.orders.NoSuchOrderExists;
@@ -19,11 +23,13 @@ public class FogTraelast {
     private final UserRepository userLists;
     private final OrderRepository orderLists;
     private final MaterialService materialService;
+    private final ConstructionRepository constructionRepository;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, ConstructionRepository constructionRepository) {
         this.userLists = userLists;
         this.orderLists = orderLists;
         this.materialService = materialService;
+        this.constructionRepository = constructionRepository;
     }
 
     public Object getVERSION() {
@@ -55,9 +61,17 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    public Material findMaterials (MaterialType type, int width, String color, double price, Category category, int height) throws NoSuchMaterialExists{
-        return materialService.findMaterial(type, width, color, price, category, height);
+    public Material findMaterial (int id, String typeName, MaterialType type, int width, String color, double price, Category category, int height) throws NoSuchMaterialExists{
+        return materialService.findMaterial(id, typeName, color, price, type, category, height);
         //TODO Cath til Jonathan - linker jeg disse til db?
+    }
+
+    public List<Material> roofMaterials(Construction construction){
+        return materialService.roofMaterials(construction);
+    }
+
+    public Roof createRoof(String choiceTypeRoof, int roofheight, Construction construction,  Material roofCladding, int degree){
+        return constructionRepository.createRoof(choiceTypeRoof , roofheight , construction, roofCladding, degree);
     }
 
     public void insertMaterialIntoDB(Material material){
