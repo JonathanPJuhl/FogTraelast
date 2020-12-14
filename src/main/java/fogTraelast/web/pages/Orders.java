@@ -6,6 +6,7 @@ import domain.construction.Roof.PitchedRoof;
 import domain.construction.Roof.Roof;
 import domain.construction.Roof.RoofSizeCalculator;
 import domain.construction.UsersChoice;
+import domain.material.Material;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
@@ -42,9 +43,11 @@ public class Orders extends BaseServlet {
             else if (cmd.equals("constructionOverview")) {
                 HttpSession session = req.getSession();
                 UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
-
+                System.out.println(usersChoice.toString());
 
                 if(!(usersChoice ==null)){
+                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
+                    req.setAttribute("claddingOptionsRoof", claddingOpts);
                     req.setAttribute("userChoice", usersChoice);
                     render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
                } else {

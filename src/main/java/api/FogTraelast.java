@@ -61,9 +61,8 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    public Material findMaterial (int id, String typeName, MaterialType type, int width, String color, double price, Category category, int height) throws NoSuchMaterialExists{
+    public Material findMaterial (int id, String typeName, String type, int width, String color, double price, String category, int height) throws NoSuchMaterialExists{
         return materialService.findMaterial(id, typeName, color, price, type, category, height);
-        //TODO Cath til Jonathan - linker jeg disse til db?
     }
 
     public List<Material> roofMaterials(String roofType){

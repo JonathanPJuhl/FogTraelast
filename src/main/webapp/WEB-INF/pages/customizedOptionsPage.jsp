@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Jonathan
@@ -10,9 +11,9 @@
     <div class="text-white" align="center">
         <h1>Vælg dine tag og beklædnings egenskaber</h1>
         <form method="post" action="${pageContext.request.contextPath}/Orders/viewSVG}">
-            <c:forEach var="materialOption" items="${sessionScope.claddingOptionsRoof}">
-                <option id="roofMaterial" value="${materialOption}">${materialOption.name}</option>
-            </c:forEach>
+            <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
+            <option id="roofMaterial" value="${materialOption.name}">${materialOption.name}</option>
+        </c:forEach>
             <c:if test = "${requestScope.userChoice.roofChoice=='Pitched'}">
             <label for="roofMaterial">Tagbeklædning </label>
             <seclect name = "degreeOption">

@@ -8,12 +8,12 @@ public class Material {
     private String nametype;
     private String color;
     private final double price;
-    private final MaterialType type;
-    private Category category;
+    private final String type;
+    private String category;
     private int height;
 
 
-    public Material(int id, String nametype, String color, double price, MaterialType type, Category category, int height) {
+    public Material(int id, String nametype, String color, double price, String type, String category, int height) {
         this.id = id;
         this.nametype = nametype;
         this.color = color;
