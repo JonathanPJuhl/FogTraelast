@@ -10,7 +10,7 @@
 <div class="scrollbar" id="styleFog">
 <div align="center" >
     <table class="text-white" border="1" cellpadding="5">
-        <h2 class="text-white">List of orders</h2>
+        <h2 class="text-white">Alle ordrer</h2>
         <tr>
             <th>orderID</th>
             <th>orderStatus</th>

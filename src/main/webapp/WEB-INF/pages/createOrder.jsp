@@ -9,7 +9,7 @@
 <div class="scrollbar" id="styleFog">
     <div class="text-white" align="center">
         <h1>Vælg dine mål</h1>
-        <form method="post" action="${pageContext.request.contextPath}/Orders/otherOptions">
+        <form method="post" action="${pageContext.request.contextPath}/Orders/create">
 
             <label for="lengthName">Længde </label>
             <input type="number" class="form-control" id="lengthName" aria-describedby="lengthNameHelp" name="length">
@@ -19,9 +19,10 @@
 
             <label for="roofType">Tag type</label>
             <select class="form-control" name="roofType" id="roofType">
-                <option value="flat">Fladt tag</option>
-                <option value="pitched">Tag med rejsning</option>
+                <option value="Flat">Fladt tag</option>
+                <option value="Pitched">Tag med rejsning</option>
             </select>
+
 
             <label for="shedOrNo">Vil du have et skur? </label>
             <select class="form-control" name="shedOrNo" id="shedOrNo">

@@ -9,6 +9,7 @@ import domain.material.Material;
 import domain.material.NoSuchMaterialExists;
 import domain.material.MaterialService;
 import domain.material.MaterialType;
+import domain.orders.Order;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,38 +26,41 @@ public class DBMaterialRepository implements MaterialService {
         this.db = db;
     }
 
-    private Material parseMaterialList(ResultSet set) throws SQLException, NoSuchMaterialExists {
+    public Material parseMaterialList(ResultSet set) throws SQLException, NoSuchMaterialExists {
         return new Material(
-                set.getInt("materialer.materialeID"),
-                set.getString("materialer.navn"),
-                set.getString("materialer.farve"),
-                set.getDouble("materialer.pris"),
-                materialType(set),
-                category(set),
-                set.getInt("materialer.højde")
+                set.getInt("materials.materialID"),
+                set.getString("materials.name"),
+                set.getString("materials.color"),
+                set.getDouble("materials.price"),
+                set.getString("materials.type"),
+                set.getString("category"),
+                set.getInt("materials.height")
         );
 
     }
 
-    private MaterialType materialType (ResultSet set) throws SQLException, NoSuchMaterialExists {
-        String materialName;
-        materialName = set.getString("materialer.type");
-        for (MaterialType m : MaterialType.values()) {
-            if (m.getDanishName().equals(materialName))
-                return m;
+
+
+   /* private Category category (String catName) throws SQLException, NoSuchMaterialExists {
+      Category cat = null;
+        ArrayList<Order> ordersByStatus = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM categories where ;
+            var smt = conn.prepareStatement(sql);
+
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while(set.next()) {
+                ordersByStatus.add(parseOrderList(set));
+            }
+        } catch (SQLException throwables) {
+            throw new UnexpectedDBError(throwables);
         }
-        throw new NoSuchMaterialExists();
+        return ordersByStatus;
     }
 
-    private Category category (ResultSet set) throws SQLException, NoSuchMaterialExists {
-        String categoryName;
-        categoryName = set.getString("kategori"); //TODO kan være et problem på droplet
-        for (Category c : Category.values()) {
-            if (c.getDanishName().equals(categoryName))
-                return c;
-        }
-        throw new NoSuchMaterialExists();
-    }
+
+    }*/
 
     @Override
     public void insertMaterialIntoDB(Material material) {
@@ -64,22 +68,21 @@ public class DBMaterialRepository implements MaterialService {
     }
 
     @Override
-    public Material findMaterial(int id, String nameType, String color, double price, MaterialType type, Category category, int height) {
+    public Material findMaterial(int id, String nameType, String color, double price, String type, String category, int height) {
         return null;
     }
 
     @Override
-    public List<Material> roofMaterials(Construction construction) {
+    public List<Material> roofMaterials(String roofType) {
+        System.out.println("String: " + roofType);
         List<Material> roofItems = new ArrayList();
         try (Connection conn = db.connect()) {
-            String sql = "SELECT * FROM fogtraelast.materialer LEFT JOIN fogtraelast.materialer_kategorier mk " +
-                    "ON materialer.materialeID = mk.materialID " +
-                    "RIGHT JOIN fogtraelast.kategorier k on k.kategoriID = mk.kategoriID " +
-                    "WHERE k.kategori = ?";
+            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID WHERE C.category=?;";
             PreparedStatement smt = conn.prepareStatement(sql);
-            smt.setString(1, construction.getRoof().getCategory().getDanishName());
+            smt.setString( 1, roofType);
             smt.executeQuery();
             ResultSet set = smt.getResultSet();
+
             while (set.next()) {
                 Material material = parseMaterialList(set);
                 roofItems.add(material);

@@ -5,6 +5,8 @@ import domain.construction.Roof.FlatRoof;
 import domain.construction.Roof.PitchedRoof;
 import domain.construction.Roof.Roof;
 import domain.construction.Roof.RoofSizeCalculator;
+import domain.construction.UsersChoice;
+import domain.material.Material;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
@@ -37,7 +39,27 @@ public class Orders extends BaseServlet {
 
             if (cmd.equals("new")) {
                 render("Fog Trælast", "/WEB-INF/pages/createOrder.jsp", req, resp);
-            } else if (cmd.equals("edit")) {
+            }
+            else if (cmd.equals("constructionOverview")) {
+                HttpSession session = req.getSession();
+                UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
+                System.out.println(usersChoice.toString());
+
+                if(!(usersChoice ==null)){
+                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
+                    ArrayList<Integer> degreeOpts = new ArrayList<>();
+                    for (int i=5; i<50; i+=5){
+                        degreeOpts.add(i);
+                    }
+                    System.out.println("Size: " + claddingOpts.size());
+                    req.setAttribute("claddingOptionsRoof", claddingOpts);
+                    req.setAttribute("userChoice", usersChoice);
+                    req.setAttribute("degrees", degreeOpts);
+                    render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
+               } else {
+                    resp.sendError(400, "Badly formated request");
+                }
+        }else if (cmd.equals("edit")) {
                 Order order;
 
                 try {
@@ -112,31 +134,19 @@ public class Orders extends BaseServlet {
 
             if (customerEmail == null || customerEmail.equals("")) {
                 resp.sendError(400, "Mangler email");
-            } else if(customerPhone == null || customerPhone.equals("")){
+            } else if (customerPhone == null || customerPhone.equals("")) {
                 resp.sendError(400, "Mangler tlf");
-            } else{
+            } else {
+                //CREATE LATER ON
                 Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
-                resp.sendRedirect(req.getContextPath());
-
                 // Create new method
-                Construction construction = new Construction(width, length, null, null,null,null);
+                UsersChoice tempConstruction = new UsersChoice(width, length, roofType, shedOrNo, cladding);
+                System.out.println("Shed: " + shedOrNo.toString());
+                HttpSession session = req.getSession();
+                session.setAttribute("tempConstruction", tempConstruction);
+                resp.sendRedirect(req.getContextPath() + "/Orders/constructionOverview");
 
-                Roof roof;
-                if (roofType.equals("pitched"))
-                    roof = new PitchedRoof(0, length, width, null, 0); //TODO
-                else if (roofType.equals("flat")){
-                    roof = new FlatRoof(0,length,width, null); //TODO
-                }else{
-                    throw new IllegalArgumentException("Dette er ikke et type tag");
-                }
-                //int roofAngle = Integer.parseInt(req.getParameter("roofangle")); //TODO
-                construction.setRoof(roof);
-                final RoofSizeCalculator roofCalculator = new RoofSizeCalculator();//TODO Fjern parameter
-                int roofHeight = roofCalculator.roofHeight(construction, construction.getRoof().isFlat(),length,width);
-                construction.getRoof().setHeight(roofHeight);
-                req.getSession().setAttribute("construction", construction);
             }
-
 
         } else if (req.getPathInfo().substring(1).equals("edit")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil
@@ -179,37 +189,42 @@ public class Orders extends BaseServlet {
                 api.editRoofType(rooftype, orderID);
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 noSuchOrderExists.printStackTrace();
-            }int shedOrNo = Integer.parseInt(req.getParameter("shedOrNo"));
+            }
+            int shedOrNo = Integer.parseInt(req.getParameter("shedOrNo"));
             try {
                 //Edits salesman field
                 api.editShedOrNo(shedOrNo, orderID);
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 noSuchOrderExists.printStackTrace();
-            }int cladding = Integer.parseInt(req.getParameter("cladding"));
+            }
+            int cladding = Integer.parseInt(req.getParameter("cladding"));
             try {
                 //Edits salesman field
                 api.editCladding(cladding, orderID);
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 noSuchOrderExists.printStackTrace();
+
             }
 
-
-        } else if (req.getParameter("newButton").equals(null) || req.getParameter("newButton").equals("")
+            resp.sendRedirect(req.getContextPath() + "/Orders");
+        }/* else if (req.getParameter("newButton").equals(null) || req.getParameter("newButton").equals("")
                 || req.getParameter("orderID").equals(null) || req.getParameter("orderID").equals("")) {
             resp.sendRedirect(req.getContextPath() + "/Orders/");
-        } else if (req.getParameter("newButton").equals("new")) {
+        } *//* else if (req.getParameter("newButton").equals("new")) {
 
-            resp.sendRedirect(req.getContextPath() + "/Orders/new");
-        }/*else if (!(req.getParameter("orderID") == null) && !(req.getParameter("orderID").equals(""))) {
+            resp.sendRedirect(req.getContextPath() + "/Orders/new");*/
+
+    //}
+    /*else if (!(req.getParameter("orderID") == null) && !(req.getParameter("orderID").equals(""))) {
             int orderID = Integer.parseInt(req.getParameter("orderID"));
             HttpSession session = req.getSession();
             session.setAttribute("editID", orderID);
             resp.sendRedirect(req.getContextPath() + "/Orders/edit");
         }*/
 
-
     }
-}
+    }
+
 
 /*
 package fogTraelast.web.pages;
