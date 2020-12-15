@@ -1,10 +1,14 @@
 package api;
 
+import domain.construction.Category;
 import domain.construction.Construction;
 import domain.construction.ConstructionRepository;
-import domain.construction.Material;
-import domain.construction.NoSuchMaterialExists;
 import domain.construction.Roof.Roof;
+import domain.construction.Roof.RoofSizeCalculator;
+import domain.material.Material;
+import domain.material.NoSuchMaterialExists;
+import domain.material.MaterialService;
+import domain.material.MaterialType;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
@@ -18,12 +22,14 @@ public class FogTraelast {
     private String VERSION = "0.1"; //TODO Rediger db version
     private final UserRepository userLists;
     private final OrderRepository orderLists;
-    private final ConstructionRepository constructionLists;
+    private final MaterialService materialService;
+    private final ConstructionRepository constructionRepository;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists, ConstructionRepository constructionLists) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, ConstructionRepository constructionRepository) {
         this.userLists = userLists;
         this.orderLists = orderLists;
-        this.constructionLists = constructionLists;
+        this.materialService = materialService;
+        this.constructionRepository = constructionRepository;
     }
 
     public Object getVERSION() {
@@ -39,8 +45,8 @@ public class FogTraelast {
         return orderLists.findSpecificOrder(id);
     }
 
-    public Order createOrder(double length, double width, String customerPhone, String customerEmail) {
-        return orderLists.insertOrderIntoDB(length, width, customerPhone, customerEmail);
+    public Order createOrder(double length, double width, String customerPhone, String customerEmail, String  roofType, int shedOrNo, int cladding) {
+        return orderLists.insertOrderIntoDB(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
     }
 
     public User loginSalesman(String salesmanEmail, String password) throws NoSuchUserExists {
@@ -55,17 +61,21 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    public List<Material> findMaterialsForRoof (Construction construction) throws NoSuchMaterialExists{
-        return constructionLists.findMaterialsForRoof(construction);
+    public Material findMaterial (int id, String typeName, String type, int width, String color, double price, String category, int height) throws NoSuchMaterialExists{
+        return materialService.findMaterial(id, typeName, color, price, type, category, height);
     }
 
-    public List<Material> setRoofBOM (Material material, int quantity){ //TODO Cath til Jonathan - linker jeg disse til db?
-        return constructionLists.setRoofBOM(material, quantity);
+    public List<Material> roofMaterials(String roofType){
+        return materialService.roofMaterials(roofType);
     }
 
-    public void insertRoofBOM (List<Material> roofBOM){
-        constructionLists.insertRoofBOM(roofBOM);
-    }//TODO
+    public Roof createRoof(String choiceTypeRoof, int roofheight, Construction construction,  Material roofCladding, int degree){
+        return constructionRepository.createRoof(choiceTypeRoof , roofheight , construction, roofCladding, degree);
+    }
+
+    public void insertMaterialIntoDB(Material material){
+        materialService.insertMaterialIntoDB(material);
+    }
 
     public void editPrice(double columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editPrice(columnValue, orderID);
@@ -76,6 +86,16 @@ public class FogTraelast {
     public void editStatus(String columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editStatus(columnValue, orderID);
     }
+    public void editRoofType(String columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editRoofType(columnValue, orderID);
+    }
+    public void editShedOrNo(int columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editShedOrNo(columnValue, orderID);
+    }
+    public void editCladding(int columnValue, int orderID) throws NoSuchOrderExists {
+        orderLists.editCladding(columnValue, orderID);
+    }
+
     public List<User> findAllSalesmen() throws NoSuchUserExists {
         return userLists.findAllSalesmen();
     }
@@ -85,4 +105,5 @@ public class FogTraelast {
     public List<Order> displayOrderBySalesman(int wantedSalesman){
         return orderLists.displayOrdersBySalesman(wantedSalesman);
     }
+
 }

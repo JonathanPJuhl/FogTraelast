@@ -3,6 +3,8 @@ package infrastructure;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
+import domain.users.NoSuchUserExists;
+import domain.users.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,15 +21,18 @@ public class DBOrderRepository implements OrderRepository {
     }
 
     @Override
-    public Order insertOrderIntoDB(double length, double width, String customerPhone, String customerEmail) {
+    public Order insertOrderIntoDB(double length, double width, String customerPhone, String customerEmail, String roofType, int shedOrNo, int cladding) {
         int newID;
         try(Connection conn = db.connect()){
-            String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail) VALUES (?, ?, ?, ?);";
+            String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding) VALUES (?, ?, ?, ?, ?, ?, ?);";
             var smt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             smt.setDouble(1, length);
             smt.setDouble(2, width);
             smt.setString(3, customerPhone);
             smt.setString(4, customerEmail);
+            smt.setString(5, roofType);
+            smt.setInt(6, shedOrNo);
+            smt.setInt(7, cladding);
             smt.executeUpdate();
             ResultSet set = smt.getGeneratedKeys();
             if(set.next()) {
@@ -88,6 +93,7 @@ public class DBOrderRepository implements OrderRepository {
         return list;
     }
 
+
     @Override
     public void editSalesman(int columnValue, int orderID) throws NoSuchOrderExists{
         try (Connection conn = db.connect()){
@@ -120,6 +126,42 @@ public class DBOrderRepository implements OrderRepository {
             String sql = "UPDATE orders set price = ? where orderID=?;";
             var smt = conn.prepareStatement(sql);
             smt.setDouble(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public void editRoofType(String columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set roofType = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setString(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public void editShedOrNo(int columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set shedOrNo = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setInt(1, columnValue);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    @Override
+    public void editCladding(int columnValue, int orderID) throws NoSuchOrderExists{
+        try (Connection conn = db.connect()){
+            String sql = "UPDATE orders set cladding = ? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setInt(1, columnValue);
             smt.setInt(2, orderID);
             smt.executeUpdate();
         } catch (SQLException throwables) {
@@ -173,8 +215,10 @@ public class DBOrderRepository implements OrderRepository {
                 set.getString("orders.customerPhone"),
                 set.getString("orders.customerEmail"),
                 set.getDouble("orders.price"),
-                set.getInt("orders.salesmanID")
-        );
+                set.getInt("orders.salesmanID"),
+                set.getString("orders.roofType"),
+                set.getInt("orders.shedOrNo"),
+                set.getInt("orders.cladding"));
     }
 }
 

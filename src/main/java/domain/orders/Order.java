@@ -10,10 +10,12 @@ public class Order {
     private final String customerEmail;
     private final double price;
     private final int salesmanID;
+    private final String roofType;
+    private final int shedOrNo;
+    private final int cladding;
 
 
-
-    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID) {
+    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID, String roofType, int shedOrNo, int cladding) {
         this.orderID = orderID;
         this.orderStatus = orderStatus;
         this.length = length;
@@ -22,6 +24,9 @@ public class Order {
         this.customerEmail = customerEmail;
         this.price = price;
         this.salesmanID = salesmanID;
+        this.roofType = roofType;
+        this.shedOrNo = shedOrNo;
+        this.cladding = cladding;
     }
 
     public int getOrderID() {
@@ -54,6 +59,18 @@ public class Order {
 
     public int getSalesmanID() {
         return salesmanID;
+    }
+
+    public String getRoofType() {
+        return roofType;
+    }
+
+    public int getShedOrNo() {
+        return shedOrNo;
+    }
+
+    public int getCladding() {
+        return cladding;
     }
 
     @Override

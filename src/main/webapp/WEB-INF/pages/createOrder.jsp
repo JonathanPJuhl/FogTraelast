@@ -17,11 +17,25 @@
             <label for="widthName">Bredde</label>
             <input type="number" class="form-control" id="widthName" name="width">
 
-            <label id="roofTypeName">Tag type</label>
-            <select class="form-control" name="roofType">
-                <option value="flat">Flat tag</option>
-                <option value="pitched">Tag med rejsning</option>
+            <label for="roofType">Tag type</label>
+            <select class="form-control" name="roofType" id="roofType">
+                <option value="Flat">Fladt tag</option>
+                <option value="Pitched">Tag med rejsning</option>
             </select>
+
+
+            <label for="shedOrNo">Vil du have et skur? </label>
+            <select class="form-control" name="shedOrNo" id="shedOrNo">
+                <option value=1>Ja</option>
+                <option value=0>Nej</option>
+            </select>
+
+            <label for="cladding">Beklædning</label>
+            <select class="form-control" name="cladding" id="cladding">
+                <option value=1>Med vægge(3 stk)</option>
+                <option value=0>Uden vægge</option>
+            </select>
+
 
             <label for="emailName">Email </label>
             <input type="email" class="form-control" id="emailName" aria-describedby="emailNameHelp" name="email">
@@ -31,8 +45,7 @@
             <input type="text" class="form-control" id="phoneName" name="phone">
             <small id="phoneNameHelp" class="form-text text-muted">Vi giver aldrig dit nummer ud til andre!</small>
             <br>
-            <button type="submit" class="btn btn-primary">Bestil carport!</button>
-
+            <button type="submit" class="btn btn-primary">Bestil videre på carport!</button>
         </form>
     </div>
 </div>

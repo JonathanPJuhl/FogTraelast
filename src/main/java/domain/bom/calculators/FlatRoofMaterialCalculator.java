@@ -1,10 +1,7 @@
-package domain.construction.Roof;
+package domain.bom.calculators;
 
 import domain.construction.Construction;
-import domain.construction.Material;
-
-import java.util.ArrayList;
-import java.util.List;
+import domain.construction.Roof.RoofSizeCalculator;
 
 public class FlatRoofMaterialCalculator {
 
@@ -20,12 +17,12 @@ public class FlatRoofMaterialCalculator {
     private final int roofWidth;
     private final int roofLength;
 
-    RoofCalculator roofCalculator;
+    RoofSizeCalculator roofSizeCalculator;
 
-    public FlatRoofMaterialCalculator(RoofCalculator roofCalculator) {
-        this.roofCalculator = roofCalculator;
-        this.roofWidth = roofCalculator.roofWidthSurface();
-        this.roofLength = roofCalculator.roofLengthSurface();
+    public FlatRoofMaterialCalculator(RoofSizeCalculator roofSizeCalculator, Construction construction) {
+        this.roofSizeCalculator = roofSizeCalculator;
+        this.roofWidth = roofSizeCalculator.roofWidthSurface(construction);
+        this.roofLength = roofSizeCalculator.roofLengthSurface(construction);
     }
 
 
