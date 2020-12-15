@@ -126,8 +126,8 @@ public class Orders extends BaseServlet {
             int length = Integer.parseInt(req.getParameter("length"));
             int width = Integer.parseInt(req.getParameter("width"));
             String roofType = req.getParameter("roofType"); //TODO
-            Integer shedOrNo = Integer.parseInt((req.getParameter("shedOrNo")));
-            Integer cladding = Integer.parseInt(req.getParameter("cladding"));
+            int shedOrNo = Integer.parseInt((req.getParameter("shedOrNo")));
+            int cladding = Integer.parseInt(req.getParameter("cladding"));
 
             String customerEmail = req.getParameter("email");
             String customerPhone = req.getParameter("phone");
@@ -141,14 +141,21 @@ public class Orders extends BaseServlet {
                 Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
                 // Create new method
                 UsersChoice tempConstruction = new UsersChoice(width, length, roofType, shedOrNo, cladding);
-                System.out.println("Shed: " + shedOrNo.toString());
+                //System.out.println("Shed: " + shedOrNo.toString());
                 HttpSession session = req.getSession();
                 session.setAttribute("tempConstruction", tempConstruction);
                 resp.sendRedirect(req.getContextPath() + "/Orders/constructionOverview");
 
             }
 
-        } else if (req.getPathInfo().substring(1).equals("edit")) {
+        }
+        //TODO CATHRINE ARBEJDER PÅ DENNE DEL
+        else if (req.getPathInfo().substring(1).equals("constructionOverview")){
+            Material roofMaterial = (Material) req.getAttribute("roofMaterialOption"); //TODO virker det når det ikke er parameter?
+            int degreeOption = Integer.parseInt(req.getParameter("degreeOption"));
+
+        }
+        else if (req.getPathInfo().substring(1).equals("edit")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil
             //og variablerne gives dermed værdier, der ændres i db'en
 

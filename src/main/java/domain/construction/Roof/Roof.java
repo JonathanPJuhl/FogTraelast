@@ -58,4 +58,8 @@ public class Roof {
     public int getWidth() {
         return width;
     }
+
+    public Material getCladding() {
+        return cladding;
+    }
 }
