@@ -206,7 +206,7 @@ public class Orders extends BaseServlet {
 
             }
 
-
+            resp.sendRedirect(req.getContextPath() + "/Orders");
         }/* else if (req.getParameter("newButton").equals(null) || req.getParameter("newButton").equals("")
                 || req.getParameter("orderID").equals(null) || req.getParameter("orderID").equals("")) {
             resp.sendRedirect(req.getContextPath() + "/Orders/");
