@@ -117,14 +117,14 @@ public class PitchedRoofMaterialCalculator {
 
 
     public int spærPlankLengthPerSpær(){
-        int spærfodLength = construction.getCarport().width();
+        int spærfodLength = construction.getCarport().getWidth();
         int spærArm = (int) (spærfodLength/(Math.cos(Math.toRadians(construction.getRoof().getDegree()))))*2;
         spærFullPlankLength = (spærArm*2)+spærfodLength;
         return spærFullPlankLength;
     }
     //TODO beregning af ekstra spær (til sidst)
     public int spærQuantity(){
-        int carportLength = construction.getCarport().length();
+        int carportLength = construction.getCarport().getLength();
         int distanceBestweenSpær = 89;
         for (int i = 0; i < carportLength; i = 1 + distanceBestweenSpær) {
             spærAmount++;
@@ -142,8 +142,8 @@ public class PitchedRoofMaterialCalculator {
 
     public int gavlOverlayQuantity(int overlayPlankWidthKonstant, int overlayPlankLenghtAvailable){
         int gavlOverlayPlanksQuantity = 0;
-        int lengthOfTriangleGavl = construction.getCarport().length();
-        int lenghtOfTriangleGavlShorter = construction.getCarport().width();
+        int lengthOfTriangleGavl = construction.getCarport().getLength();
+        int lenghtOfTriangleGavlShorter = construction.getCarport().getWidth();
         int restTotal;
         int restUseable = 1;
         int roofHeight = construction.getRoof().getHeight();

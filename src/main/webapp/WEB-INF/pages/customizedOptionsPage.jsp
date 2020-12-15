@@ -14,7 +14,7 @@
 
         <form method="post" action="${pageContext.request.contextPath}/Orders/viewSVG}">
 
-            <select name="materialOption">
+            <select name="roofMaterialOption">
             <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
             <option id="roofMaterial" value="${materialOption.nametype}">${materialOption.nametype} - ${materialOption.color}</option>
             </c:forEach>
@@ -28,8 +28,6 @@
                     </c:forEach>
                 </select>
             </c:if>
-
-
 
 
                 <c:if test="${requestScope.userChoice.shedOrNo==1}">
