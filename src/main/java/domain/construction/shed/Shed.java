@@ -1,6 +1,7 @@
 package domain.construction.shed;
 
 import domain.construction.*;
+import domain.construction.carport.Carport;
 import domain.material.Material;
 
 import java.util.ArrayList;
@@ -9,22 +10,20 @@ import java.util.List;
 public class Shed extends ConstructionPart {
     private final int length;
     private final int width;
-    private final int height;
     private final Category category;
 
-    public Shed(Construction construction) {
-        this.length = construction.getShedLength();
-        this.width = construction.getWidth();
-        this.height = construction.getCarport().getHeight();
+    public Shed(UsersChoice usersChoice) {
+        this.length = usersChoice.getShedLength();
+        this.width = usersChoice.getShedwidth();
         this.category = Category.Shed;
     }
 
-    public Cladding[] addCladdingToShed(Material material){
+    public Cladding[] addCladdingToShed(Material material, Carport carport){
         Cladding[] wallsForShed = new Cladding[4];
 
-        Cladding claddingBack = new Cladding(width, height, Category.Carport,material);
-        Cladding claddingFront = new Cladding(width, height, Category.Carport,material);
-        Cladding claddingSide = new Cladding(length, height, Category.Carport, material);
+        Cladding claddingBack = new Cladding(width, carport.getHeight(), Category.Carport,material);
+        Cladding claddingFront = new Cladding(width, carport.getHeight(), Category.Carport,material);
+        Cladding claddingSide = new Cladding(length, carport.getHeight(), Category.Carport, material);
 
         wallsForShed[0] = claddingBack;
         wallsForShed[1] = claddingSide;

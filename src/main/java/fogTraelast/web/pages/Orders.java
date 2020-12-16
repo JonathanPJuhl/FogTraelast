@@ -1,12 +1,9 @@
 package fogTraelast.web.pages;
 
-import domain.construction.Category;
-import domain.construction.Construction;
-import domain.construction.Roof.FlatRoof;
-import domain.construction.Roof.PitchedRoof;
-import domain.construction.Roof.Roof;
-import domain.construction.Roof.RoofSizeCalculator;
-import domain.construction.UsersChoice;
+import domain.construction.*;
+import domain.construction.Roof.*;
+import domain.construction.carport.Carport;
+import domain.construction.shed.Shed;
 import domain.material.Material;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
@@ -22,6 +19,9 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static domain.construction.Roof.FlatRoof.TILTTODEGREE;
 
 @WebServlet({"/Orders", "/Orders/*"})
 public class Orders extends BaseServlet {
@@ -41,14 +41,13 @@ public class Orders extends BaseServlet {
 
             if (cmd.equals("new")) {
                 render("Fog Trælast", "/WEB-INF/pages/createOrder.jsp", req, resp);
-            }
-            else if (cmd.equals("constructionOverview")) {
+            } else if (cmd.equals("constructionOverview")) {
                 HttpSession session = req.getSession();
                 UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
                 System.out.println(usersChoice.toString());
 
-                if(!(usersChoice ==null)){
-                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice(),30); //TODO burde lave noget smartere
+                if (!(usersChoice == null)) {
+                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice()); //TODO burde lave noget smartere
                     ArrayList<Integer> degreeOpts = new ArrayList<>();
                     /*for (int i=5; i<50; i+=5){
                         degreeOpts.add(i);
@@ -58,10 +57,10 @@ public class Orders extends BaseServlet {
                     req.setAttribute("userChoice", usersChoice);
                     req.setAttribute("degrees", degreeOpts);
                     render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
-               } else {
+                } else {
                     resp.sendError(400, "Badly formated request");
                 }
-        }else if (cmd.equals("edit")) {
+            } else if (cmd.equals("edit")) {
                 Order order;
 
                 try {
@@ -82,30 +81,28 @@ public class Orders extends BaseServlet {
                     noSuchOrderExists.printStackTrace();
                 }
 
-            } else if(cmd.equals("SortByNew")){
+            } else if (cmd.equals("SortByNew")) {
                 String status = "New";
                 List<Order> sortedList = api.displayOrderByStatus(status);
                 req.setAttribute("list", sortedList);
                 render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            }else if(cmd.equals("SortByProcessing")){
+            } else if (cmd.equals("SortByProcessing")) {
                 String status = "Processing";
-                List<Order>sortedList = api.displayOrderByStatus(status);
+                List<Order> sortedList = api.displayOrderByStatus(status);
                 req.setAttribute("list", sortedList);
                 render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            }else if(cmd.equals("SortByDone")){
+            } else if (cmd.equals("SortByDone")) {
                 String status = "Done";
                 List<Order> sortedList = api.displayOrderByStatus(status);
                 req.setAttribute("list", sortedList);
                 render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            }
-            else if(cmd.equals("SortBySalesman")){
+            } else if (cmd.equals("SortBySalesman")) {
                 HttpSession session = req.getSession();
-                int salesman = (Integer)session.getAttribute("userID");
+                int salesman = (Integer) session.getAttribute("userID");
                 List<Order> sortedList = api.displayOrderBySalesman(salesman);
                 req.setAttribute("list", sortedList);
                 render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            }
-            else {
+            } else {
                 try {
                     int orderID = Integer.parseInt(req.getPathInfo().substring(1));
                     Order order = api.findOrder(orderID);
@@ -140,7 +137,7 @@ public class Orders extends BaseServlet {
                 resp.sendError(400, "Mangler tlf");
             } else {
                 //CREATE LATER ON
-                Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
+                //Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
                 // Create new method
                 UsersChoice tempConstruction = new UsersChoice(width, length, roofType, shedOrNo, cladding);
                 //System.out.println("Shed: " + shedOrNo.toString());
@@ -152,17 +149,60 @@ public class Orders extends BaseServlet {
 
         }
         //TODO CATHRINE ARBEJDER PÅ DENNE DEL
-        else if (req.getPathInfo().substring(1).equals("constructionOverview")){
-            Material roofMaterial = (Material) req.getAttribute("roofMaterialOption"); //TODO virker det når det ikke er parameter?
-            int degreeOption = Integer.parseInt(req.getParameter("degreeOption"));
-            int shedlenght = Integer.parseInt(req.getParameter("shedLength"));
-            int shedwitdh = Integer.parseInt(req.getParameter("shedWidth"));
+        else if (req.getPathInfo().substring(1).equals("constructionOverview")) {
             HttpSession session = req.getSession();
-            UsersChoice constructionFirst = (UsersChoice) session.getAttribute("tempConstruction");
-            //Construction constructionSecond =
+            UsersChoice consFirst = (UsersChoice) session.getAttribute("tempConstruction");
+            Material roofMaterial = (Material) req.getAttribute("roofMaterialOption"); //TODO virker det når det ikke er parameter?
 
-        }
-        else if (req.getPathInfo().substring(1).equals("edit")) {
+            double degreeOption = 0;
+            int shedlenght = 0;
+            int shedwitdh = 0;
+            Material shedCladding = null;
+            Material carportCladding = null;
+
+            if ((req.getParameter("degreeOption") == null)) {
+                degreeOption = TILTTODEGREE;
+            } else {
+                degreeOption = Integer.parseInt(req.getParameter("degreeOption"));
+            }
+
+            if (consFirst.getShedOrNo() == 1) {
+                shedCladding = (Material) (req.getAttribute("shedCladding"));
+                shedlenght = Integer.parseInt(req.getParameter("shedLength"));
+                shedwitdh = Integer.parseInt(req.getParameter("shedWidth"));
+            }
+            if (consFirst.getCladdingChoice() == 1) {
+                carportCladding = (Material) (req.getAttribute("carportCladding"));
+            }
+
+
+            UsersChoice constructionSecondChoice = new UsersChoice(consFirst.getWidth(), consFirst.getLength(),
+                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(), roofMaterial,
+                    degreeOption, shedlenght, shedwitdh, carportCladding);
+            req.getSession().setAttribute("secondUserChoice", constructionSecondChoice);
+            RoofFactory roofFactory = new RoofFactory();
+            Roof roof = roofFactory.createRoof(constructionSecondChoice);
+            Carport carport = roofFactory.createCarport(constructionSecondChoice);
+            Construction construction = roofFactory.createConstruction(roof, carport);
+            List<Cladding> carportCladdingList;
+
+            if (constructionSecondChoice.getShedOrNo() == 1) {
+                Shed shed = roofFactory.createShed(constructionSecondChoice);
+                List<ConstructionPart> shedcladding = shed.addCladding(shed.addCladdingToShed(shedCladding, carport));
+                construction.addShed(shed);
+            }
+            if (constructionSecondChoice.getCladdingChoice() == 1 && constructionSecondChoice.getShedOrNo() == 1) {
+                carportCladdingList = carport.addCladding(carport.threeWallswithCladding(shedCladding));
+
+            } else if (constructionSecondChoice.getCladdingChoice() == 1) {
+                Carport carportTmp = (Carport) construction.getPartForConstruction().get("carport");
+                carportTmp.addCladding(carportTmp.threeWallswithCladding(carportCladding)); // TODO SKal man indsætte igen i Map?
+            }
+
+            session.setAttribute("construction", construction.getPartForConstruction());
+            resp.sendRedirect(req.getContextPath() + "/BOM"); // TODO skal vise SVG Senere
+
+        } else if (req.getPathInfo().substring(1).equals("edit")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil
             //og variablerne gives dermed værdier, der ændres i db'en
 
@@ -228,7 +268,7 @@ public class Orders extends BaseServlet {
 
             resp.sendRedirect(req.getContextPath() + "/Orders/new");*/
 
-    //}
+        //}
     /*else if (!(req.getParameter("orderID") == null) && !(req.getParameter("orderID").equals(""))) {
             int orderID = Integer.parseInt(req.getParameter("orderID"));
             HttpSession session = req.getSession();
@@ -237,7 +277,7 @@ public class Orders extends BaseServlet {
         }*/
 
     }
-    }
+}
 
 
 /*
@@ -461,7 +501,7 @@ public class Orders extends BaseServlet {
 
             resp.sendRedirect(req.getContextPath() + "/Orders/new");
         *//*
-*/
+ */
 /*}else if (!(req.getParameter("orderID") == null) && !(req.getParameter("orderID").equals(""))) {
             int orderID = Integer.parseInt(req.getParameter("orderID"));
             HttpSession session = req.getSession();

@@ -5,7 +5,7 @@ import domain.construction.UsersChoice;
 
 public class FlatRoof extends Roof {
 
-    private static final double TILTTODEGREE = Math.round(Math.toDegrees(Math.atan(3.0 / 100.0))); //TODO kunne ændre?
+    public static final double TILTTODEGREE = Math.round(Math.toDegrees(Math.atan(3.0 / 100.0))); //TODO kunne ændre?
 
     public FlatRoof(UsersChoice usersChoice, RoofSizeCalculator roofSizeCalculator) {
         super(TILTTODEGREE,

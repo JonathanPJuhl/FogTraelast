@@ -104,7 +104,13 @@ public class DBMaterialRepository implements MaterialService {
     }
 
     @Override
-    public List<Material> roofMaterials(String roofType, int height) {
+    public List<Material> roofMaterials(String roofType) {
+        int height;
+        if (roofType.equals("Pitched")){
+            height = 30;
+        } else {
+            height = 10;
+        }
         List<Material> roofItems = new ArrayList();
         try (Connection conn = db.connect()) {
             String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID WHERE C.category=? and materials.height =?;";

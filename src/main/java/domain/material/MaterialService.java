@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface MaterialService {
+public abstract interface MaterialService {
 
     public void insertMaterialIntoDB(Material material); //TODO
 
@@ -17,7 +17,7 @@ public interface MaterialService {
 
     public List<Material> findMaterialsByCategory(Category category);
 
-    public List<Material> roofMaterials(String roofType, int height); //TODO lav den til en generel metode
+    public List<Material> roofMaterials(String roofType);
 
     public List<Material>allMaterialsInDB();
 }

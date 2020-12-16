@@ -34,9 +34,8 @@ public class DummyMaterialSearchService implements MaterialService {
         return null;
     }
 
-
     @Override
-    public List<Material> roofMaterials(String roofType, int width) {
+    public List<Material> roofMaterials(String roofType) {
         return null;
     }
 

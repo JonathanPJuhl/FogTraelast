@@ -64,8 +64,8 @@ public class FogTraelast {
         return materialService.findMaterial(typeName, color, type, category, height);
     }
 
-    public List<Material> roofMaterials(String roofType, int height){
-        return materialService.roofMaterials(roofType, height);
+    public List<Material> roofMaterials(String roofType){
+        return materialService.roofMaterials(roofType);
     }
 
     /*public Roof createRoof(UsersChoice usersChoice){

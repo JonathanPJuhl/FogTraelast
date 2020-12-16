@@ -37,8 +37,8 @@ public class Carport extends ConstructionPart {
         return threeWalls;
     }
 
-    public List<ConstructionPart> addCladding(Cladding[] claddingWalls){
-        List<ConstructionPart> claddingCarport = new ArrayList();
+    public List<Cladding> addCladding(Cladding[] claddingWalls){
+        List<Cladding> claddingCarport = new ArrayList();
 
         for (Cladding claddingWall : claddingWalls ) {
         claddingCarport.add(claddingWall);

@@ -12,35 +12,54 @@
 
         <h1>Vælg dine tag og beklædnings egenskaber</h1>
 
-        <form method="post" action="${pageContext.request.contextPath}/Orders/viewSVG}">
+        <form method="post">
 
+            <label for="roofMaterial">Tagbeklædning </label>
             <select name="roofMaterialOption" class="form-control">
-            <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
-            <option id="roofMaterial" value="${materialOption.nametype}">${materialOption.nametype} - ${materialOption.color}</option>
-            </c:forEach>
+                <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
+                    <option id="roofMaterial" value="${materialOption}">${materialOption.nametype}
+                        - ${materialOption.color}</option>
+                </c:forEach>
             </select>
 
-<br>
-            <c:if test = "${requestScope.userChoice.roofChoice.equals('Pitched')}">
-                <select name = "degreeOption" class="form-control">
-                    <c:forEach var="i" begin="0" end="45" step="5">
+            <br>
+            <c:if test="${requestScope.userChoice.isCladdingChoice()==1}">
+                <label for="caportCladding">Beklædning </label>
+                <select name="carportCladding" class="form-control">
+                    <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
+                        <option id="caportCladding" value="${materialOption}">${materialOption.nametype}
+                            - ${materialOption.color}</option>
+                    </c:forEach>
+                </select>
+            </c:if>
+            <br>
+            <c:if test="${requestScope.userChoice.roofChoice.equals('Pitched')}">
+                <label for="roofMaterial">Taghældning </label>
+                <select name="degreeOption" class="form-control">
+                    <c:forEach var="i" begin="15" end="45" step="5">
                         <option id="degreeOption" value="${i}">${i}</option>
                     </c:forEach>
                 </select>
             </c:if>
 
-<br>
-                <c:if test="${requestScope.userChoice.shedOrNo==1}">
-                <label for="shedLength">skurlængde </label>
+            <br>
+            <c:if test="${requestScope.userChoice.shedOrNo==1}">
+                <label for="shedLength">Skurlængde </label>
                 <input type="number" name="shedLength" id="shedLength" class="form-control">
 
-<br>
-
-                <label for="shedWidth">skurbredde </label>
+                <label for="shedWidth">Skurbredde </label>
                 <input type="number" name="shedWidth" id="shedWidth" class="form-control">
-                </c:if>
 
+                <label for="shedCladding">Skurbeklædning </label>
+                <select name="shedCladding" class="form-control">
+                    <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
+                        <option id="shedCladding" value="${materialOption}">${materialOption.nametype}
+                            - ${materialOption.color}</option>
+                    </c:forEach>
+                </select>
+            </c:if>
 
+<button class="btn btn-primary" type="submit">Se Stykliste (pt)</button>
         </form>
     </div>
 </div>

@@ -79,7 +79,7 @@ public class CarportMaterialCalculator {
         // - one for left and one for right with amount of number of spaer and one Material that is the beslag skruer where the amount is roofSpaernumber x2x3x3
 
         // Der skal være max 550 mm mellem spærne
-        int constructionLength = construction.getLength();
+        int constructionLength = construction.getRoof().getLength();;
         double almostSpaerAmount = constructionLength / 550.0 + 1;
         int spaerAmount = (int) Math.round(almostSpaerAmount);
         return spaerAmount;

@@ -28,8 +28,8 @@ public class FlatRoofMaterialCalculator {
     private final Construction construction;
 
     public FlatRoofMaterialCalculator(Construction construction) {
-        this.roofWidthSurfaceCalc = roofSizeCalculator.pitchedRoofCalcutatedSurfaceWidth(construction.getWidth(),construction.getRoof().getDegree());
-        this.roofLength = roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getLength(),construction.getRoof().getDegree());
+        this.roofWidthSurfaceCalc = roofSizeCalculator.pitchedRoofCalcutatedSurfaceWidth(construction.getRoof().getWidth(),construction.getRoof().getDegree());
+        this.roofLength = roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(),construction.getRoof().getDegree());
         this.construction = construction;
     }
 

@@ -26,7 +26,7 @@ public class UsersChoice {
     }
 
     public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice, Material roofCladding,
-                       int degree, int shedLength, int shedwidth, Material shedAndCarportCladding) {
+                       double degree, int shedLength, int shedwidth, Material shedAndCarportCladding) {
         this.width = width;
         this.length = length;
         this.roofChoice = roofChoice;
