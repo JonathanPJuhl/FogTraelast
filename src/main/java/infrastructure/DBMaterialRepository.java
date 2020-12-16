@@ -39,9 +39,133 @@ public class DBMaterialRepository implements MaterialService {
 
     }
 
+    @Override
+    public void insertMaterialIntoDB(Material material) {
 
+    }
+    @Override
+    public Material findMaterial(String nametype) {
+        Material material = null;
+        try (Connection conn = db.connect()) {
+            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID where materials.name=?;";
+            PreparedStatement smt = conn.prepareStatement(sql);
+            smt.setString( 1, nametype);
+            //TODO
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            if (set.next()) {
+                material = parseMaterialList(set);
+            }
+            return material;
+        } catch (SQLException | NoSuchMaterialExists throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+    }
+    /*@Override
+    public Material findMaterial(String nametype, String color, String type, String category, int height) {
+        Material material = null;
+        try (Connection conn = db.connect()) {
+            String sql = "SELECT materials.materialID FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID where materials.name=?;";
+            PreparedStatement smt = conn.prepareStatement(sql);
+            smt.setString( 1, nametype);
+            smt.setString( 2, color);
+            //TODO
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            if (set.next()) {
+                material = parseMaterialList(set);
+            }
+            return material;
+        } catch (SQLException | NoSuchMaterialExists throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+    }*/
 
-   /* private Category category (String catName) throws SQLException, NoSuchMaterialExists {
+    @Override
+    public Material findMaterialByID(int id) {
+        Material material = null;
+        try (Connection conn = db.connect()) {
+            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID where materials.materialID=?;";
+            PreparedStatement smt = conn.prepareStatement(sql);
+            smt.setInt( 1, id);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            if (set.next()) {
+                material = parseMaterialList(set);
+            }
+            return material;
+        } catch (SQLException | NoSuchMaterialExists throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+    }
+
+    @Override
+    public List<Material> findMaterialsByCategory(Category category) {
+        List<Material> roofItems = new ArrayList();
+        try (Connection conn = db.connect()) {
+            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID WHERE C.category=?;";
+            PreparedStatement smt = conn.prepareStatement(sql);
+            System.out.println("Her er category: "+ category.toString());
+            smt.setString( 1, category.toString());
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+
+            while (set.next()) {
+                Material material = parseMaterialList(set);
+                roofItems.add(material);
+            }
+            return roofItems;
+        } catch (SQLException | NoSuchMaterialExists throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+    }
+
+    @Override
+    public List<Material> roofMaterials(String roofType) {
+        int height;
+        if (roofType.equals("Pitched")){
+            height = 30;
+        } else {
+            height = 10;
+        }
+        List<Material> roofItems = new ArrayList();
+        try (Connection conn = db.connect()) {
+            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID WHERE C.category=? and materials.height =?;";
+            PreparedStatement smt = conn.prepareStatement(sql);
+            smt.setString( 1, roofType);
+            smt.setInt(2,height);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+
+            while (set.next()) {
+                Material material = parseMaterialList(set);
+                roofItems.add(material);
+            }
+            return roofItems;
+        } catch (SQLException | NoSuchMaterialExists throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+    }
+
+    @Override
+    public List<Material> allMaterialsInDB() {
+        List<Material> roofItems = new ArrayList();
+        try (Connection conn = db.connect()) {
+            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID;";
+            PreparedStatement smt = conn.prepareStatement(sql);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while (set.next()) {
+                Material material = parseMaterialList(set);
+                roofItems.add(material);
+            }
+            return roofItems;
+        } catch (SQLException | NoSuchMaterialExists throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+    }
+
+  /* private Category category (String catName) throws SQLException, NoSuchMaterialExists {
       Category cat = null;
         ArrayList<Order> ordersByStatus = new ArrayList<>();
         try (Connection conn = db.connect()){
@@ -61,36 +185,4 @@ public class DBMaterialRepository implements MaterialService {
 
 
     }*/
-
-    @Override
-    public void insertMaterialIntoDB(Material material) {
-
-    }
-
-    @Override
-    public Material findMaterial(int id, String nameType, String color, double price, String type, String category, int height) {
-        return null;
-    }
-
-    @Override
-    public List<Material> roofMaterials(String roofType) {
-        System.out.println("String: " + roofType);
-        List<Material> roofItems = new ArrayList();
-        try (Connection conn = db.connect()) {
-            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID WHERE C.category=?;";
-            PreparedStatement smt = conn.prepareStatement(sql);
-            smt.setString( 1, roofType);
-            smt.executeQuery();
-            ResultSet set = smt.getResultSet();
-
-            while (set.next()) {
-                Material material = parseMaterialList(set);
-                roofItems.add(material);
-            }
-            return roofItems;
-        } catch (SQLException | NoSuchMaterialExists throwables) {
-            throw new UnexpectedDBError(throwables);
-        }
-    }
-
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Bruger
@@ -12,7 +13,7 @@
 <div class="scrollbar" id="styleFog">
     <div align="center" >
         <table class="text-white" border="1" cellpadding="5">
-            <h2 class="text-white">List of orders</h2>
+            <h2 class="text-white">Stykliste</h2>
             <tr>
                 <th>Materialets beskrivelse</th>
                 <th>Længde</th>
@@ -20,10 +21,14 @@
                 <th>Enhed</th>
                 <th>Beskrivelse</th>
             </tr>
-            <c:forEach var="material" items="${sessionScope}">
+            <c:forEach var="BOMItem" items="${sessionScope.bom}">
                 <tr>
-                    <td></td>
-
+                    <td>${BOMItem.material.nametype}</td>
+                    <td>${BOMItem.length}</td>
+                    <td>${BOMItem.quantity}</td>
+                    <!--SKAL FIXES -->
+                    <td>${BOMItem.material.color}</td>
+                    <td>${BOMItem.description}</td>
                 </tr>
             </c:forEach>
         </table>

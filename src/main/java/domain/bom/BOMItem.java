@@ -4,14 +4,15 @@ import domain.material.Material;
 
 public class BOMItem {
     private final Material material;
-    private final int width;
+    private final int quantity;
     private final int length;
     private final String description;
 
-    public BOMItem(Material material, int width, int length, String description) {
+
+    public BOMItem(Material material, int quantity, int length, String description) {
         this.material = material;
-        this.width = width;
         this.length = length;
+        this.quantity = quantity;
         this.description = description;
     }
 
@@ -19,8 +20,8 @@ public class BOMItem {
         return material;
     }
 
-    public int getWidth() {
-        return width;
+    public int getQuantity() {
+        return quantity;
     }
 
     public int getLength() {

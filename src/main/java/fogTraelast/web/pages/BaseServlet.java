@@ -20,19 +20,19 @@ public class BaseServlet extends HttpServlet {
 
     protected static final FogTraelast api;
     protected static final RoofSizeCalculator roofSizing;
+    protected static final Database db;
 
     //Dette er gjort på dette format, da vi ikke har lyst til at instantiere et nyt API hver gang render køres, i det
     //kan give problemer med at dele det imellem vores servlets. Til dette bruges en class-constructor, fordi emnet
     //er static.
     static {
-        Database db = new Database();
+        db = new Database();
         api = createOrder(); //TODO bedre navngivning
         roofSizing = new RoofSizeCalculator();
     }
 
     private static FogTraelast createOrder() {
-        Database db = new Database();
-        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db), new RoofFactory());
+        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db));
     }
 
     protected void render(String title, String content, HttpServletRequest req, HttpServletResponse resp) throws

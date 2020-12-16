@@ -1,23 +1,49 @@
 package domain.construction.carport;
 
+import domain.construction.Category;
+import domain.construction.Cladding;
+import domain.construction.ConstructionPart;
 import domain.construction.UsersChoice;
+import domain.material.Material;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class Carport {
+public class Carport extends ConstructionPart {
 
     private final int height;
     private final int length;
     private final int width;
-    private UsersChoice construction;
     private final int fromRoofToCarportMin;
 
-    public Carport(UsersChoice usersChoice) { //TODO
+    public Carport(UsersChoice usersChoice) {
         this.fromRoofToCarportMin = 180;
         this.height = 2500; //TODO
-        this.construction = construction;
-        this.length = construction.getLength();
-        this.width = construction.getWidth();
+        this.length = usersChoice.getLength()-fromRoofToCarportMin;
+        this.width = usersChoice.getWidth()-fromRoofToCarportMin;
 
+    }
+
+    public Cladding[] threeWallswithCladding(Material material){
+        Cladding[] threeWalls = new Cladding[3]; //TODO
+
+        Cladding claddingBack = new Cladding(width, height, Category.Carport,material);
+        Cladding claddingSide = new Cladding(length, height, Category.Carport, material);
+
+        threeWalls[0] = claddingBack;
+        threeWalls[1] = claddingSide;
+        threeWalls[2] = claddingSide;
+
+        return threeWalls;
+    }
+
+    public List<Cladding> addCladding(Cladding[] claddingWalls){
+        List<Cladding> claddingCarport = new ArrayList();
+
+        for (Cladding claddingWall : claddingWalls ) {
+        claddingCarport.add(claddingWall);
+        }
+        return claddingCarport;
     }
 
     public int getHeight() {
@@ -32,7 +58,13 @@ public class Carport {
         return width;
     }
 
-    public int getFromRoofToCarportMin() {
-        return fromRoofToCarportMin;
+    @Override
+    public String toString() {
+        return "Carport{" +
+                "height=" + height +
+                ", length=" + length +
+                ", width=" + width +
+                ", fromRoofToCarportMin=" + fromRoofToCarportMin +
+                '}';
     }
 }

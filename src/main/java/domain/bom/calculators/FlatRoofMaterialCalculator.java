@@ -5,6 +5,14 @@ import domain.construction.Roof.RoofSizeCalculator;
 
 public class FlatRoofMaterialCalculator {
 
+    public int getT300ROOFPLADELENGTH() {
+        return T300ROOFPLADELENGTH;
+    }
+
+    public int getT600ROOFPLADELENGTH() {
+        return T600ROOFPLADELENGTH;
+    }
+
     //TODO ændre bredde
     private final int T300ROOFPLADELENGTH = 3000; //TODO Dette skulle rigtig beregnes ud fra 360 cm istedet
     private final int T600ROOFPLADELENGTH = 6000;
@@ -14,19 +22,18 @@ public class FlatRoofMaterialCalculator {
     private int square1numberOfT600Trapezplates = 0;
     private int square2numberOfT600Trapezplates = 0;
     private int square3numberOfT600Trapezplates = 0;
-    private final int roofWidth;
+    private final int roofWidthSurfaceCalc;
     private final int roofLength;
+    private final RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
+    private final Construction construction;
 
-    RoofSizeCalculator roofSizeCalculator;
-
-    public FlatRoofMaterialCalculator(RoofSizeCalculator roofSizeCalculator, Construction construction) {
-        this.roofSizeCalculator = roofSizeCalculator;
-        this.roofWidth = roofSizeCalculator.roofWidthSurface(construction);
-        this.roofLength = roofSizeCalculator.roofLengthSurface(construction);
+    public FlatRoofMaterialCalculator(Construction construction) {
+        this.roofWidthSurfaceCalc = roofSizeCalculator.pitchedRoofCalcutatedSurfaceWidth(construction.getRoof().getWidth(),construction.getRoof().getDegree());
+        this.roofLength = roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(),construction.getRoof().getDegree());
+        this.construction = construction;
     }
 
-
- //TrapezePlader
+    //TrapezePlader
 
     //quantity T600 Trapezplates
     //TODO Cath skal se det igennem in case of forandringer i pladebredde
@@ -34,7 +41,7 @@ public class FlatRoofMaterialCalculator {
         ///////////////Beregning af første del af tag (hvor mange HELE T600 plader kan der være)
         trapezPladeWidth = trapezPladeWidth*10;
         int tempTrapezPladeWidth = trapezPladeWidth;
-        for (int i = 0; i < (roofWidth- tempTrapezPladeWidth + OVERLAP); i = i+ tempTrapezPladeWidth) {
+        for (int i = 0; i < (roofWidthSurfaceCalc - tempTrapezPladeWidth + OVERLAP); i = i+ tempTrapezPladeWidth) {
             for (int j = 0; j < roofLength-1; j = j+ T600ROOFPLADELENGTH) {
                 square1numberOfT600Trapezplates++;
                 tempTrapezPladeWidth = trapezPladeWidth*10 - OVERLAP;
@@ -48,7 +55,7 @@ public class FlatRoofMaterialCalculator {
             square2numberOfT600Trapezplates++;
         }
 
-        int restWidth = roofWidth % tempTrapezPladeWidth;
+        int restWidth = roofWidthSurfaceCalc % tempTrapezPladeWidth;
 
         int restPart;
         double temp2;
@@ -67,7 +74,7 @@ public class FlatRoofMaterialCalculator {
         tempTrapezPladeWidth = trapezPladeWidth;
 
         if (quantityOfT300 == 0) {
-            for (int i = 0; i < (roofWidth- tempTrapezPladeWidth + OVERLAP) ; i = i + tempTrapezPladeWidth) {
+            for (int i = 0; i < (roofWidthSurfaceCalc - tempTrapezPladeWidth + OVERLAP) ; i = i + tempTrapezPladeWidth) {
                 square3numberOfT600Trapezplates++;
 
             }
@@ -96,7 +103,7 @@ public class FlatRoofMaterialCalculator {
         int restOfLength = roofLength % T600ROOFPLADELENGTH;
         int quantityOfT300 = 0;
         if (restOfLength > 0 && restOfLength <= T300ROOFPLADELENGTH){
-            for (int i = 0; i < roofWidth - tempTrapezPladeWidth + OVERLAP; i=i+ tempTrapezPladeWidth) {
+            for (int i = 0; i < roofWidthSurfaceCalc - tempTrapezPladeWidth + OVERLAP; i=i+ tempTrapezPladeWidth) {
                 quantityOfT300++;
                 tempTrapezPladeWidth = trapezPladeWidth*10 - OVERLAP;
             }
