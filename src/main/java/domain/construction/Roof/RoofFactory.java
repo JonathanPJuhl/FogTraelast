@@ -32,12 +32,7 @@ private RoofSizeCalculator roofSizeCalculator;
 
     @Override
     public Shed createShed(Construction construction) {
-        return new Shed( construction);
-    }
-
-    @Override
-    public Cladding createCladding(Construction construction) {
-        return new Cladding(construction);
+        return new Shed(construction);
     }
 
 

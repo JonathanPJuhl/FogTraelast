@@ -159,7 +159,7 @@ public class Orders extends BaseServlet {
             int shedwitdh = Integer.parseInt(req.getParameter("shedWidth"));
             HttpSession session = req.getSession();
             UsersChoice constructionFirst = (UsersChoice) session.getAttribute("tempConstruction");
-            Construction constructionSecond =
+            //Construction constructionSecond =
 
         }
         else if (req.getPathInfo().substring(1).equals("edit")) {
