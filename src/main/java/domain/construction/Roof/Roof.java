@@ -1,27 +1,29 @@
 package domain.construction.Roof;
 
 import domain.construction.Category;
+import domain.construction.ConstructionPart;
+import domain.construction.UsersChoice;
 import domain.material.Material;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Roof {
-    private int height;
+public class Roof extends ConstructionPart {
 
+    private static final RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
 
-
+    private final double height;
     private final int length;
     private final int width;
-    private List<Material> roofMaterials;
     private final boolean flat;
     private final Material cladding;
     private final double degree;
     private final Category category;
+    private final UsersChoice usersChoice;
 
 
     //TODO Skal den have et parameter med højde?
-    public Roof(int height, int length, int width, boolean flat, Material cladding, double degree, Category category) {
+    public Roof(double degree, int length, int width, boolean flat, Material cladding, double height, Category category, UsersChoice usersChoice) {
         this.height = height;
         this.length = length;
         this.width = width;
@@ -29,7 +31,7 @@ public class Roof {
         this.flat = flat;
         this.cladding = cladding;
         this.category = category;
-        roofMaterials = new ArrayList();
+        this.usersChoice = usersChoice;
     }
 
     public double getDegree() {
@@ -40,10 +42,6 @@ public class Roof {
         return flat;
     }
 
-    public void setHeight(int height){
-        this.height = height;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -51,7 +49,7 @@ public class Roof {
         return length;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 

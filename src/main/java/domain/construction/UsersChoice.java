@@ -1,13 +1,21 @@
 package domain.construction;
 
+import domain.material.Material;
+
 public class UsersChoice {
     private final int width;
     private final int length;
-    private String roofChoice;
-    private int shedOrNo;
-    private int claddingChoice;
+    private final String roofChoice;
+    private final int shedOrNo;
+    private final int claddingChoice;
+    private Material roofCladding;
+    private double degree;
+    private int shedLength;
+    private int shedwidth;
+    private Material shedAndCarportCladding;
 
-    public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
+    //TODO LAV METODER ISTEDET FOR CONSTRUCTER HVIS TID
+    public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice) {
         this.width = width;
         this.length = length;
         this.roofChoice = roofChoice;
@@ -17,14 +25,31 @@ public class UsersChoice {
         this.claddingChoice = convert(claddingChoice);*/
     }
 
-    public Boolean convert(Integer digilBoolean){
-        if( digilBoolean.equals(1))
+    public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice, Material roofCladding,
+                       int degree, int shedLength, int shedwidth, Material shedAndCarportCladding) {
+        this.width = width;
+        this.length = length;
+        this.roofChoice = roofChoice;
+        this.shedOrNo = shedOrNo;
+        this.claddingChoice = claddingChoice;
+        this.roofCladding = roofCladding;
+        this.degree = degree;
+        this.shedLength = shedLength;
+        this.shedwidth = shedwidth;
+        this.shedAndCarportCladding = shedAndCarportCladding;
+    }
+
+    public boolean roofChoiceConverter(String roofChoice){
+        if (roofChoice.equals("Flat")){
             return true;
-        else if (digilBoolean.equals(0))
-            return false;
-        else{
-            throw new IllegalArgumentException("Dette kan ikke konverteres til noget der er der eller ikke er (boolean"); //TODO
         }
+        else{
+            return false;
+        }
+    }
+
+    public Material getShedAndCarportCladding() {
+        return shedAndCarportCladding;
     }
 
     public int getWidth() {
@@ -45,5 +70,29 @@ public class UsersChoice {
 
     public int isCladdingChoice() {
         return claddingChoice;
+    }
+
+    public int getShedOrNo() {
+        return shedOrNo;
+    }
+
+    public int getCladdingChoice() {
+        return claddingChoice;
+    }
+
+    public Material getRoofCladding() {
+        return roofCladding;
+    }
+
+    public double getDegree() {
+        return degree;
+    }
+
+    public int getShedLength() {
+        return shedLength;
+    }
+
+    public int getShedwidth() {
+        return shedwidth;
     }
 }

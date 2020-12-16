@@ -3,15 +3,40 @@ package domain.construction;
 import domain.construction.Roof.Roof;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
+import domain.material.Material;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Construction extends UsersChoice {
 
+    private final List<ConstructionPart> partForConstruction;
+    private final Carport carport;
+    private final Roof roof;
 
-    private Roof roof;
-    private Carport carport;
-    private Shed shed;
-    private Cladding cladding;
+    public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice, Material roofCladding,
+                        int degree, int shedLength, int shedwidth, Material shedAndCarportCladding, Carport carport, Roof roof) {
+        super(width, length, roofChoice, shedOrNo, claddingChoice, roofCladding,degree,shedLength,shedwidth,shedAndCarportCladding);
+        this.carport = carport;
+        this.roof = roof;
+        partForConstruction = new ArrayList();
+    }
 
+    public void addShed(Shed shed){
+        partForConstruction.add(shed);
+    }
+
+    public List<ConstructionPart> getPartForConstruction() {
+        return partForConstruction;
+    }
+
+    public Carport getCarport() {
+        return carport;
+    }
+
+    public Roof getRoof() {
+        return roof;
+    }
 
     /*public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
         this.width = width;
@@ -21,15 +46,7 @@ public class Construction extends UsersChoice {
         this.claddingChoice = convert(claddingChoice);
     }*/
 
-    public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice, Roof roof, Carport carport, Shed shed, Cladding cladding) {
-        super(width, length, roofChoice, shedOrNo, claddingChoice);
-        this.roof = roof;
-        this.carport = carport;
-        this.shed = shed;
-        this.cladding = cladding;
-    }
-
-    public Boolean convert(Integer digilBoolean){
+    /*public Boolean convert(Integer digilBoolean){
         if( digilBoolean.equals(1))
            return true;
         else if (digilBoolean.equals(0))
@@ -37,23 +54,8 @@ public class Construction extends UsersChoice {
         else{
             throw new IllegalArgumentException("Dette kan ikke konverteres til noget der er der eller ikke er (boolean"); //TODO
         }
-    }
-
-    public Roof getRoof() {
-        return roof;
-    }
-
-    public void setRoof(Roof roof){
-    this.roof = roof;
-    }
+    }*/
 
 
-    public Carport getCarport() {
-        return carport;
-    }
-
-    public Shed getShed() {
-        return shed;
-    }
 
 }

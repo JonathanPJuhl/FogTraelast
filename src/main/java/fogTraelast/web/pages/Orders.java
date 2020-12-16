@@ -1,5 +1,6 @@
 package fogTraelast.web.pages;
 
+import domain.construction.Category;
 import domain.construction.Construction;
 import domain.construction.Roof.FlatRoof;
 import domain.construction.Roof.PitchedRoof;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +48,11 @@ public class Orders extends BaseServlet {
                 System.out.println(usersChoice.toString());
 
                 if(!(usersChoice ==null)){
-                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
+                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice(),30); //TODO burde lave noget smartere
                     ArrayList<Integer> degreeOpts = new ArrayList<>();
-                    for (int i=5; i<50; i+=5){
+                    /*for (int i=5; i<50; i+=5){
                         degreeOpts.add(i);
-                    }
+                    }*/
                     System.out.println("Size: " + claddingOpts.size());
                     req.setAttribute("claddingOptionsRoof", claddingOpts);
                     req.setAttribute("userChoice", usersChoice);
@@ -153,6 +155,11 @@ public class Orders extends BaseServlet {
         else if (req.getPathInfo().substring(1).equals("constructionOverview")){
             Material roofMaterial = (Material) req.getAttribute("roofMaterialOption"); //TODO virker det når det ikke er parameter?
             int degreeOption = Integer.parseInt(req.getParameter("degreeOption"));
+            int shedlenght = Integer.parseInt(req.getParameter("shedLength"));
+            int shedwitdh = Integer.parseInt(req.getParameter("shedWidth"));
+            HttpSession session = req.getSession();
+            UsersChoice constructionFirst = (UsersChoice) session.getAttribute("tempConstruction");
+            Construction constructionSecond =
 
         }
         else if (req.getPathInfo().substring(1).equals("edit")) {

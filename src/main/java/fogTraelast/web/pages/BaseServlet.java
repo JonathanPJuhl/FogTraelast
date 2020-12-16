@@ -32,7 +32,7 @@ public class BaseServlet extends HttpServlet {
 
     private static FogTraelast createOrder() {
         Database db = new Database();
-        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db), new RoofFactory());
+        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db));
     }
 
     protected void render(String title, String content, HttpServletRequest req, HttpServletResponse resp) throws

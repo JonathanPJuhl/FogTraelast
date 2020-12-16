@@ -1,23 +1,52 @@
 package domain.construction.Roof;
 
+import domain.construction.Cladding;
 import domain.construction.Construction;
 import domain.construction.ConstructionRepository;
-import domain.material.Material;
+import domain.construction.UsersChoice;
+import domain.construction.carport.Carport;
+import domain.construction.shed.Shed;
 
-public class RoofFactory implements ConstructionRepository {
+public class RoofFactory implements ConstructionRepository { /*TODO Ændres til ConstructionFactory og flyttes*/
 
+private RoofSizeCalculator roofSizeCalculator;
 
     @Override
-    public Roof createRoof(String roofTypChoice, int roofHeight, Construction construction, Material cladding, int degree) {
-        int width = construction.getWidth();
-        int length = construction.getLength();
+    public Roof createRoof(UsersChoice usersChoice) {
+        roofSizeCalculator = new RoofSizeCalculator();
+        int width = usersChoice.getWidth();
+        int length = usersChoice.getLength();
         Roof roof;
-        if (roofTypChoice.equals("flat")){
-            roof = new FlatRoof(roofHeight, length, width, cladding);
+        if (usersChoice.roofChoiceConverter("Flat")){
+            roof = new FlatRoof(usersChoice, roofSizeCalculator);
         }else{
-            roof = new PitchedRoof(roofHeight,length, width,cladding, degree);
+            roof = new PitchedRoof(usersChoice, roofSizeCalculator);
         }
         return roof;
     }
+
+    @Override
+    public Carport createCarport(UsersChoice usersChoice) {
+        return new Carport(usersChoice);
+    }
+
+    @Override
+    public Shed createShed(Construction construction) {
+        return new Shed( construction);
+    }
+
+    @Override
+    public Cladding createCladding(Construction construction) {
+        return new Cladding(construction);
+    }
+
+
+ /*public boolean roofChoiceConverter(String roofTypeChoice){
+        if(roofTypeChoice.equals("Flat")){
+            return true;
+        } else {
+            return false;
+        }
+    }*/
 
 }

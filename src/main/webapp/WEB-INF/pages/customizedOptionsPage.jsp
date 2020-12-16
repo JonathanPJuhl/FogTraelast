@@ -14,27 +14,30 @@
 
         <form method="post" action="${pageContext.request.contextPath}/Orders/viewSVG}">
 
-            <select name="roofMaterialOption">
+            <select name="roofMaterialOption" class="form-control">
             <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
             <option id="roofMaterial" value="${materialOption.nametype}">${materialOption.nametype} - ${materialOption.color}</option>
             </c:forEach>
             </select>
 
-
+<br>
             <c:if test = "${requestScope.userChoice.roofChoice.equals('Pitched')}">
-                <select name = "degreeOption">
-                    <c:forEach begin="0" end="45" step="5" varStatus="i">
-                        <option id="degreeOption" value=<c:out value="${i}"/>><c:out value="${i.count}"/></option>
+                <select name = "degreeOption" class="form-control">
+                    <c:forEach var="i" begin="0" end="45" step="5">
+                        <option id="degreeOption" value="${i}">${i}</option>
                     </c:forEach>
                 </select>
             </c:if>
 
-
+<br>
                 <c:if test="${requestScope.userChoice.shedOrNo==1}">
                 <label for="shedLength">skurlængde </label>
-                <input type="number" name="shedLength" id="shedLength">
+                <input type="number" name="shedLength" id="shedLength" class="form-control">
+
+<br>
+
                 <label for="shedWidth">skurbredde </label>
-                <input type="number" name="shedWidth" id="shedWidth">
+                <input type="number" name="shedWidth" id="shedWidth" class="form-control">
                 </c:if>
 
 

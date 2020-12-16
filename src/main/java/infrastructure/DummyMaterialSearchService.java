@@ -20,12 +20,29 @@ public class DummyMaterialSearchService implements MaterialService {
     }
 
     @Override
-    public Material findMaterial(int id, String nameType, String color, double price, String type, String category, int height) {
-        return new Material(id, "Dummy" + type, color, price, type, category, height);
+    public Material findMaterial(String nameType, String color, String type, String category, int height) {
+        return new Material(0,"Dummy" + type, color, 0.0, type, category, height);
     }
 
     @Override
-    public List<Material> roofMaterials(String roofType) {
+    public Material findMaterialByID(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Material> findMaterialsByCategory(Category category) {
+        return null;
+    }
+
+
+    @Override
+    public List<Material> roofMaterials(String roofType, int width) {
+        return null;
+    }
+
+
+    @Override
+    public List<Material> allMaterialsInDB() {
         return null;
     }
 

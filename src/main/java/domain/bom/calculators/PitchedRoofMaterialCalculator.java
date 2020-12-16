@@ -25,8 +25,7 @@ public class PitchedRoofMaterialCalculator {
     private int vindskedeLængde;
     private int vandBrætsLength;
     private int tagstenEntirePitchedRoof;
-    //NOTE: tagpladerne fylder 307mm i længden og vi antager 200mm i bredden, derfor disse værdier for tagsten.
-    private int tagstenBredde;
+    private int roofTilesWidth = 200;
     private int rygstenBeslag;
     private int spærFullPlankLength;
     private int spærAmount;
@@ -47,14 +46,13 @@ public class PitchedRoofMaterialCalculator {
     }
 
 
-    public int amountOfTagsten(){
-        //NOTE: tagpladerne fylder 307mm i længden og vi antager 200mm i bredden, derfor disse værdier.
-        tagstenBredde = 200;
+    public int amountOfRoofTiles(){
         int tagstenHalfePitchedRoof = 0;
         //Vi trækker ikke en tagstenbredde fra i tagets længde i for-loopet fordi vi vil have det hele antal + en hvis
         // der er en rest
-        for (int i = 0; i < roofSizeCalculator.roofWidthSurface(construction)- LÆGTESTENDISTANCE; i= i + LÆGTESTENDISTANCE) {
-            for (int j = 0; j < roofSizeCalculator.roofLengthSurface(construction); j = j + tagstenBredde) {
+        for (int i = 0; i < roofSizeCalculator.roofWidthSurface(construction.roofChoiceConverter(construction.getRoofChoice()), construction.getWidth(),
+                construction.getDegree())- LÆGTESTENDISTANCE; i= i + LÆGTESTENDISTANCE) {
+            for (int j = 0; j < roofSizeCalculator.roofLengthSurface(false,construction.getLength(),construction.getRoof().getDegree()); j = j + roofTilesWidth) {
                 tagstenHalfePitchedRoof++;
             }
         }
@@ -63,7 +61,7 @@ public class PitchedRoofMaterialCalculator {
     }
 
     public int tagstenBindereCalculated(){
-        int tagstenBinder = amountOfTagsten();
+        int tagstenBinder = amountOfRoofTiles();
         for (int i = 0; i < tagstenBinder; i = i+2) {
             tagstenBinder ++;
         }
@@ -72,7 +70,7 @@ public class PitchedRoofMaterialCalculator {
 
     public int tagstenNakkekrogeCalculated(){
         //Vi formoder der er en tagstensnakkekrog pr. tagsten
-        tagstenNakkekrog = amountOfTagsten();
+        tagstenNakkekrog = amountOfRoofTiles();
         return tagstenNakkekrog;
     }
 
@@ -84,9 +82,7 @@ public class PitchedRoofMaterialCalculator {
 
     public int screwsForVindskederCalculated(){
         //Vi antager der bruges en skrue for hvert 50cm
-        vindskedeLængde = (int)(Math.hypot((construction.getWidth()/2.0), (double) (roofSizeCalculator.roofHeight(construction,
-                construction.getRoof().isFlat(), construction.getLength(),
-                construction.getWidth()))));
+        vindskedeLængde = (int)(Math.hypot((construction.getWidth()/2.0), roofSizeCalculator.roofHeight(construction.getWidth(),construction.getRoof().getDegree())));
         for (int i = 50; i < vindskedeLængde-50 ; i = i + 50) {
             screwsForVindskeder++;
         }
@@ -129,7 +125,7 @@ public class PitchedRoofMaterialCalculator {
         for (int i = 0; i < carportLength; i = 1 + distanceBestweenSpær) {
             spærAmount++;
         }
-        if (construction.getShed() != null) {
+        if (construction.getShedOrNo()==0) {
             spærAmount = spærAmount+ 2;
         }
         return spærAmount;
@@ -146,10 +142,11 @@ public class PitchedRoofMaterialCalculator {
         int lenghtOfTriangleGavlShorter = construction.getCarport().getWidth();
         int restTotal;
         int restUseable = 1;
-        int roofHeight = construction.getRoof().getHeight();
+        int roofHeight = (int) construction.getRoof().getHeight();
         double newHeight = construction.getRoof().getHeight();
         int roofAngleInTop = (int)(construction.getRoof().getDegree())*2;
-        int lengthOfHalfRoofWidthSurface = roofSizeCalculator.roofWidthSurface(construction);
+        int lengthOfHalfRoofWidthSurface = roofSizeCalculator.roofWidthSurface(construction.roofChoiceConverter
+                (construction.getRoofChoice()),construction.getWidth(),construction.getRoof().getDegree());
         int overlayPlankWidth;
         double kFactor;
         double tempHeigth;
@@ -304,4 +301,7 @@ public class PitchedRoofMaterialCalculator {
         return numberOfVandbraet;
     }
 
+    public int getRoofTilesWidth() {
+        return roofTilesWidth;
+    }
 }

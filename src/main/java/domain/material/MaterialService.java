@@ -11,9 +11,13 @@ public interface MaterialService {
 
     public void insertMaterialIntoDB(Material material); //TODO
 
-    public Material findMaterial(int id, String nametype, String color, double price, String type, String category, int height);
+    public Material findMaterial(String nametype, String color, String type, String category, int height);
 
-    public List<Material> roofMaterials(String roofType);
+    Material findMaterialByID(int id);
 
+    public List<Material> findMaterialsByCategory(Category category);
 
+    public List<Material> roofMaterials(String roofType, int height); //TODO lav den til en generel metode
+
+    public List<Material>allMaterialsInDB();
 }
