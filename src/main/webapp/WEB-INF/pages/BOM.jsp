@@ -23,11 +23,12 @@
             </tr>
             <c:forEach var="BOMItem" items="${sessionScope.bom}">
                 <tr>
-                    <td>${BOMItem}</td>
-                    <td>${BOMItem}</td>
-                    <td>${BOMItem}</td>
-                    <td>${BOMItem}</td>
-                    <td>${BOMItem}</td>
+                    <td>${BOMItem.material.nametype}</td>
+                    <td>${BOMItem.length}</td>
+                    <td>${BOMItem.quantity}</td>
+                    <!--SKAL FIXES -->
+                    <td>${BOMItem.material.color}</td>
+                    <td>${BOMItem.description}</td>
                 </tr>
             </c:forEach>
         </table>

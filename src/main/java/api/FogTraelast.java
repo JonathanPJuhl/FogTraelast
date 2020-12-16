@@ -60,9 +60,9 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    public Material findMaterial (String typeName, String type, int width, String color, String category, int height) throws NoSuchMaterialExists{
+    /*public Material findMaterial (String typeName, String type, int width, String color, String category, int height) throws NoSuchMaterialExists{
         return materialService.findMaterial(typeName, color, type, category, height);
-    }
+    }*/
 
     public List<Material> roofMaterials(String roofType){
         return materialService.roofMaterials(roofType);
@@ -107,5 +107,7 @@ public class FogTraelast {
     public List<Order> displayOrderBySalesman(int wantedSalesman){
         return orderLists.displayOrdersBySalesman(wantedSalesman);
     }
-
+public Material findMaterial(String name){
+        return materialService.findMaterial(name);
 }
+        }

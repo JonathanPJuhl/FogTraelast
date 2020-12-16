@@ -58,4 +58,13 @@ public class Carport extends ConstructionPart {
         return width;
     }
 
+    @Override
+    public String toString() {
+        return "Carport{" +
+                "height=" + height +
+                ", length=" + length +
+                ", width=" + width +
+                ", fromRoofToCarportMin=" + fromRoofToCarportMin +
+                '}';
+    }
 }

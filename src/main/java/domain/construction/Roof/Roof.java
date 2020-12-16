@@ -60,4 +60,18 @@ public class Roof extends ConstructionPart {
     public Material getCladding() {
         return cladding;
     }
+
+    @Override
+    public String toString() {
+        return "Roof{" +
+                "height=" + height +
+                ", length=" + length +
+                ", width=" + width +
+                ", flat=" + flat +
+                ", cladding=" + cladding +
+                ", degree=" + degree +
+                ", category=" + category +
+                ", usersChoice=" + usersChoice +
+                '}';
+    }
 }

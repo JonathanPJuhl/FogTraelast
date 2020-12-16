@@ -26,7 +26,7 @@ public class UsersChoice {
     }
 
     public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice, Material roofCladding,
-                       double degree, int shedLength, int shedwidth, Material shedAndCarportCladding) {
+                       double degree, int shedLength, int shedWidth, Material shedAndCarportCladding) {
         this.width = width;
         this.length = length;
         this.roofChoice = roofChoice;
@@ -35,7 +35,7 @@ public class UsersChoice {
         this.roofCladding = roofCladding;
         this.degree = degree;
         this.shedLength = shedLength;
-        this.shedwidth = shedwidth;
+        this.shedwidth = shedWidth;
         this.shedAndCarportCladding = shedAndCarportCladding;
     }
 
@@ -94,5 +94,21 @@ public class UsersChoice {
 
     public int getShedwidth() {
         return shedwidth;
+    }
+
+    @Override
+    public String toString() {
+        return "UsersChoice{" +
+                "width=" + width +
+                ", length=" + length +
+                ", roofChoice='" + roofChoice + '\'' +
+                ", shedOrNo=" + shedOrNo +
+                ", claddingChoice=" + claddingChoice +
+                ", roofCladding=" + roofCladding +
+                ", degree=" + degree +
+                ", shedLength=" + shedLength +
+                ", shedwidth=" + shedwidth +
+                ", shedAndCarportCladding=" + shedAndCarportCladding +
+                '}';
     }
 }

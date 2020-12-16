@@ -1,6 +1,7 @@
 package fogTraelast.web.pages;
 
 import domain.bom.BOM;
+import domain.bom.BOMItem;
 import domain.bom.BOMService;
 import domain.construction.Construction;
 import domain.construction.ConstructionPart;
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +28,12 @@ public class BOM_Kladde extends BaseServlet {
         HashMap construction = (HashMap) req.getSession().getAttribute("construction");
         UsersChoice usersChoice = (UsersChoice) req.getSession().getAttribute("secondUserChoice");
         Roof roof = (Roof) construction.get("roof");
-        if (!(req.getPathInfo() == null) && !(usersChoice.equals(null)) && !(roof.getCladding().equals(null))) {
+
+        if (!(usersChoice.equals(null)) && !(roof.getCladding().equals(null))) {
             BOMService bs = new BOMService(new DBMaterialRepository(db));
             BOM bom = bs.calculateBom(construction, usersChoice);
-            req.getSession().setAttribute("bom", bom);
+            ArrayList<BOMItem> bomI= (bom.getItems());
+            req.getSession().setAttribute("bom", bomI);
             render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
         //} else if (!(req.getPathInfo() == null) && !(construction.equals(null))) {
         } else {

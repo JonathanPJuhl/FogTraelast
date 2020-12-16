@@ -10,14 +10,14 @@
 <div class="scrollbar" id="styleFog">
     <div class="text-white" align="center">
 
-        <h1>Vælg dine tag og beklædnings egenskaber</h1>
+        <h1>Vælg dit tags og beklædnings egenskaber</h1>
 
         <form method="post">
 
             <label for="roofMaterial">Tagbeklædning </label>
             <select name="roofMaterialOption" class="form-control">
                 <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
-                    <option id="roofMaterial" value="${materialOption}">${materialOption.nametype}
+                    <option id="roofMaterial" value="${materialOption.nametype}">${materialOption.nametype}
                         - ${materialOption.color}</option>
                 </c:forEach>
             </select>
@@ -27,7 +27,7 @@
                 <label for="caportCladding">Beklædning </label>
                 <select name="carportCladding" class="form-control">
                     <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
-                        <option id="caportCladding" value="${materialOption}">${materialOption.nametype}
+                        <option id="caportCladding" value="${materialOption.nametype}">${materialOption.nametype}
                             - ${materialOption.color}</option>
                     </c:forEach>
                 </select>
@@ -53,7 +53,7 @@
                 <label for="shedCladding">Skurbeklædning </label>
                 <select name="shedCladding" class="form-control">
                     <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
-                        <option id="shedCladding" value="${materialOption}">${materialOption.nametype}
+                        <option id="shedCladding" value="${materialOption.nametype}">${materialOption.nametype}
                             - ${materialOption.color}</option>
                     </c:forEach>
                 </select>

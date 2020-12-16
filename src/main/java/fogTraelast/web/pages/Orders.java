@@ -152,33 +152,36 @@ public class Orders extends BaseServlet {
         else if (req.getPathInfo().substring(1).equals("constructionOverview")) {
             HttpSession session = req.getSession();
             UsersChoice consFirst = (UsersChoice) session.getAttribute("tempConstruction");
-            Material roofMaterial = (Material) req.getAttribute("roofMaterialOption"); //TODO virker det når det ikke er parameter?
+            String roofMaterial = req.getParameter("roofMaterialOption"); //TODO virker det når det ikke er parameter?
 
             double degreeOption = 0;
             int shedlenght = 0;
             int shedwitdh = 0;
-            Material shedCladding = null;
-            Material carportCladding = null;
+            String shedCladding = null;
+            String carportCladding = null;
 
             if ((req.getParameter("degreeOption") == null)) {
                 degreeOption = TILTTODEGREE;
             } else {
                 degreeOption = Integer.parseInt(req.getParameter("degreeOption"));
             }
-
-            if (consFirst.getShedOrNo() == 1) {
-                shedCladding = (Material) (req.getAttribute("shedCladding"));
+            if (consFirst.getShedOrNo()==1) {
+                shedCladding = (req.getParameter("shedCladding"));
+                System.out.println("shedClad" + shedCladding);
                 shedlenght = Integer.parseInt(req.getParameter("shedLength"));
+                System.out.println("shedLength" + shedlenght);
                 shedwitdh = Integer.parseInt(req.getParameter("shedWidth"));
+                System.out.println("shedWidth" + shedwitdh);
             }
             if (consFirst.getCladdingChoice() == 1) {
-                carportCladding = (Material) (req.getAttribute("carportCladding"));
+                carportCladding = (req.getParameter("carportCladding"));
             }
 
 
             UsersChoice constructionSecondChoice = new UsersChoice(consFirst.getWidth(), consFirst.getLength(),
-                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(), roofMaterial,
-                    degreeOption, shedlenght, shedwitdh, carportCladding);
+                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(), api.findMaterial(shedCladding),
+                    degreeOption, shedlenght, shedwitdh, api.findMaterial(carportCladding));
+
             req.getSession().setAttribute("secondUserChoice", constructionSecondChoice);
             RoofFactory roofFactory = new RoofFactory();
             Roof roof = roofFactory.createRoof(constructionSecondChoice);
@@ -188,15 +191,15 @@ public class Orders extends BaseServlet {
 
             if (constructionSecondChoice.getShedOrNo() == 1) {
                 Shed shed = roofFactory.createShed(constructionSecondChoice);
-                List<ConstructionPart> shedcladding = shed.addCladding(shed.addCladdingToShed(shedCladding, carport));
+                List<ConstructionPart> shedcladding = shed.addCladding(shed.addCladdingToShed(api.findMaterial(shedCladding), carport));
                 construction.addShed(shed);
             }
             if (constructionSecondChoice.getCladdingChoice() == 1 && constructionSecondChoice.getShedOrNo() == 1) {
-                carportCladdingList = carport.addCladding(carport.threeWallswithCladding(shedCladding));
+                carportCladdingList = carport.addCladding(carport.threeWallswithCladding(api.findMaterial(shedCladding)));
 
             } else if (constructionSecondChoice.getCladdingChoice() == 1) {
                 Carport carportTmp = (Carport) construction.getPartForConstruction().get("carport");
-                carportTmp.addCladding(carportTmp.threeWallswithCladding(carportCladding)); // TODO SKal man indsætte igen i Map?
+                carportTmp.addCladding(carportTmp.threeWallswithCladding(api.findMaterial(carportCladding))); // TODO SKal man indsætte igen i Map?
             }
 
             session.setAttribute("construction", construction.getPartForConstruction());

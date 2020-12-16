@@ -42,4 +42,12 @@ public class Shed extends ConstructionPart {
         return claddingShed;
     }
 
+    @Override
+    public String toString() {
+        return "Shed{" +
+                "length=" + length +
+                ", width=" + width +
+                ", category=" + category +
+                '}';
+    }
 }

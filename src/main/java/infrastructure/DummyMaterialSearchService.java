@@ -20,9 +20,14 @@ public class DummyMaterialSearchService implements MaterialService {
     }
 
     @Override
+    public Material findMaterial(String nametype) {
+        return null;
+    }
+
+    /*@Override
     public Material findMaterial(String nameType, String color, String type, String category, int height) {
         return new Material(0,"Dummy" + type, color, 0.0, type, category, height);
-    }
+    }*/
 
     @Override
     public Material findMaterialByID(int id) {
