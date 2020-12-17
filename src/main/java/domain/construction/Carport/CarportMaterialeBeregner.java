@@ -1,4 +1,4 @@
-package domain.construction.Carport;
+package domain.construction.carport;
 
 public class CarportMaterialeBeregner {
 
