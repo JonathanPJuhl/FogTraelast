@@ -99,7 +99,7 @@ public class BOMService {
             bom.addItem(new BOMItem((Material) shedMaterialMap.get("trykimp. Brædt 25"), shedMaterialCalculator.getStern().quantity(), shedMaterialCalculator.getStern().length(), shedMaterialCalculator.getStern().description("Sternbrædder til siderne Skur del (deles)")));
             bom.addItem(new BOMItem((Material) shedMaterialMap.get("trykimp. Stolpe 97"), shedMaterialCalculator.getPostAdded().quantity(), shedMaterialCalculator.getPostAdded().length(), shedMaterialCalculator.getPostAdded().description("Stolper nedgraves 90 cm. i jord + skråstiver")));
             bom.addItem(new BOMItem((Material) shedMaterialMap.get("spærtræ ubh. 45"), shedMaterialCalculator.getRim().quantity(), shedMaterialCalculator.getRim().length(), shedMaterialCalculator.getRim().description("Remme i sider, sadles ned i stolper Skur del")));
-            bom.addItem(new BOMItem((Material) shedMaterialMap.get("reglar ubh 45"), shedMaterialCalculator.getRim().quantity(), shedMaterialCalculator.getRim().length(), shedMaterialCalculator.getRim().description("Remme i sider, sadles ned i stolper Skur del")));
+            bom.addItem(new BOMItem((Material) shedMaterialMap.get("reglar ubh 45"), shedMaterialCalculator.getQuanityLoesHolterFront(), shedMaterialCalculator.getLengthLoesHolterFront(), shedMaterialCalculator.getLoesHolterBack().description("Remme i sider, sadles ned i stolper Skur del")));
         }
 
         //TODO

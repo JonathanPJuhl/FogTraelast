@@ -11,10 +11,10 @@ public class FlatRoofMaterialCalculator {
     private final static RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
     private TrapezPlates trapezPlatez = new TrapezPlates(construction, roofSizeCalculator);
     private Raft raft = new Raft(construction);
-    private Stern overSternFront = new Stern(construction.getRoof().getWidth());
-    private Stern overSternside = new Stern(construction.getRoof().getLength());
-    private Stern underSternLength = new Stern(construction.getRoof().getLength());
-    private Stern underSternWidth = new Stern(construction.getRoof().getWidth());
+    private final Stern overSternFront = new Stern(construction.getRoof().getWidth());
+    private final Stern overSternside = new Stern(construction.getRoof().getLength());
+    private final Stern underSternLength = new Stern(construction.getRoof().getLength());
+    private final Stern underSternWidth = new Stern(construction.getRoof().getWidth());
 
 
     public FlatRoofMaterialCalculator(Construction construction) {
@@ -220,4 +220,6 @@ public class FlatRoofMaterialCalculator {
     public Stern getOverSternside() {
         return overSternside;
     }
+
+
 }

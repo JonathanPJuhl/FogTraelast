@@ -4,8 +4,6 @@ import domain.bom.BOMItemSpecifications;
 import domain.construction.Construction;
 import domain.construction.shed.Shed;
 
-import java.util.ArrayList;
-
 public class ShedMaterialCalculator {
 
     private Construction construction;
@@ -14,7 +12,10 @@ public class ShedMaterialCalculator {
     private final Stern stern = new Stern();
     private final PostsWithShed postAdded = new PostsWithShed();
     private final Rim rim = new Rim();
-    private final LoesHolter loesHolter = new LoesHolter();
+    private final LoesHolter loesHolterSide = new LoesHolter(shed.getLength());
+    private final LoesHolter loesHolterBack = new LoesHolter(shed.getWidth());
+    private final int LengthLoesHolterFront = (int) Math.hypot(postAdded.sidePostFront(shed.getWidth()), shed.getHeigth());
+    private final int quanityLoesHolterFront = postAdded.sidePostFront(shed.getWidth())-1;
 
     public ShedMaterialCalculator(Construction construction){
         this.construction = construction;
@@ -22,26 +23,22 @@ public class ShedMaterialCalculator {
 
     public class LoesHolter implements BOMItemSpecifications{
 
-        public ArrayList<Integer> postLenghts(){
-            ArrayList<Integer> postLenghtsList = null;
+        private final int side;
 
-            int distanceBetweenPostsSide = postAdded.sidePostAmount(shed.getWidth());
-
-            double length = Math.hypot(distanceBetweenPostsSide, shed.getHeigth());
-
-            return postLenghtsList;
+        public LoesHolter(int side) {
+            this.side = side;
         }
 
         @Override
         public int length() {
-
+            int distanceBetweenPostsSide = postAdded.sidePostAmount(side);
+            double length = Math.hypot(distanceBetweenPostsSide, shed.getHeigth());
+            return (int) length;
         }
 
         @Override
         public int quantity() {
-            int quantity = postAdded.sidePostFront(shed.getWidth())-1;
-            quantity =+ (postAdded.sidePostAmount(shed.getLength())-1)*2;
-            quantity =+ postAdded.sidePostAmount(shed.getWidth())-1;
+            int quantity = postAdded.sidePostAmount(side)-1;
             return quantity;
         }
 
@@ -136,5 +133,21 @@ public class ShedMaterialCalculator {
 
     public Rim getRim() {
         return rim;
+    }
+
+    public LoesHolter getLoesHolterSide() {
+        return loesHolterSide;
+    }
+
+    public LoesHolter getLoesHolterBack() {
+        return loesHolterBack;
+    }
+
+    public int getLengthLoesHolterFront() {
+        return LengthLoesHolterFront;
+    }
+
+    public int getQuanityLoesHolterFront() {
+        return quanityLoesHolterFront;
     }
 }
