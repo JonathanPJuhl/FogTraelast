@@ -7,28 +7,30 @@ import domain.construction.Roof.RoofSizeCalculator;
 import static domain.bom.BOMService.WOODDIFFERENCES;
 
 public class FlatRoofMaterialCalculator {
+    private final TrapezPlates trapezPlates;
     private Construction construction;
-    private final static RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
-    private TrapezPlates trapezPlatez = new TrapezPlates(construction, roofSizeCalculator);
-    private Raft raft = new Raft(construction);
-    private final Stern overSternFront = new Stern(construction.getRoof().getWidth());
-    private final Stern overSternside = new Stern(construction.getRoof().getLength());
-    private final Stern underSternLength = new Stern(construction.getRoof().getLength());
-    private final Stern underSternWidth = new Stern(construction.getRoof().getWidth());
+    private RoofSizeCalculator roofSizeCalculator;
+    private final Raft raft;
+    private final Stern overSternFront;
+    private final Stern overSternSide;
+    private final Stern underSternLength;
+    private final Stern underSternWidth;
 
-
-    public FlatRoofMaterialCalculator(Construction construction) {
+    public FlatRoofMaterialCalculator(Construction construction, RoofSizeCalculator roofSizeCalculator) {
         this.construction = construction;
+        this.roofSizeCalculator = roofSizeCalculator;
+        this.trapezPlates = new TrapezPlates(roofSizeCalculator, construction);
+        this.raft = new Raft(construction);
+        this.overSternFront = new Stern(construction.getRoof().getWidth());
+        this.overSternSide = new Stern(construction.getRoof().getLength());
+        this.underSternLength =  new Stern(construction.getRoof().getLength());
+        this.underSternWidth = new Stern(construction.getRoof().getWidth());
     }
 
-    public TrapezPlates getTrapezPlatez() {
-        return trapezPlatez;
-    }
+
 
     //Denne implementerer ikke BOMItemsSpecifications, da der er tale om flere længder og undgå af spilmateriale, så pladerne har ikke kun en længde pr. slags materiale objekt
-    public class TrapezPlates{
-
-        private Construction construction;
+    public class TrapezPlates {
         //TODO ændre bredde
         private final int T300ROOFPLADELENGTH = 3000; //TODO Dette skulle rigtig beregnes ud fra 360 cm istedet
         private final int T600ROOFPLADELENGTH = 6000;
@@ -38,11 +40,16 @@ public class FlatRoofMaterialCalculator {
         private int square1numberOfT600Trapezplates = 0;
         private int square2numberOfT600Trapezplates = 0;
         private int square3numberOfT600Trapezplates = 0;
-        private final int roofWidthSurfaceCalc = roofSizeCalculator.pitchedRoofCalcutatedSurfaceWidth(construction.getRoof().getWidth(), construction.getRoof().getDegree());;
-        private final int roofLength = roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(), construction.getRoof().getDegree());;
+        private Construction construction;
+        public RoofSizeCalculator roofSizeCalculator;
+        private final int roofWidthSurfaceCalc;
+        private final int roofLength;
 
-        public TrapezPlates(Construction construction, RoofSizeCalculator roofSizeCalculator) {
+        public TrapezPlates(RoofSizeCalculator roofSizeCalculator, Construction construction) {
             this.construction = construction;
+            this.roofSizeCalculator = roofSizeCalculator;
+            roofWidthSurfaceCalc = roofSizeCalculator.pitchedRoofCalcutatedSurfaceWidth(construction.getRoof().getWidth(), construction.getRoof().getDegree());
+            roofLength =  roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(), construction.getRoof().getDegree());
         }
 
         //quantity T600 Trapezplates
@@ -143,7 +150,10 @@ public class FlatRoofMaterialCalculator {
     }
 
     public class Raft implements BOMItemSpecifications {
+        private Construction construction;
+
         public Raft(Construction construction) {
+        this.construction = construction;
         }
 
         @Override
@@ -217,9 +227,12 @@ public class FlatRoofMaterialCalculator {
         return underSternWidth;
     }
 
-    public Stern getOverSternside() {
-        return overSternside;
+    public Stern getOverSternSide() {
+        return overSternSide;
     }
 
+    public TrapezPlates getTrapezPlates() {
+        return trapezPlates;
+    }
 
 }

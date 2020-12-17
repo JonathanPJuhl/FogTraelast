@@ -188,7 +188,7 @@ public class Orders extends BaseServlet {
             Material claddingMaterial = api.findMaterial(carportCladding);
 
             if (constructionSecondChoice.getShedOrNo() == 1) {
-                Shed shed = roofFactory.createShed(constructionSecondChoice);
+                Shed shed = roofFactory.createShed(constructionSecondChoice, construction);
                  construction.addCladding(shed.addCladdingToShed(claddingMaterial, carport));
                 construction.addShed(shed);
             }

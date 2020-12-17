@@ -14,7 +14,7 @@ public class Shed extends ConstructionPart {
     private final int heigth;
     Construction construction;
 
-    public Shed(UsersChoice usersChoice) {
+    public Shed(UsersChoice usersChoice, Construction construction) {
         this.length = usersChoice.getShedLength();
         this.width = usersChoice.getShedwidth();
         this.category = Category.Shed;

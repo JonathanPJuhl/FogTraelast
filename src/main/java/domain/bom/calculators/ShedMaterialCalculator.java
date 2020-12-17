@@ -8,17 +8,25 @@ public class ShedMaterialCalculator {
 
     private Construction construction;
     private final CarportMaterialCalculator carportMaterialCalculator = new CarportMaterialCalculator(construction);
-    private final Shed shed = (Shed) construction.getPartForConstruction().get("shed");
-    private final Stern stern = new Stern();
-    private final PostsWithShed postAdded = new PostsWithShed();
-    private final Rim rim = new Rim();
-    private final LoesHolter loesHolterSide = new LoesHolter(shed.getLength());
-    private final LoesHolter loesHolterBack = new LoesHolter(shed.getWidth());
-    private final int LengthLoesHolterFront = (int) Math.hypot(postAdded.sidePostFront(shed.getWidth()), shed.getHeigth());
-    private final int quanityLoesHolterFront = postAdded.sidePostFront(shed.getWidth())-1;
+    private final Shed shed;
+    private final Stern stern;
+    private final PostsWithShed postAdded;
+    private final Rim rim;
+    private final LoesHolter loesHolterSide;
+    private final LoesHolter loesHolterBack;
+    private final int lengthLoesHolterFront;
+    private final int quanityLoesHolterFront;
 
     public ShedMaterialCalculator(Construction construction){
         this.construction = construction;
+        shed = (Shed) construction.getPartForConstruction().get("shed");
+        stern = new Stern();
+        postAdded = new PostsWithShed();
+        rim = new Rim();
+        loesHolterSide = new LoesHolter(shed.getLength()); // TODO d. 18 december Kig på Her omkring shed = null;
+        loesHolterBack = new LoesHolter(shed.getWidth());
+        lengthLoesHolterFront = (int) Math.hypot(postAdded.sidePostFront(shed.getWidth()), shed.getHeigth());
+        quanityLoesHolterFront = postAdded.sidePostFront(shed.getWidth())-1;
     }
 
     public class LoesHolter implements BOMItemSpecifications{
@@ -144,7 +152,7 @@ public class ShedMaterialCalculator {
     }
 
     public int getLengthLoesHolterFront() {
-        return LengthLoesHolterFront;
+        return lengthLoesHolterFront;
     }
 
     public int getQuanityLoesHolterFront() {

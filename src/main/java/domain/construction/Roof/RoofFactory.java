@@ -31,8 +31,8 @@ private RoofSizeCalculator roofSizeCalculator;
     }
 
     @Override
-    public Shed createShed(UsersChoice usersChoice) {
-        return new Shed(usersChoice);
+    public Shed createShed(UsersChoice usersChoice, Construction construction) {
+        return new Shed(usersChoice, construction);
     }
 
     @Override
