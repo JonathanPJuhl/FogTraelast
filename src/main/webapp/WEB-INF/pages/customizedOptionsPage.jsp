@@ -26,8 +26,8 @@
             <c:if test="${requestScope.userChoice.isCladdingChoice()==1}">
                 <label for="caportCladding">Beklædning </label>
                 <select name="carportCladding" class="form-control">
-                    <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
-                        <option id="caportCladding" value="${materialOption.nametype}">${materialOption.nametype}
+                    <c:forEach var="materialOption" items="${requestScope.claddingOptionsShedCarport}">
+                        <option id="caportCladding" value="${materialOption}">${materialOption.nametype}
                             - ${materialOption.color}</option>
                     </c:forEach>
                 </select>
@@ -49,16 +49,8 @@
 
                 <label for="shedWidth">Skurbredde </label>
                 <input type="number" name="shedWidth" id="shedWidth" class="form-control">
-
-                <label for="shedCladding">Skurbeklædning </label>
-                <select name="shedCladding" class="form-control">
-                    <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
-                        <option id="shedCladding" value="${materialOption.nametype}">${materialOption.nametype}
-                            - ${materialOption.color}</option>
-                    </c:forEach>
-                </select>
             </c:if>
-
+<br>
 <button class="btn btn-primary" type="submit">Se Stykliste (pt)</button>
         </form>
     </div>

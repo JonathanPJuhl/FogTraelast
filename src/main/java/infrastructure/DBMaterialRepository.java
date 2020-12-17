@@ -122,18 +122,22 @@ public class DBMaterialRepository implements MaterialService {
 
     @Override
     public List<Material> roofMaterials(String roofType) {
-        int height;
-        if (roofType.equals("Pitched")){
-            height = 30;
-        } else {
-            height = 10;
-        }
         List<Material> roofItems = new ArrayList();
+        String roofMaterialType;
+        int roofMaterialHeight;
+        if(roofType.equals("Flat")) {
+            roofMaterialType = MaterialType.roofPlades.getDanishName();
+            roofMaterialHeight = 10;
+        }else {
+            roofMaterialType = MaterialType.roofTiles.getDanishName();
+            roofMaterialHeight = 30;
+        }
         try (Connection conn = db.connect()) {
-            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID WHERE C.category=? and materials.height =?;";
+            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID WHERE C.category=? and materials.type = ? and materials.height = ?";
             PreparedStatement smt = conn.prepareStatement(sql);
             smt.setString( 1, roofType);
-            smt.setInt(2,height);
+            smt.setString(2,roofMaterialType);
+            smt.setInt(3,roofMaterialHeight);
             smt.executeQuery();
             ResultSet set = smt.getResultSet();
 

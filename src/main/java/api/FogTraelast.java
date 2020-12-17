@@ -1,15 +1,9 @@
 package api;
 
 import domain.construction.Category;
-import domain.construction.Construction;
-import domain.construction.ConstructionRepository;
-import domain.construction.Roof.Roof;
-import domain.construction.Roof.RoofSizeCalculator;
-import domain.construction.UsersChoice;
+import domain.construction.Roof.RoofFactory;
 import domain.material.Material;
-import domain.material.NoSuchMaterialExists;
 import domain.material.MaterialService;
-import domain.material.MaterialType;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
@@ -24,11 +18,13 @@ public class FogTraelast {
     private final UserRepository userLists;
     private final OrderRepository orderLists;
     private final MaterialService materialService;
+    private final RoofFactory constructionFactory;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, RoofFactory constructionFactory) {
         this.userLists = userLists;
         this.orderLists = orderLists;
         this.materialService = materialService;
+        this.constructionFactory = constructionFactory;
     }
 
     public Object getVERSION() {
@@ -107,7 +103,8 @@ public class FogTraelast {
     public List<Order> displayOrderBySalesman(int wantedSalesman){
         return orderLists.displayOrdersBySalesman(wantedSalesman);
     }
-public Material findMaterial(String name){
+
+    public Material findMaterial(String name){
         return materialService.findMaterial(name);
 }
-        }
+}

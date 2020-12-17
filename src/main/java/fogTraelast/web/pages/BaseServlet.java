@@ -21,6 +21,7 @@ public class BaseServlet extends HttpServlet {
     protected static final FogTraelast api;
     protected static final RoofSizeCalculator roofSizing;
     protected static final Database db;
+    protected static final RoofFactory constructionFactory;
 
     //Dette er gjort på dette format, da vi ikke har lyst til at instantiere et nyt API hver gang render køres, i det
     //kan give problemer med at dele det imellem vores servlets. Til dette bruges en class-constructor, fordi emnet
@@ -29,10 +30,11 @@ public class BaseServlet extends HttpServlet {
         db = new Database();
         api = createOrder(); //TODO bedre navngivning
         roofSizing = new RoofSizeCalculator();
+        constructionFactory = new RoofFactory();
     }
 
     private static FogTraelast createOrder() {
-        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db));
+        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db), constructionFactory);
     }
 
     protected void render(String title, String content, HttpServletRequest req, HttpServletResponse resp) throws

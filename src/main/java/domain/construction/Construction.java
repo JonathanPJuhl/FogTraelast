@@ -3,11 +3,9 @@ package domain.construction;
 import domain.construction.Roof.Roof;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
-import domain.material.Material;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Construction {
@@ -28,6 +26,10 @@ public class Construction {
 
     public void addShed(Shed shed){
         partForConstruction.put("shed", shed);
+    }
+
+    public void addCladding(Cladding[] claddings){
+        partForConstruction.put(claddings[0].getCategory(), claddings);
     }
 
     public Map getPartForConstruction() {

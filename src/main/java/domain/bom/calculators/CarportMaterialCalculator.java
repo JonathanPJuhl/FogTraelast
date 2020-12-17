@@ -41,8 +41,8 @@ public class CarportMaterialCalculator {
     /////////////////////////////////////////
 
     final private int POSTWIDTH = 100;
-    final private int MAXPOSTDISTANCE = 3000; //TODO er det 3 m fra side til side?
-    final private int MAXROWSISTANCE = 6000; //TODO er det 6 m fra side til side?
+    final private int MAXPOSTDISTANCE = 3000;
+    final private int MAXROWSISTANCE = 6000;
 
     //counts how many posts should there be on one side of a carport or a shed
     public int sidePostAmount(int size) {
@@ -73,17 +73,6 @@ public class CarportMaterialCalculator {
         return rows;
     }
 
-    public static int roofSpaerAmount(Construction construction) {
-        //todo return number of spaer needed for whole construction length
-        //todo in ConstrucionMaterialCalculator implement method that will return  2 Materials of beslag
-        // - one for left and one for right with amount of number of spaer and one Material that is the beslag skruer where the amount is roofSpaernumber x2x3x3
-
-        // Der skal være max 550 mm mellem spærne
-        int constructionLength = construction.getRoof().getLength();;
-        double almostSpaerAmount = constructionLength / 550.0 + 1;
-        int spaerAmount = (int) Math.round(almostSpaerAmount);
-        return spaerAmount;
-    }
 
     public int getPOSTWIDTH() {
         return POSTWIDTH;
