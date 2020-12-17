@@ -12,4 +12,16 @@ public class Cladding extends ConstructionPart{
         this.material = material;
         this.sidesQuanitatyForCarport = 3;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public int getSidesQuanitatyForCarport() {
+        return sidesQuanitatyForCarport;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
 }

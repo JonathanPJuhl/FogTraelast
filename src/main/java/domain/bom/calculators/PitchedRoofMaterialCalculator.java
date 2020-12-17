@@ -8,8 +8,6 @@ import domain.construction.carport.Carport;
 
 import java.util.HashMap;
 
-import static domain.bom.calculators.CarportMaterialCalculator.roofSpaerAmount;
-
 public class PitchedRoofMaterialCalculator {
 
     private int numberOfTaglaegter; // T1 taglægter til spær
@@ -83,12 +81,6 @@ public class PitchedRoofMaterialCalculator {
         //Vi formoder der er en tagstensnakkekrog pr. tagsten
         tagstenNakkekrog = amountOfRoofTiles();
         return tagstenNakkekrog;
-    }
-
-    public int screwForTaglægterCalculated(Construction construction){
-        //Vi antager der er er en skrue pr toplægteholder + samt et pr spær for at sætte toplægten fast
-        screwForTaglægter = amountOfToplaegteHolder(construction) * SCREWSPERTAGLÆGTEHOLDER;
-        return screwForTaglægter;
     }
 
     public int screwsForVindskederCalculated(){
@@ -227,16 +219,6 @@ public class PitchedRoofMaterialCalculator {
         }
 
         return numberOfStern;
-    }
-
-    //** Beregning af antal Toplægteholdere i forhold til spær (beslag)
-    private int amountOfToplaegteHolder(Construction construction)
-    {
-        int spaer = roofSpaerAmount(construction);
-        int toplaegteholder = spaer;
-
-        numberOfToplaegteHolder = toplaegteholder * spaer;
-        return numberOfToplaegteHolder;
     }
 
     //** Beregning af T1 toplægte (til rygsten) i forhold til tag længde **

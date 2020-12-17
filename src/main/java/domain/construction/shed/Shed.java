@@ -33,8 +33,8 @@ public class Shed extends ConstructionPart {
         return wallsForShed;
     }
 
-    public List<ConstructionPart> addCladding(Cladding[] claddingWalls){
-        List<ConstructionPart> claddingShed = new ArrayList();
+    public ArrayList<ConstructionPart> addCladding(Cladding[] claddingWalls){
+        ArrayList<ConstructionPart> claddingShed = new ArrayList();
 
         for (Cladding claddingWall : claddingWalls ) {
             claddingShed.add(claddingWall);

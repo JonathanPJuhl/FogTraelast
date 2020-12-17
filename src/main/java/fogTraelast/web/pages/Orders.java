@@ -48,14 +48,15 @@ public class Orders extends BaseServlet {
 
                 if (!(usersChoice == null)) {
                     List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice()); //TODO burde lave noget smartere
-                    ArrayList<Integer> degreeOpts = new ArrayList<>();
-                    /*for (int i=5; i<50; i+=5){
+                    List<Material> claddingOptsShedCarport = api.findMaterialsByCategory(Category.Cladding);
+                    /*ArrayList<Integer> degreeOpts = new ArrayList<>();
+                    for (int i=5; i<50; i+=5){
                         degreeOpts.add(i);
                     }*/
                     System.out.println("Size: " + claddingOpts.size());
                     req.setAttribute("claddingOptionsRoof", claddingOpts);
                     req.setAttribute("userChoice", usersChoice);
-                    req.setAttribute("degrees", degreeOpts);
+                    req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
                     render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
                 } else {
                     resp.sendError(400, "Badly formated request");
@@ -148,17 +149,16 @@ public class Orders extends BaseServlet {
             }
 
         }
-        //TODO CATHRINE ARBEJDER PÅ DENNE DEL
         else if (req.getPathInfo().substring(1).equals("constructionOverview")) {
             HttpSession session = req.getSession();
             UsersChoice consFirst = (UsersChoice) session.getAttribute("tempConstruction");
             String roofMaterial = req.getParameter("roofMaterialOption"); //TODO virker det når det ikke er parameter?
 
-            double degreeOption = 0;
+            double degreeOption;
             int shedlenght = 0;
             int shedwitdh = 0;
-            String shedCladding = null;
-            String carportCladding = null;
+            String shedCladding = "none";
+            String carportCladding = "none";
 
             if ((req.getParameter("degreeOption") == null)) {
                 degreeOption = TILTTODEGREE;
@@ -166,8 +166,6 @@ public class Orders extends BaseServlet {
                 degreeOption = Integer.parseInt(req.getParameter("degreeOption"));
             }
             if (consFirst.getShedOrNo()==1) {
-                shedCladding = (req.getParameter("shedCladding"));
-                System.out.println("shedClad" + shedCladding);
                 shedlenght = Integer.parseInt(req.getParameter("shedLength"));
                 System.out.println("shedLength" + shedlenght);
                 shedwitdh = Integer.parseInt(req.getParameter("shedWidth"));
@@ -179,7 +177,7 @@ public class Orders extends BaseServlet {
 
 
             UsersChoice constructionSecondChoice = new UsersChoice(consFirst.getWidth(), consFirst.getLength(),
-                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(), api.findMaterial(shedCladding),
+                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(), api.findMaterial(roofMaterial),
                     degreeOption, shedlenght, shedwitdh, api.findMaterial(carportCladding));
 
             req.getSession().setAttribute("secondUserChoice", constructionSecondChoice);
@@ -187,19 +185,19 @@ public class Orders extends BaseServlet {
             Roof roof = roofFactory.createRoof(constructionSecondChoice);
             Carport carport = roofFactory.createCarport(constructionSecondChoice);
             Construction construction = roofFactory.createConstruction(roof, carport);
-            List<Cladding> carportCladdingList;
+            Material claddingMaterial = api.findMaterial(carportCladding);
 
             if (constructionSecondChoice.getShedOrNo() == 1) {
                 Shed shed = roofFactory.createShed(constructionSecondChoice);
-                List<ConstructionPart> shedcladding = shed.addCladding(shed.addCladdingToShed(api.findMaterial(shedCladding), carport));
+                 construction.addCladding(shed.addCladdingToShed(claddingMaterial, carport));
                 construction.addShed(shed);
             }
             if (constructionSecondChoice.getCladdingChoice() == 1 && constructionSecondChoice.getShedOrNo() == 1) {
-                carportCladdingList = carport.addCladding(carport.threeWallswithCladding(api.findMaterial(shedCladding)));
+                construction.addCladding(carport.threeWallswithCladding(claddingMaterial));
 
             } else if (constructionSecondChoice.getCladdingChoice() == 1) {
                 Carport carportTmp = (Carport) construction.getPartForConstruction().get("carport");
-                carportTmp.addCladding(carportTmp.threeWallswithCladding(api.findMaterial(carportCladding))); // TODO SKal man indsætte igen i Map?
+                carportTmp.addCladding(carportTmp.threeWallswithCladding(claddingMaterial)); // TODO SKal man indsætte igen i Map? TEST DET
             }
 
             session.setAttribute("construction", construction.getPartForConstruction());

@@ -11,11 +11,11 @@ public abstract interface MaterialService {
 
     public void insertMaterialIntoDB(Material material); //TODO
 
-    Material findMaterial(String nametype);
+    public Material findMaterial(String nametype);
 
     /*public Material findMaterial(String nametype, String color, String type, String category, int height);*/
 
-    Material findMaterialByID(int id);
+    public Material findMaterialByID(int id);
 
     public List<Material> findMaterialsByCategory(Category category);
 
