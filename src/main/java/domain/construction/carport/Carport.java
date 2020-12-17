@@ -24,11 +24,12 @@ public class Carport extends ConstructionPart {
 
     }
 
-    public Cladding[] threeWallswithCladding(Material material){
+    public Cladding[] threeWallswithCladding(Material claddingMaterial){
+
         Cladding[] threeWalls = new Cladding[3]; //TODO
 
-        Cladding claddingBack = new Cladding(width, height, Category.Carport,material);
-        Cladding claddingSide = new Cladding(length, height, Category.Carport, material);
+        Cladding claddingBack = new Cladding(width, height, Category.Carport, claddingMaterial);
+        Cladding claddingSide = new Cladding(length, height, Category.Carport, claddingMaterial);
 
         threeWalls[0] = claddingBack;
         threeWalls[1] = claddingSide;

@@ -11,11 +11,14 @@ public class Shed extends ConstructionPart {
     private final int length;
     private final int width;
     private final Category category;
+    private final int heigth;
+    Construction construction;
 
     public Shed(UsersChoice usersChoice) {
         this.length = usersChoice.getShedLength();
         this.width = usersChoice.getShedwidth();
         this.category = Category.Shed;
+        this.heigth = construction.getCarport().getHeight();
     }
 
     public Cladding[] addCladdingToShed(Material material, Carport carport){
@@ -40,6 +43,22 @@ public class Shed extends ConstructionPart {
             claddingShed.add(claddingWall);
         }
         return claddingShed;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public int getHeigth() {
+        return heigth;
     }
 
     @Override

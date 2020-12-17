@@ -22,7 +22,7 @@ public class BOM_Kladde extends BaseServlet {
         HashMap construction = (HashMap) req.getSession().getAttribute("construction");
         UsersChoice usersChoice = (UsersChoice) req.getSession().getAttribute("secondUserChoice");
         if (!(usersChoice.getRoofCladding()==null)) {
-            BOMService bs = new BOMService(new DBMaterialRepository(db), constructionFactory);
+            BOMService bs = new BOMService(new DBMaterialRepository(db));
             BOM bom = bs.calculateBom(construction, usersChoice, constructionFactory);
             ArrayList<BOMItem> bomI= (bom.getItems());
             req.getSession().setAttribute("bom", bomI);

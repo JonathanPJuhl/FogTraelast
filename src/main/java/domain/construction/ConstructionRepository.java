@@ -13,4 +13,5 @@ public interface ConstructionRepository { //TODO navngiv til andet navn f.eks. -
     public Shed createShed(UsersChoice usersChoice);
 
     public Construction createConstruction(Roof roof, Carport carport);
+
 }
