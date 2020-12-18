@@ -1,39 +1,28 @@
 package domain.construction.SVG;
 
-public class svgCarport implements Draw {
-    /*
-    private int StolpeResultat;
-    private int remResult;
+class SvgCarport {
 
-    int antalStolper = StolpeResultat;
-    int remLength = remResult;
-*/
-    int stolpeBredde = 12;
-    int y1 = 29 + 40;
+    private Tag tag = new Tag();
+    private Spær spær = new Spær();
+    private Rem rem = new Rem();
+    private Stolper stolper = new Stolper();
+    private Pile pile = new Pile();
+    private Skur skur;
 
-    @Override
-    public String draw(int length, int width) {
-        StringBuilder stolpeText = new StringBuilder();
-
-        int y2 = width - 60 + stolpeBredde - 3 + 40;
-
-        int Resultat = 0;
-        int AfstandprBjælke = 0;
-
-        int overskud = (length - (AfstandprBjælke * (Resultat - 1)));
-        int x = 35 + (overskud / 2);
-        for (int i = 0; i < Resultat; i++){
-
-            stolpeText.append("<rect x=\""+x+"\" y=\""+y1+"\" width=\"12\" height=\"12\" " +
-                    "style=\"stroke:black; storke-width:1; fill-opacity:0.0;\" > </rect>" + "\n"
-            );
-            stolpeText.append("<rect x=\""+x+"\" y=\""+ y2 +"\" width=\"12\" height=\"12\" " +
-                    "style=\"stroke:black; storke-width:1; fill-opacity:0.0;\" > </rect>" + "\n"
-            );
-            x += 180;
-        }
+    StringBuilder SvgCarportText = new StringBuilder();
 
 
-        return stolpeText.toString();
+    public String Build(int lenght, int width, int skurBredde, int skurLængde){
+        skur = new Skur(skurBredde, skurLængde);
+
+        SvgCarportText.append(tag.draw(lenght,width));
+        SvgCarportText.append(spær.draw(lenght,width));
+        SvgCarportText.append(rem.draw(lenght,width));
+        SvgCarportText.append(stolper.draw(lenght,width));
+        SvgCarportText.append(pile.draw(lenght,width));
+        SvgCarportText.append(skur.draw(lenght,width));
+
+        return SvgCarportText.toString();
     }
+
 }
