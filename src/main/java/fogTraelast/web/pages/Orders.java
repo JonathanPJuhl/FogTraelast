@@ -46,14 +46,14 @@ public class Orders extends BaseServlet {
                 UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
                 System.out.println(usersChoice.toString());
 
-                if (!(usersChoice == null)) {
+                if (!(usersChoice == null)) {//TODO Fejl håndtering (Denne vil altid være true)
                     List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice()); //TODO burde lave noget smartere
                     List<Material> claddingOptsShedCarport = api.findMaterialsByCategory(Category.Cladding);
                     /*ArrayList<Integer> degreeOpts = new ArrayList<>();
                     for (int i=5; i<50; i+=5){
                         degreeOpts.add(i);
                     }*/
-                    System.out.println("Size: " + claddingOpts.size());
+                    System.out.println("Material: " + claddingOptsShedCarport.size());
                     req.setAttribute("claddingOptionsRoof", claddingOpts);
                     req.setAttribute("userChoice", usersChoice);
                     req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
@@ -123,8 +123,8 @@ public class Orders extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo().substring(1).equals("create")) {
-            int length = Integer.parseInt(req.getParameter("length"));
-            int width = Integer.parseInt(req.getParameter("width"));
+            int length = Integer.parseInt(req.getParameter("length"))*10;
+            int width = Integer.parseInt(req.getParameter("width"))*10;
             String roofType = req.getParameter("roofType"); //TODO
             int shedOrNo = Integer.parseInt((req.getParameter("shedOrNo")));
             int cladding = Integer.parseInt(req.getParameter("cladding"));
@@ -152,13 +152,13 @@ public class Orders extends BaseServlet {
         else if (req.getPathInfo().substring(1).equals("constructionOverview")) {
             HttpSession session = req.getSession();
             UsersChoice consFirst = (UsersChoice) session.getAttribute("tempConstruction");
-            String roofMaterial = req.getParameter("roofMaterialOption"); //TODO virker det når det ikke er parameter?
+            int roofMaterial = Integer.parseInt(req.getParameter("roofMaterialOption")); //TODO virker det når det ikke er parameter?
+            int carportShedCladding = Integer.parseInt(req.getParameter("carportCladding"));
 
             double degreeOption;
             int shedlenght = 0;
             int shedwitdh = 0;
-            String shedCladding = "none";
-            String carportCladding = "none";
+            int carportCladding = 0;
 
             if ((req.getParameter("degreeOption") == null)) {
                 degreeOption = TILTTODEGREE;
@@ -172,20 +172,21 @@ public class Orders extends BaseServlet {
                 System.out.println("shedWidth" + shedwitdh);
             }
             if (consFirst.getCladdingChoice() == 1) {
-                carportCladding = (req.getParameter("carportCladding"));
+                carportCladding = Integer.parseInt(req.getParameter("carportCladding"));
+                carportShedCladding = carportCladding;
             }
-
+            Material claddingMaterial = api.findMaterialByID(carportShedCladding);
 
             UsersChoice constructionSecondChoice = new UsersChoice(consFirst.getWidth(), consFirst.getLength(),
-                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(), api.findMaterial(roofMaterial),
-                    degreeOption, shedlenght, shedwitdh, api.findMaterial(carportCladding));
+                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(), api.findMaterialByID(roofMaterial),
+                    degreeOption, shedlenght, shedwitdh, claddingMaterial);
 
             req.getSession().setAttribute("secondUserChoice", constructionSecondChoice);
             RoofFactory roofFactory = new RoofFactory();
             Roof roof = roofFactory.createRoof(constructionSecondChoice);
             Carport carport = roofFactory.createCarport(constructionSecondChoice);
             Construction construction = roofFactory.createConstruction(roof, carport);
-            Material claddingMaterial = api.findMaterial(carportCladding);
+
 
             if (constructionSecondChoice.getShedOrNo() == 1) {
                 Shed shed = roofFactory.createShed(constructionSecondChoice, construction);

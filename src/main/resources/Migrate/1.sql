@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS materials;
 
 
+
 CREATE TABLE IF NOT EXISTS categories(
                                          categoryID int PRIMARY KEY AUTO_INCREMENT,
                                          category varchar(50) NOT NULL

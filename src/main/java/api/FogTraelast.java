@@ -107,4 +107,7 @@ public class FogTraelast {
     public Material findMaterial(String name){
         return materialService.findMaterial(name);
 }
+public Material findMaterialByID(int id){
+        return materialService.findMaterialByID(id);
+    }
 }

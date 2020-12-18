@@ -19,8 +19,6 @@ public class BOMService {
 
     private final MaterialService materials;
 
-    public static final int WOODDIFFERENCES = 300; //TODO HVordan gør jeg den private?
-
     private CarportMaterialCalculator carportMaterialCalculator;
     private CladdingMaterialCalculator claddingMaterialCalculator;
     private FlatRoofMaterialCalculator flatRoofMaterialCalculator;
@@ -41,8 +39,6 @@ public class BOMService {
 
         Construction construction = constructionFactory.createConstruction(roof,carport);
 
-        Shed shed = constructionFactory.createShed(usersChoice,construction);
-
         RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
         carportMaterialCalculator = new CarportMaterialCalculator(construction);
         flatRoofMaterialCalculator = new FlatRoofMaterialCalculator(construction, roofSizeCalculator);
@@ -54,6 +50,7 @@ public class BOMService {
             claddingMaterialCalculator = new CladdingMaterialCalculator(claddingMaterial);
         }
         if (usersChoice.getShedOrNo() == 1) {
+            Shed shed = constructionFactory.createShed(usersChoice,construction);
             construction.setShed(shed);
             shedMaterialCalculator = new ShedMaterialCalculator(construction);
         }
@@ -68,7 +65,7 @@ public class BOMService {
         HashMap materialMapRoofWood = new HashMap();
 
         for (Material woodMaterial: materialListRoof) {
-            if (woodMaterial.getType().equals(MaterialType.wood)){
+            if (woodMaterial.getType().equals(MaterialType.wood.getDanishName())){
                 materialMapRoofWood.put(woodMaterial.getNametype()+" "+woodMaterial.getHeight(),woodMaterial);
             }
         }
@@ -77,11 +74,11 @@ public class BOMService {
         if (construction.getRoof().isFlat()) {
             bom.addItem(new BOMItem(roofMaterialCladding, flatRoofMaterialCalculator.getTrapezPlates().quantityOfT600ForRoof(1090), flatRoofMaterialCalculator.getTrapezPlates().getT600ROOFPLADELENGTH(),"tagplader monteres på spær"));
             bom.addItem(new BOMItem(roofMaterialCladding, flatRoofMaterialCalculator.getTrapezPlates().quantityOfT300ForRoof(1090), flatRoofMaterialCalculator.getTrapezPlates().getT300ROOFPLADELENGTH(),"tagplader monteres på spær"));
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("spærtræ 25"), flatRoofMaterialCalculator.getRaft().quantity(),flatRoofMaterialCalculator.getRaft().length(), flatRoofMaterialCalculator.getRaft().description("Spær,monteres på rem")));
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Brædt 25"), flatRoofMaterialCalculator.getUnderSternWidth().quantity(),flatRoofMaterialCalculator.getUnderSternWidth().length(), flatRoofMaterialCalculator.getUnderSternWidth().description("understernbrædder til for & bag ende")));
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Brædt 25"), flatRoofMaterialCalculator.getUnderSternLength().quantity()*2,flatRoofMaterialCalculator.getUnderSternLength().length(), flatRoofMaterialCalculator.getUnderSternLength().description("understernbrædder til siderne")));
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Brædt 25"), flatRoofMaterialCalculator.getOverSternFront().quantity(),flatRoofMaterialCalculator.getOverSternFront().length(), flatRoofMaterialCalculator.getOverSternFront().description("oversternsbrædder til forenden")));
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Brædt 25"), flatRoofMaterialCalculator.getOverSternSide().quantity()*2,flatRoofMaterialCalculator.getOverSternSide().length(), flatRoofMaterialCalculator.getOverSternSide().description("oversternbrædder til siderne")));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("spærtræ ubh. 45"), flatRoofMaterialCalculator.getRaft().quantity(),flatRoofMaterialCalculator.getRaft().length(), flatRoofMaterialCalculator.getRaft().description("Spær, monteres på rem")));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getUnderSternWidth().quantity()*2,flatRoofMaterialCalculator.getUnderSternWidth().length(), flatRoofMaterialCalculator.getUnderSternWidth().description("understernbrædder til for & bag ende")));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getUnderSternLength().quantity()*2,flatRoofMaterialCalculator.getUnderSternLength().length(), flatRoofMaterialCalculator.getUnderSternLength().description("understernbrædder til siderne")));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getOverSternFront().quantity(),flatRoofMaterialCalculator.getOverSternFront().length(), flatRoofMaterialCalculator.getOverSternFront().description("oversternsbrædder til forenden")));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getOverSternSide().quantity()*2,flatRoofMaterialCalculator.getOverSternSide().length(), flatRoofMaterialCalculator.getOverSternSide().description("oversternbrædder til siderne")));
         }else{
             bom.addItem(new BOMItem(roofMaterialCladding, pitchedRoofMaterialCalculator.amountOfRoofTiles(),pitchedRoofMaterialCalculator.getRoofTilesWidth(),"monteres på taglægter"));
             //bom.addItem(new BOMItem((Material) materialMapRoofWood.get(""), pitchedRoofMaterialCalculator);

@@ -4,8 +4,6 @@ import domain.bom.BOMItemSpecifications;
 import domain.construction.Construction;
 import domain.construction.Roof.RoofSizeCalculator;
 
-import static domain.bom.BOMService.WOODDIFFERENCES;
-
 public class FlatRoofMaterialCalculator {
     private final TrapezPlates trapezPlates;
     private Construction construction;
@@ -15,12 +13,13 @@ public class FlatRoofMaterialCalculator {
     private final Stern overSternSide;
     private final Stern underSternLength;
     private final Stern underSternWidth;
+    public final int WOODDIFFERENCES = 3000;
 
     public FlatRoofMaterialCalculator(Construction construction, RoofSizeCalculator roofSizeCalculator) {
         this.construction = construction;
         this.roofSizeCalculator = roofSizeCalculator;
         this.trapezPlates = new TrapezPlates(roofSizeCalculator, construction);
-        this.raft = new Raft(construction);
+        this.raft = new Raft(construction, WOODDIFFERENCES);
         this.overSternFront = new Stern(construction.getRoof().getWidth());
         this.overSternSide = new Stern(construction.getRoof().getLength());
         this.underSternLength =  new Stern(construction.getRoof().getLength());
@@ -56,12 +55,11 @@ public class FlatRoofMaterialCalculator {
         //TODO Cath skal se det igennem in case of forandringer i pladebredde
         public int quantityOfT600ForRoof(int trapezPladeWidth) {
             ///////////////Beregning af første del af tag (hvor mange HELE T600 plader kan der være)
-            trapezPladeWidth = trapezPladeWidth * 10;
             int tempTrapezPladeWidth = trapezPladeWidth;
             for (int i = 0; i < (roofWidthSurfaceCalc - tempTrapezPladeWidth + OVERLAP); i = i + tempTrapezPladeWidth) {
                 for (int j = 0; j < roofLength - 1; j = j + T600ROOFPLADELENGTH) {
                     square1numberOfT600Trapezplates++;
-                    tempTrapezPladeWidth = trapezPladeWidth * 10 - OVERLAP;
+                    tempTrapezPladeWidth = trapezPladeWidth - OVERLAP;
                 }
             }
             tempTrapezPladeWidth = trapezPladeWidth;
@@ -116,13 +114,13 @@ public class FlatRoofMaterialCalculator {
 
         //Antal T300 Trapezplader
         public int quantityOfT300ForRoof(int trapezPladeWidth) {
-            int tempTrapezPladeWidth = (trapezPladeWidth * 10);
+            int tempTrapezPladeWidth = (trapezPladeWidth);
             int restOfLength = roofLength % T600ROOFPLADELENGTH;
             int quantityOfT300 = 0;
             if (restOfLength > 0 && restOfLength <= T300ROOFPLADELENGTH) {
                 for (int i = 0; i < roofWidthSurfaceCalc - tempTrapezPladeWidth + OVERLAP; i = i + tempTrapezPladeWidth) {
                     quantityOfT300++;
-                    tempTrapezPladeWidth = trapezPladeWidth * 10 - OVERLAP;
+                    tempTrapezPladeWidth = trapezPladeWidth - OVERLAP;
                 }
             }
             numberOfT300Trapezplates = quantityOfT300;
@@ -152,7 +150,7 @@ public class FlatRoofMaterialCalculator {
     public class Raft implements BOMItemSpecifications {
         private Construction construction;
 
-        public Raft(Construction construction) {
+        public Raft(Construction construction, int woodDifferences) {
         this.construction = construction;
         }
 
@@ -173,7 +171,7 @@ public class FlatRoofMaterialCalculator {
         public int quantity() {
             int quantityRafters = 0;
             int constructionLength = construction.getRoof().getLength();
-            for (int i = 0; i < constructionLength; i = i + 60) {
+            for (int i = 0; i < constructionLength; i =( i + 60)) {
                 quantityRafters++;
             }
             return quantityRafters;
@@ -196,6 +194,10 @@ public class FlatRoofMaterialCalculator {
 
         @Override
         public int length() {
+            if(size==construction.getRoof().getLength())
+            construction.getRoof().getLength();
+            else
+                construction.getRoof().getWidth();
             return size;
         }
 

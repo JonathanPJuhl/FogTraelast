@@ -7,16 +7,31 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<h1 class="text-white">Stykliste</h1>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="scrollbar" id="styleFog">
-    <div align="center" >
+    <div align="center">
+        <H1 class="text-white">Tillykke med din nye carport!</H1>
+        <br>
+        <H3 class="text-white" align="left">&nbsp;&nbsp;&nbsp;&nbsp;Din carports egenskaber:</H3>
+        <H5 class="text-white" align="left"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+            Bredde: ${(sessionScope.tempConstruction.width)/1000} m -
+            Længde: ${(sessionScope.tempConstruction.length)/1000} m
+            - Tagtype: ${(sessionScope.tempConstruction.roofChoice)}
+            - Skur? ${(sessionScope.tempConstruction.shedOrNo)}
+            - Beklædning? ${(sessionScope.tempConstruction.claddingChoice)}</H5>
+        <H5 class="text-white" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <c:if test="${sessionScope.tempConstruction.shedOrNo==1}">
+                - Beklædnings materiale ${(sessionScope.tempConstruction.shedAndCarportCladding.nametype)} - ${(sessionScope.tempConstruction.shedAndCarportCladding.color)}
+            </c:if>
+            <c:if test="${sessionScope.tempConstruction.isCladdingChoice()==1}">
+            - Tag materiale ${(sessionScope.tempConstruction.roofCladding.nametype)}
+            - ${sessionScope.tempConstruction.roofCladding.color} -</H5>
+        </c:if>
         <table class="text-white" border="1" cellpadding="5">
             <h2 class="text-white">Stykliste</h2>
             <tr>
                 <th>Materialets beskrivelse</th>
-                <th>Længde</th>
+                <th>Længde (i mm)</th>
                 <th>Antal</th>
                 <th>Enhed</th>
                 <th>Beskrivelse</th>
