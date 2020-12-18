@@ -23,7 +23,7 @@
             </select>
 
             <br>
-            <c:if test="${requestScope.userChoice.isCladdingChoice()==1}">
+            <c:if test="${requestScope.userChoice.isCladdingChoice()==1 || requestScope.userChoice.shedOrNo() ==1}">
                 <label for="caportCladding">Beklædning </label>
                 <select name="carportCladding" class="form-control">
                     <c:forEach var="materialOption" items="${requestScope.claddingOptionsShedCarport}">

@@ -1,7 +1,7 @@
 package api;
 
 import domain.construction.Category;
-import domain.construction.Roof.RoofFactory;
+import domain.construction.Roof.ConstructionFactory;
 import domain.material.Material;
 import domain.material.MaterialService;
 import domain.orders.NoSuchOrderExists;
@@ -18,9 +18,9 @@ public class FogTraelast {
     private final UserRepository userLists;
     private final OrderRepository orderLists;
     private final MaterialService materialService;
-    private final RoofFactory constructionFactory;
+    private final ConstructionFactory constructionFactory;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, RoofFactory constructionFactory) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, ConstructionFactory constructionFactory) {
         this.userLists = userLists;
         this.orderLists = orderLists;
         this.materialService = materialService;

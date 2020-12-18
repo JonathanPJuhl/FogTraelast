@@ -7,7 +7,7 @@ import domain.construction.shed.Shed;
 public class ShedMaterialCalculator {
 
     private Construction construction;
-    private final CarportMaterialCalculator carportMaterialCalculator = new CarportMaterialCalculator(construction);
+    private final CarportMaterialCalculator carportMaterialCalculator;
     private final Shed shed;
     private final Stern stern;
     private final PostsWithShed postAdded;
@@ -19,14 +19,15 @@ public class ShedMaterialCalculator {
 
     public ShedMaterialCalculator(Construction construction){
         this.construction = construction;
-        shed = (Shed) construction.getPartForConstruction().get("shed");
-        stern = new Stern();
-        postAdded = new PostsWithShed();
-        rim = new Rim();
-        loesHolterSide = new LoesHolter(shed.getLength()); // TODO d. 18 december Kig på Her omkring shed = null;
-        loesHolterBack = new LoesHolter(shed.getWidth());
-        lengthLoesHolterFront = (int) Math.hypot(postAdded.sidePostFront(shed.getWidth()), shed.getHeigth());
-        quanityLoesHolterFront = postAdded.sidePostFront(shed.getWidth())-1;
+        this.carportMaterialCalculator = new CarportMaterialCalculator(construction);
+        this.shed = (Shed) construction.getPartForConstruction().get("shed");
+        this.stern = new Stern();
+        this.postAdded = new PostsWithShed();
+        this.rim = new Rim(); //TODO RET NAVN VIGTIGT
+        this.loesHolterSide = new LoesHolter(shed.getLength()); // TODO d. 18 december Kig på Her omkring shed = null;
+        this.loesHolterBack = new LoesHolter(shed.getWidth());
+        this.lengthLoesHolterFront = (int) Math.hypot(postAdded.sidePostFront(shed.getWidth()), shed.getHeigth());
+        this.quanityLoesHolterFront = postAdded.sidePostFront(shed.getWidth())-1;
     }
 
     public class LoesHolter implements BOMItemSpecifications{
@@ -61,7 +62,7 @@ public class ShedMaterialCalculator {
         @Override
         public int length() {
             Shed shed = (Shed) construction.getPartForConstruction().get("shed");
-            return shed.getLength()*2;
+            return shed.getLength()*2; //TODO Ændre beregning
         }
 
         @Override

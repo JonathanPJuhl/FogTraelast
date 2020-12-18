@@ -7,7 +7,7 @@ import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
 
-public class RoofFactory implements ConstructionRepository { /*TODO Ændres til ConstructionFactory og flyttes*/
+public class ConstructionFactory implements ConstructionRepository { /*TODO Ændres til ConstructionFactory og flyttes*/
 
 private RoofSizeCalculator roofSizeCalculator;
 

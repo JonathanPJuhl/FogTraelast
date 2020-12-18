@@ -1,9 +1,10 @@
 package domain.bom;
 
 import domain.bom.calculators.*;
+import domain.construction.Category;
 import domain.construction.Construction;
 import domain.construction.Roof.Roof;
-import domain.construction.Roof.RoofFactory;
+import domain.construction.Roof.ConstructionFactory;
 import domain.construction.Roof.RoofSizeCalculator;
 import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
@@ -31,7 +32,7 @@ public class BOMService {
         this.materials = materials;
     }
 
-    public BOM calculateBom(HashMap constructionList, UsersChoice usersChoice, RoofFactory constructionFactory) {
+    public BOM calculateBom(HashMap constructionList, UsersChoice usersChoice, ConstructionFactory constructionFactory) {
 
         //Bygger construction ud fra UserChoice og opretter beregnere
         Carport carport = constructionFactory.createCarport(usersChoice);
@@ -51,7 +52,7 @@ public class BOMService {
         }
         if (usersChoice.getShedOrNo() == 1) {
             Shed shed = constructionFactory.createShed(usersChoice,construction);
-            construction.setShed(shed);
+            construction.addShed(shed);
             shedMaterialCalculator = new ShedMaterialCalculator(construction);
         }
 
@@ -73,7 +74,7 @@ public class BOMService {
         //Tag materialer tilføjes til stykliste alt efter tagtype som brugeren har valgt
         if (construction.getRoof().isFlat()) {
             bom.addItem(new BOMItem(roofMaterialCladding, flatRoofMaterialCalculator.getTrapezPlates().quantityOfT600ForRoof(1090), flatRoofMaterialCalculator.getTrapezPlates().getT600ROOFPLADELENGTH(),"tagplader monteres på spær"));
-            bom.addItem(new BOMItem(roofMaterialCladding, flatRoofMaterialCalculator.getTrapezPlates().quantityOfT300ForRoof(1090), flatRoofMaterialCalculator.getTrapezPlates().getT300ROOFPLADELENGTH(),"tagplader monteres på spær"));
+                bom.addItem(new BOMItem(roofMaterialCladding, flatRoofMaterialCalculator.getTrapezPlates().quantityOfT300ForRoof(1090), flatRoofMaterialCalculator.getTrapezPlates().getT300ROOFPLADELENGTH(), "tagplader monteres på spær"));
             bom.addItem(new BOMItem((Material) materialMapRoofWood.get("spærtræ ubh. 45"), flatRoofMaterialCalculator.getRaft().quantity(),flatRoofMaterialCalculator.getRaft().length(), flatRoofMaterialCalculator.getRaft().description("Spær, monteres på rem")));
             bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getUnderSternWidth().quantity()*2,flatRoofMaterialCalculator.getUnderSternWidth().length(), flatRoofMaterialCalculator.getUnderSternWidth().description("understernbrædder til for & bag ende")));
             bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getUnderSternLength().quantity()*2,flatRoofMaterialCalculator.getUnderSternLength().length(), flatRoofMaterialCalculator.getUnderSternLength().description("understernbrædder til siderne")));
@@ -87,10 +88,11 @@ public class BOMService {
 
         if (usersChoice.getCladdingChoice() == 1) {
         bom.addItem(new BOMItem(claddingMaterial, claddingMaterialCalculator.quantity(), claddingMaterialCalculator.length(), claddingMaterialCalculator.description("Beklædning af væg og skur")));
+        //TODO
         }
 
         if (usersChoice.getShedOrNo() == 1) {
-            List<Material> materialListShed = materials.findMaterialsByCategory(construction.getRoof().getCategory());
+            List<Material> materialListShed = materials.findMaterialsByCategory(Category.Shed);
             HashMap shedMaterialMap = new HashMap();
             for (Material shedMaterial: materialListShed) {
                     shedMaterialMap.put(shedMaterial.getNametype()+" "+shedMaterial.getHeight(),shedMaterial);

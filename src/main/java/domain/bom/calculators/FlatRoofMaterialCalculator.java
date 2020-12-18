@@ -14,6 +14,7 @@ public class FlatRoofMaterialCalculator {
     private final Stern underSternLength;
     private final Stern underSternWidth;
     public final int WOODDIFFERENCES = 3000;
+    private int quantityOfT300temp;
 
     public FlatRoofMaterialCalculator(Construction construction, RoofSizeCalculator roofSizeCalculator) {
         this.construction = construction;
@@ -47,7 +48,7 @@ public class FlatRoofMaterialCalculator {
         public TrapezPlates(RoofSizeCalculator roofSizeCalculator, Construction construction) {
             this.construction = construction;
             this.roofSizeCalculator = roofSizeCalculator;
-            roofWidthSurfaceCalc = roofSizeCalculator.pitchedRoofCalcutatedSurfaceWidth(construction.getRoof().getWidth(), construction.getRoof().getDegree());
+            roofWidthSurfaceCalc = roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(), construction.getRoof().getDegree());
             roofLength =  roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(), construction.getRoof().getDegree());
         }
 
@@ -56,8 +57,9 @@ public class FlatRoofMaterialCalculator {
         public int quantityOfT600ForRoof(int trapezPladeWidth) {
             ///////////////Beregning af første del af tag (hvor mange HELE T600 plader kan der være)
             int tempTrapezPladeWidth = trapezPladeWidth;
+
             for (int i = 0; i < (roofWidthSurfaceCalc - tempTrapezPladeWidth + OVERLAP); i = i + tempTrapezPladeWidth) {
-                for (int j = 0; j < roofLength - 1; j = j + T600ROOFPLADELENGTH) {
+                for (int j = 0; j < (roofLength - 1); j = j + T600ROOFPLADELENGTH) {
                     square1numberOfT600Trapezplates++;
                     tempTrapezPladeWidth = trapezPladeWidth - OVERLAP;
                 }
@@ -84,11 +86,11 @@ public class FlatRoofMaterialCalculator {
             /////////////////////////////////////////////////////
 
             ///////////////Beregning af tredje del af tag (om hvor mange antal T600 plader der er (delt i længden))
-            int quantityOfT300 = quantityOfT300ForRoof(trapezPladeWidth);
+            quantityOfT300temp = quantityOfT300ForRoof(trapezPladeWidth);
 
             tempTrapezPladeWidth = trapezPladeWidth;
 
-            if (quantityOfT300 == 0) {
+            if (quantityOfT300temp == 0) {
                 for (int i = 0; i < (roofWidthSurfaceCalc - tempTrapezPladeWidth + OVERLAP); i = i + tempTrapezPladeWidth) {
                     square3numberOfT600Trapezplates++;
 
@@ -103,7 +105,7 @@ public class FlatRoofMaterialCalculator {
 
             /////////////Beregning af fjerde og sidste del af tag (om den sidste plade skal være en T600 eller T300)
 
-            if (quantityOfT300 == 0)
+            if (quantityOfT300temp == 0)
                 numberOfT600Trapezplates++;
 
 
@@ -237,4 +239,7 @@ public class FlatRoofMaterialCalculator {
         return trapezPlates;
     }
 
+    public int getQuantityOfT300temp() {
+        return quantityOfT300temp;
+    }
 }
