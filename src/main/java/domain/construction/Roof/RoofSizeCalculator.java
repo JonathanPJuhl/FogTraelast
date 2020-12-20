@@ -50,8 +50,7 @@ public class RoofSizeCalculator{
     public int pitchedRoofCalcutatedSurfaceWidth(int width, double degree) {
         double roofHeigth = roofHeight(width, degree);
         int halfRaftWidth = width / 2;
-        int roofSurfaceHalfWidth = (int) (halfRaftWidth / (Math.sin(
-                Math.toRadians(degree))));
+        int roofSurfaceHalfWidth = (int) (halfRaftWidth / (Math.sin(Math.toRadians(degree))));
         return roofSurfaceHalfWidth;
     }
 

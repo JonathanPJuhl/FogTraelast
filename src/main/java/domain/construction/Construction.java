@@ -13,15 +13,13 @@ public class Construction {
     private Map partForConstruction;
     private Carport carport;
     private Roof roof;
-    private Shed shed;
 
-    public Construction( Roof roof, Carport carport) {
+    public Construction(Roof roof, Carport carport) {
         this.carport = carport;
         this.roof = roof;
         partForConstruction = new HashMap();
         partForConstruction.put("roof", roof);
         partForConstruction.put("carport", carport);
-        this.shed = (Shed) partForConstruction.get("shed");
     }
 
     public void addShed(Shed shed){
@@ -50,10 +48,6 @@ public class Construction {
 
     public void setRoof(Roof roof) {
         this.roof = roof;
-    }
-
-    public void setShed(Shed shed) {
-        this.shed = shed;
     }
 
     /*public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput

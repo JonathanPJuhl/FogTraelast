@@ -61,25 +61,6 @@ public class DBMaterialRepository implements MaterialService {
             throw new UnexpectedDBError(throwables);
         }
     }
-    /*@Override
-    public Material findMaterial(String nametype, String color, String type, String category, int height) {
-        Material material = null;
-        try (Connection conn = db.connect()) {
-            String sql = "SELECT materials.materialID FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID where materials.name=?;";
-            PreparedStatement smt = conn.prepareStatement(sql);
-            smt.setString( 1, nametype);
-            smt.setString( 2, color);
-            //TODO
-            smt.executeQuery();
-            ResultSet set = smt.getResultSet();
-            if (set.next()) {
-                material = parseMaterialList(set);
-            }
-            return material;
-        } catch (SQLException | NoSuchMaterialExists throwables) {
-            throw new UnexpectedDBError(throwables);
-        }
-    }*/
 
     @Override
     public Material findMaterialByID(int id) {

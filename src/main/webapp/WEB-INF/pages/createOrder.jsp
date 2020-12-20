@@ -11,10 +11,10 @@
         <h1>Vælg dine mål</h1>
         <form method="post" action="${pageContext.request.contextPath}/Orders/create">
 
-            <label for="lengthName">Længde </label>
+            <label for="lengthName">Længde (cm)</label>
             <input type="number" class="form-control" id="lengthName" aria-describedby="lengthNameHelp" name="length">
 
-            <label for="widthName">Bredde</label>
+            <label for="widthName">Bredde (cm)</label>
             <input type="number" class="form-control" id="widthName" name="width">
 
             <label for="roofType">Tag type</label>
@@ -22,7 +22,6 @@
                 <option value="Flat">Fladt tag</option>
                 <option value="Pitched">Tag med rejsning</option>
             </select>
-
 
             <label for="shedOrNo">Vil du have et skur? </label>
             <select class="form-control" name="shedOrNo" id="shedOrNo">
@@ -35,7 +34,6 @@
                 <option value=1>Med vægge(3 stk)</option>
                 <option value=0>Uden vægge</option>
             </select>
-
 
             <label for="emailName">Email </label>
             <input type="email" class="form-control" id="emailName" aria-describedby="emailNameHelp" name="email">

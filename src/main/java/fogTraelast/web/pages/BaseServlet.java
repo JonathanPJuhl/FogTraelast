@@ -1,7 +1,7 @@
 package fogTraelast.web.pages;
 
 import api.FogTraelast;
-import domain.construction.Roof.RoofFactory;
+import domain.construction.Roof.ConstructionFactory;
 import domain.construction.Roof.RoofSizeCalculator;
 import fogTraelast.web.widget.NavBar;
 import infrastructure.DBMaterialRepository;
@@ -21,7 +21,7 @@ public class BaseServlet extends HttpServlet {
     protected static final FogTraelast api;
     protected static final RoofSizeCalculator roofSizing;
     protected static final Database db;
-    protected static final RoofFactory constructionFactory;
+    protected static final ConstructionFactory constructionFactory;
 
     //Dette er gjort på dette format, da vi ikke har lyst til at instantiere et nyt API hver gang render køres, i det
     //kan give problemer med at dele det imellem vores servlets. Til dette bruges en class-constructor, fordi emnet
@@ -30,7 +30,7 @@ public class BaseServlet extends HttpServlet {
         db = new Database();
         api = createOrder(); //TODO bedre navngivning
         roofSizing = new RoofSizeCalculator();
-        constructionFactory = new RoofFactory();
+        constructionFactory = new ConstructionFactory();
     }
 
     private static FogTraelast createOrder() {

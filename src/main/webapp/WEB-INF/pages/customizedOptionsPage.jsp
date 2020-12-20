@@ -17,17 +17,17 @@
             <label for="roofMaterial">Tagbeklædning </label>
             <select name="roofMaterialOption" class="form-control">
                 <c:forEach var="materialOption" items="${requestScope.claddingOptionsRoof}">
-                    <option id="roofMaterial" value="${materialOption.nametype}">${materialOption.nametype}
+                    <option id="roofMaterial" value="${materialOption.id}">${materialOption.nametype}
                         - ${materialOption.color}</option>
                 </c:forEach>
             </select>
 
             <br>
-            <c:if test="${requestScope.userChoice.isCladdingChoice()==1}">
+            <c:if test="${requestScope.userChoice.isCladdingChoice()==1 || requestScope.userChoice.shedOrNo() ==1}">
                 <label for="caportCladding">Beklædning </label>
                 <select name="carportCladding" class="form-control">
                     <c:forEach var="materialOption" items="${requestScope.claddingOptionsShedCarport}">
-                        <option id="caportCladding" value="${materialOption}">${materialOption.nametype}
+                        <option id="caportCladding" value="${materialOption.id}">${materialOption.nametype}
                             - ${materialOption.color}</option>
                     </c:forEach>
                 </select>

@@ -41,17 +41,19 @@ public class CarportMaterialCalculator {
     /////////////////////////////////////////
 
     final private int POSTWIDTH = 100;
-    final private int MAXPOSTDISTANCE = 3000;
     final private int MAXROWSISTANCE = 6000;
+    final private int MAXDISTANCEPOST = 3000;
 
-    //counts how many posts should there be on one side of a carport or a shed
-    public int sidePostAmount(int size) {
+    //Taeller hvor mange stolper der er på en side af carport (og skur)
+    public int sidePostAmount(int size, int distanceMax) {
         int numberOfPost;
-        size = size - POSTWIDTH;
-        if (size % MAXPOSTDISTANCE == 0) { //
-            numberOfPost = size / MAXPOSTDISTANCE + 1;
+        if (size % distanceMax == 0) { //
+            numberOfPost = (size / distanceMax)+ 1;
         } else {
-            numberOfPost = ((size - size % MAXPOSTDISTANCE) / MAXPOSTDISTANCE) + 2;
+            numberOfPost = (size / distanceMax) + 2;
+        }
+        if (size == 1){
+            numberOfPost = 2;
         }
         return numberOfPost;
     }
@@ -59,7 +61,7 @@ public class CarportMaterialCalculator {
 
     //counts distance between posts on the side
     public int postColumns(int length) {
-        return (length - POSTWIDTH) / (sidePostAmount(length) - 1);
+        return (length - POSTWIDTH) / (sidePostAmount(length, MAXDISTANCEPOST) - 1);
     }
 
     //counts how many rows of post should there be because max distance between posts

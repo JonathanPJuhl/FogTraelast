@@ -7,7 +7,7 @@ import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
 
-public class RoofFactory implements ConstructionRepository { /*TODO Ændres til ConstructionFactory og flyttes*/
+public class ConstructionFactory implements ConstructionRepository { /*TODO Ændres til ConstructionFactory og flyttes*/
 
 private RoofSizeCalculator roofSizeCalculator;
 
@@ -31,8 +31,8 @@ private RoofSizeCalculator roofSizeCalculator;
     }
 
     @Override
-    public Shed createShed(UsersChoice usersChoice) {
-        return new Shed(usersChoice);
+    public Shed createShed(UsersChoice usersChoice, Construction construction) {
+        return new Shed(usersChoice, construction);
     }
 
     @Override
