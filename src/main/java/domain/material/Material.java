@@ -1,19 +1,18 @@
 package domain.material;
 
-import domain.construction.Category;
-
-public class Material {
+public class Material{
 
     private final int id;
-    private String nametype;
-    private String color;
+    private final String nametype;
+    private final String color;
     private final double price;
     private final String type;
-    private String category;
-    private int height;
+    private final String category;
+    private final int height;
+    private final int overlap;
 
 
-    public Material(int id, String nametype, String color, double price, String type, String category, int height) {
+    public Material(int id, String nametype, String color, double price, String type, String category, int height, int shouldHaveOverlap) {
         this.id = id;
         this.nametype = nametype;
         this.color = color;
@@ -21,6 +20,7 @@ public class Material {
         this.type = type;
         this.category = category;
         this.height = height;
+        this.overlap = shouldHaveOverlap;
     }
 
     public int getId() {
@@ -50,6 +50,12 @@ public class Material {
     public int getHeight() {
         return height;
     }
+
+    public int getOverlap() {
+        return overlap;
+    }
+}
+
 /*
     private String nameConstructor(String nameType, int width, String color, String enhed) throws IllegalFormatException {
         if (enhed.equals("mm") && color.equals(null)) {
@@ -64,17 +70,3 @@ public class Material {
     }
 
  */
-
-    @Override
-    public String toString() {
-        return "Material{" +
-                "id=" + id +
-                ", nametype='" + nametype + '\'' +
-                ", color='" + color + '\'' +
-                ", price=" + price +
-                ", type=" + type +
-                ", category=" + category +
-                ", height=" + height +
-                '}';
-    }
-}

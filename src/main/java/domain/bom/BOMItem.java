@@ -7,13 +7,15 @@ public class BOMItem {
     private final int quantity;
     private final int length;
     private final String description;
+    private final int width;
 
 
-    public BOMItem(Material material, int quantity, int length, String description) {
+    public BOMItem(Material material, int quantity, int length, String description, int width) {
         this.material = material;
         this.length = length;
         this.quantity = quantity;
         this.description = description;
+        this.width = width;
     }
 
     public Material getMaterial() {
@@ -30,5 +32,9 @@ public class BOMItem {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }
