@@ -88,9 +88,10 @@ public class NoWaistHelper {
         lengthRest = constructionPart.getLength();
         widthRest = constructionPart.getWidth();
 
-        //Beregner antal ud via givende conditions pr materialemulighed (pr. materiale med forskellige længder og bredder)
+        //Beregner antal ud via givende conditions pr materialemulighed (forskellige længder pr. materiale og bredder)
         for (int i = 1; i <= availableMaterialsAndMeasures.size() + 1; i++) {
 
+            //Dette hashMap kører kun et tal og et tilknyttet hashMap et af gangen
             for (Map.Entry materialInOrder : availableMaterialsAndMeasures.get(i).entrySet()) {
                 meassures = ((int[]) materialInOrder.getValue());
                 material = (Material) materialInOrder.getKey();
@@ -102,7 +103,7 @@ public class NoWaistHelper {
                     return mapOfQts;
                 }
 
-                //Regnestykkerne er baseret på at hver materiale har et overlap, undtagen det første materiale
+                //Regnestykkerne er baseret på at hver stykke materiale har et overlap, hvis overlap ikke er 0, undtagen det første stykke materiale
                 if (quantityLength == 0 && quantityWidth != 0) {
                     quantityLength = 1;
                     quantityWidth = quantitySide(materialWidth, widthRest, overlap, mapOfQts);
@@ -137,7 +138,7 @@ public class NoWaistHelper {
 
                 //Hvis antallet er 0, så lægger vi et materiale mere fra den forrige størrelse til og overskriver den forhenværende
                 //Vi sikrer os også på at det er ikke bliver det første materiale der er på tale
-                if (i > 1) {
+                if (i > 1 && widthRest != 0 || lengthRest != 0) {
                     materialBeforeValue = mapOfQts.get(i - 1);
                     materialMeauseresAndQt = materialBeforeValue.get(material);
                     if (lengthRest < materialLength - overlap) {
@@ -163,12 +164,12 @@ public class NoWaistHelper {
     }
 
     public int quantitySide(int materialSide, int sideConstructionPart, int overlap, HashMap<Integer, HashMap<Material, int[]>> listToValidate) {
-        int tmpMaterialSide;
+        //her ungås overlap på første materiale
+        int tmpMaterialSide = materialSide;
         int quanitiy = 0;
 
+        //Skelner mellem om der er et materiale brugt før til samme længde ved at se om der er andre materialer i mappet
         if (listToValidate.size() == 0) {
-            tmpMaterialSide = materialSide;
-        } else {
             tmpMaterialSide = materialSide - overlap;
         }
 
@@ -179,8 +180,67 @@ public class NoWaistHelper {
         return quanitiy;
     }
 
-    public HashMap quantitiesAtSideCalculated(ConstructionPart constructionPart, TreeSet<Integer> lengthOptions, Material material) {
-        
+    public HashMap quantitiesAtSideCalculated(int sideConstuctionPart, TreeSet<Integer> lengthOptions, Material material) {
+        //hhv. sidelængde og material
+        HashMap<Integer, Material> materialMeasures = new HashMap<>();
+        HashMap<Integer, Material> materialMeasuresTmp = new HashMap<>();
+        //Hhv. sidelængde (material og antal)
+        HashMap<Integer, HashMap<Integer, Material>> materialMeasuresAndQnty = new HashMap<>();
+        HashMap<Integer, HashMap<Integer, Material>> mapOfQnty = new HashMap<>();
+        int quantity;
+
+        //Sorteret længde-muligheder med tilhørende materiale tilknyttet (størt først)
+        Set inOrderLargeFirst = lengthOptions.descendingSet();
+        Iterator<Integer> listLengths = inOrderLargeFirst.iterator();
+        while (listLengths.hasNext()) {
+            materialLength = listLengths.next();
+            materialMeasures.put(materialLength, material);
+        }
+
+        int sideRest = sideConstuctionPart;
+
+        for (int i = 0; i < materialMeasures.size(); i++) {
+            for (Map.Entry materialNLength : materialMeasures.entrySet()) {
+                int materialLengthOption = (int) materialNLength.getKey();
+                Material tmpMaterial = ((Material) materialNLength.getValue());
+                int materialOverlap = tmpMaterial.getOverlap();
+
+                if (sideRest == 0) {
+                    return mapOfQnty;
+                }
+                quantity = quantitySide(materialLengthOption, sideRest, materialOverlap, null);
+                sideRest = sideRest % ((quantity * (materialLengthOption - material.getOverlap())) + material.getOverlap());
+
+                if (quantity > 0) {
+                    sideRest = sideRest % ((quantity * (materialLengthOption - material.getOverlap())) + material.getOverlap());
+                    materialMeasuresTmp.put(quantity, tmpMaterial);
+                    mapOfQnty.put(i, materialMeasuresTmp);
+                }
+            }
+
+            //Hvis antallet er 0, så lægger vi et materiale mere fra den forrige størrelse til og overskriver den forhenværende
+            //Vi sikrer os også på at det er ikke bliver det første materiale der er på tale
+            if (i > 1 && sideRest != 0) {
+                materialBeforeValue = mapOfQts.get(i - 1);
+                materialMeauseresAndQt = materialBeforeValue.get(material);
+                if (lengthRest < materialLength - overlap) {
+                    quantityLength++;
+                }
+                if (widthRest < materialWidth - overlap) {
+                    quantityWidth++;
+                }
+                //ArealBeregning
+                finalQuantity = quantityLength * quantityWidth;
+
+                finalMaterialMeauseresAndQt[0] = materialMeauseresAndQt[0];
+                finalMaterialMeauseresAndQt[1] = materialMeauseresAndQt[1];
+                finalMaterialMeauseresAndQt[2] = finalQuantity;
+
+                materialBeforeValue.put(material, finalMaterialMeauseresAndQt);
+                mapOfQts.put(i - 1, materialBeforeValue);
+                return mapOfQts;
+            }
+        }
         return mapOfQts;
     }
 }
