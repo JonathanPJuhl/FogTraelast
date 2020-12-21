@@ -1,7 +1,5 @@
 package domain.construction.Roof;
 
-import domain.construction.UsersChoice;
-
 public class RoofSizeCalculator{
 
     private final int MINPITCHDEGREEOPTION = 15;
@@ -16,7 +14,7 @@ public class RoofSizeCalculator{
         if (!(roofChoiceIsFlat))
             roofwidth = pitchedRoofCalcutatedSurfaceWidth(width,degree);
         else
-            roofwidth = width;
+            roofwidth = flatRoofCalcutatedSurfaceWidth(width, degree);
         return roofwidth;
     }
 
@@ -26,7 +24,7 @@ public class RoofSizeCalculator{
         if (!(roofChoiceIsFlat))
             roofLength = length;
         else
-            roofLength = flatRoofCalcutatedSurfaceLength(length, degree);
+            roofLength = length;
 
         return roofLength;
     }
@@ -39,10 +37,10 @@ public class RoofSizeCalculator{
 
 
     //Areal hjælpeberegning af længde af fladt tags overflade
-    public int flatRoofCalcutatedSurfaceLength(int length, double degree) {
+    public int flatRoofCalcutatedSurfaceWidth(int width, double degree) {
         int roofSurfaceLength;
-        double roofHeigthFlatRoof = roofHeight(length, degree);
-        roofSurfaceLength = (int) Math.hypot((double) length, roofHeigthFlatRoof);
+        double roofHeigthFlatRoof = roofHeight(width, degree);
+        roofSurfaceLength = (int) Math.hypot((double) width, roofHeigthFlatRoof);
         return roofSurfaceLength;
     }
 

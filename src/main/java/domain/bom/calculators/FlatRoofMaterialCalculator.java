@@ -51,7 +51,7 @@ public class FlatRoofMaterialCalculator {
             this.construction = construction;
             this.roofSizeCalculator = roofSizeCalculator;
             roofWidthSurfaceCalc = roofSizeCalculator.roofWidthSurface(construction.getRoof().isFlat(),construction.getRoof().getWidth(), construction.getRoof().getDegree());
-            roofLength =  roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(), construction.getRoof().getDegree());
+            roofLength =  roofSizeCalculator.flatRoofCalcutatedSurfaceWidth(construction.getRoof().getLength(), construction.getRoof().getDegree());
         }
 
         public HashMap whichTrapezShouldBeUsed(int trapezPladeWidth){
