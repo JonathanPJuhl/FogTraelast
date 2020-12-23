@@ -12,8 +12,6 @@ public class Cladding extends ConstructionPart{
         this.sidesQuanitatyForCarport = 3;
     }
 
-
-
     public int getSidesQuanitatyForCarport() {
         return sidesQuanitatyForCarport;
     }

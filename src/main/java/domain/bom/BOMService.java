@@ -85,9 +85,12 @@ public class BOMService {
         widths.add(1090);
         ////////////
 
+        int roofLengthSurface = roofSizeCalculator.roofLengthSurface(construction.getRoof().isFlat(),construction.getRoof().getWidth(), construction.getRoof().getDegree());
+        int roofwidthSurface = roofSizeCalculator.roofWidthSurface(construction.getRoof().isFlat(),construction.getRoof().getWidth(), construction.getRoof().getDegree());
+
         int[] meassuresAndQnty;
         if (construction.getRoof().isFlat()) {
-            HashMap<Integer, HashMap<Material, int[]>> trapezPlates = noWaistHelper.quantitiesPlatesAreaCalculated(construction.getRoof(),roofMaterialCladding,addSizeFromDB(widths),addSizeFromDB(lengths));
+            HashMap<Integer, HashMap<Material, int[]>> trapezPlates = noWaistHelper.quantitiesPlatesAreaCalculated( roofLengthSurface, roofwidthSurface,roofMaterialCladding,addSizeFromDB(widths),addSizeFromDB(lengths));
             for (int i = 1; i <= trapezPlates.size() ; i++) {
                 for (Map.Entry meassuresMaterialAndQnty : trapezPlates.get(i).entrySet()) {
                     meassuresAndQnty = (int[]) meassuresMaterialAndQnty.getValue();

@@ -145,8 +145,8 @@ public class PitchedRoofMaterialCalculator {
         int lenghtOfTriangleGavlShorter = carport.getWidth();
         int restTotal;
         int restUseable = 1;
-        int roofHeight = (int) roof.getHeight();
-        double newHeight = roof.getHeight();
+        int roofHeight = (int) roofSizeCalculator.roofHeight(construction.getWidth(),construction.getDegree());
+        double newHeight = roofSizeCalculator.roofHeight(construction.getWidth(),construction.getDegree());
         int roofAngleInTop = (int)(roof.getDegree())*2;
         int lengthOfHalfRoofWidthSurface = roofSizeCalculator.roofWidthSurface(construction.roofChoiceConverter
                 (construction.getRoofChoice()),construction.getWidth(),roof.getDegree());

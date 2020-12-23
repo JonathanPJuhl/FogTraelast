@@ -7,9 +7,6 @@ import domain.material.Material;
 
 public class Roof extends ConstructionPart {
 
-    private static final RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
-
-    private final double height;
     private final boolean flat;
     private final Material cladding;
     private final double degree;
@@ -18,9 +15,8 @@ public class Roof extends ConstructionPart {
 
 
     //TODO Skal den have et parameter med højde?
-    public Roof(double degree, int length, int width, boolean flat, Material cladding, double height, Category category, UsersChoice usersChoice) {
+    public Roof(UsersChoice usersChoice, double degree, int length, int width, boolean flat, Material cladding, Category category ) {
         super(length, width, category);
-        this.height = height;
         this.degree = degree;
         this.flat = flat;
         this.cladding = cladding;
@@ -40,10 +36,6 @@ public class Roof extends ConstructionPart {
         return category;
     }
 
-    public double getHeight() {
-        return height;
-    }
-
     public Material getCladding() {
         return cladding;
     }
@@ -51,7 +43,6 @@ public class Roof extends ConstructionPart {
     @Override
     public String toString() {
         return "Roof{" +
-                "height=" + height +
                 ", flat=" + flat +
                 ", cladding=" + cladding +
                 ", degree=" + degree +

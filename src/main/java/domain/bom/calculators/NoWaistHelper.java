@@ -12,14 +12,14 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
     private int materialWidth;
     private int quantitySide;
 
-    public HashMap quantitiesPlatesAreaCalculated(ConstructionPart constructionPart, Material material, TreeSet<Integer> materialOptionsWidth, TreeSet<Integer> materialOptionsLength) {
+    public HashMap quantitiesPlatesAreaCalculated(int constructionPartLength, int constructionPartWidth, Material material, TreeSet<Integer> materialOptionsWidth, TreeSet<Integer> materialOptionsLength) {
         //TODO - Note til rapport: Vi mapper målene med Materiale(navn) som key, for senere at kunne hente dette specifikke Materiales længder og bredder, som der vil være på evt. lager;
         // Vi har fået at vide af vores product owvner, FOG, på andet springmøde (i virkeligheden første møde med læreren, Christian) at der er f.eks. alle mål med 30 cm mellem
         // størrelserne på diverse længder (Gælder dog kun træ materialer). Dog er bredderne forskellige afhængigt af materiale. Et type materiale kan dog godt fås i forskellige bredder;
 
         HashMap<Integer, HashMap<Material, int[]>> mapOfQts = new HashMap();
-        int lengthRest = constructionPart.getLength();
-        int widthRest = constructionPart.getWidth();
+        int lengthRest = constructionPartLength;
+        int widthRest = constructionPartWidth;
         int quantityWidth = 0;
         int quantityLength = 0;
         int ID = 0;
@@ -46,9 +46,9 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
 
             //Beregner antal for bredde og længde af konstrucitonsdelen
             int startMaterialWidth = startValueForQntySideArea(this.materialWidth, material.getOverlap(), mapOfQts);
-            quantityWidth = quantitySideCounter(this.materialWidth, constructionPart.getWidth(), startMaterialWidth, material.getOverlap());
+            quantityWidth = quantitySideCounter(this.materialWidth, widthRest, startMaterialWidth, material.getOverlap());
             int startMaterialLength = startValueForQntySideArea(this.materialLength, material.getOverlap(), mapOfQts);
-            quantityLength = quantitySideCounter(this.materialLength, constructionPart.getLength(), startMaterialLength, material.getOverlap());
+            quantityLength = quantitySideCounter(this.materialLength, lengthRest, startMaterialLength, material.getOverlap());
 
             //Bregner restværdilængderne ud og bruger dem til senere materialer for at beregne rest længde og rest bredde
             int potentialRestWidth = restConstructionPartSide(widthRest, this.materialWidth, material.getOverlap(), quantityWidth);
@@ -99,7 +99,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
     public HashMap quantitiesAtSideCalculated(int sideConstuctionPart, TreeSet<Integer> lengthOptions, Material
             material) {
         //hhv. material og sidelængde
-        HashMap<Integer,Material > materialMeasures = new HashMap<>();
+        HashMap<Integer, Material> materialMeasures = new HashMap<>();
         //Hhv. sidelængde (material og antal)
         HashMap<Integer, HashMap<Material, Integer>> mapOfQnty = new HashMap<>();
         HashMap<Integer, Material> quantitiesAndMaterials = new HashMap<>();
@@ -121,39 +121,39 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                     return mapOfQnty;
                 }
 
-                int materialStarterValue = startValueForQntyLength(lengthOption, material.getOverlap(),quantitiesAndMaterials);
-                this.quantitySide = quantitySideCounter(lengthOption,sideConstuctionPart, materialStarterValue, material.getOverlap());
+                int materialStarterValue = startValueForQntyLength(lengthOption, material.getOverlap(), quantitiesAndMaterials);
+                this.quantitySide = quantitySideCounter(lengthOption, sideConstuctionPart, materialStarterValue, material.getOverlap());
 
-                if(this.quantitySide != 0) {
+                if (this.quantitySide != 0) {
                     sideRest = restConstructionPartSide(sideRest, lengthOption, material.getOverlap(), this.quantitySide);
                     quantitiesAndMaterials.put(this.quantitySide, material);
                 }
 
-                if(quantitySide != 0){
+                if (quantitySide != 0) {
                     lengthAndQnty[0] = lengthOption;
                     lengthAndQnty[1] = this.quantitySide;
                     qntysAndMaterial.put(material, lengthAndQnty);
                     mapOfQntys.put(i, qntysAndMaterial);
                 }
             }
-                int ID = mapOfQnty.size();
-                if (i > 1 && sideRest != 0) {
-                    TreeSet reverseHelper = new TreeSet();
-                    reverseHelper.addAll(listInOrderLengthOptions);
-                    ArrayList<Integer> listSortetSmallestFirst = (ArrayList) reverseHelper.iterator();
+            int ID = mapOfQnty.size();
+            if (i > 1 && sideRest != 0) {
+                TreeSet reverseHelper = new TreeSet();
+                reverseHelper.addAll(listInOrderLengthOptions);
+                ArrayList<Integer> listSortetSmallestFirst = (ArrayList) reverseHelper.iterator();
 
-                    for (int matLength : listSortetSmallestFirst) {
-                        ID--;
-                        if (sideRest < (matLength - material.getOverlap())) {
-                            measureSideQnty++;
-                            lengthAndQnty[0] = matLength;
-                            lengthAndQnty[1] = this.quantitySide;
-                            qntysAndMaterial.put(material, lengthAndQnty);
-                            mapOfQntys.put(ID, qntysAndMaterial);
-                            break;
-                        }
+                for (int matLength : listSortetSmallestFirst) {
+                    ID--;
+                    if (sideRest < (matLength - material.getOverlap())) {
+                        measureSideQnty++;
+                        lengthAndQnty[0] = matLength;
+                        lengthAndQnty[1] = this.quantitySide;
+                        qntysAndMaterial.put(material, lengthAndQnty);
+                        mapOfQntys.put(ID, qntysAndMaterial);
+                        break;
                     }
                 }
+            }
 
         }
         return mapOfQntys;
@@ -207,13 +207,14 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
         }
         return sizeOptions;
     }
+
     public ArrayList<Integer> lengthOptionsListed(Iterator<Integer> lengthOptionsOrdered) {
         int lengthOption;
         ArrayList<Integer> sizeOptions = new ArrayList<>();
-         while (lengthOptionsOrdered.hasNext()) {
-                lengthOption = lengthOptionsOrdered.next();
-                sizeOptions.add(lengthOption);
-         }
+        while (lengthOptionsOrdered.hasNext()) {
+            lengthOption = lengthOptionsOrdered.next();
+            sizeOptions.add(lengthOption);
+        }
         return sizeOptions;
     }
 
@@ -222,8 +223,8 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
         int[] measureOption = new int[3];
         //Hvis antallet er 0, så lægger vi et materiale mere fra den forrige størrelse til og overskriver den forhenværende
         //Vi sikrer os også på at det er ikke bliver det første materiale der er på tale
-        if (mapOfQtnys.size() >1)
-        materialBeforeValue = mapOfQtnys.get(mapOfQtnys.size() - 1);
+        if (mapOfQtnys.size() > 1)
+            materialBeforeValue = mapOfQtnys.get(mapOfQtnys.size() - 1);
         for (Map.Entry meassures : materialBeforeValue.entrySet()) {
             measureOption = (int[]) meassures.getValue();
         }
