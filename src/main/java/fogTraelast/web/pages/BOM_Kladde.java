@@ -24,7 +24,7 @@ public class BOM_Kladde extends BaseServlet {
         if (!(usersChoice.getRoofCladding()==null)) {
             BOMService bs = new BOMService(new DBMaterialRepository(db));
             BOM bom = bs.calculateBom(construction, usersChoice, constructionFactory);
-            ArrayList<BOMItem> bomI= (bom.getItems());
+            ArrayList<BOMItem> bomI = bom.getItems();
             req.getSession().setAttribute("bom", bomI);
             render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
         } else {
