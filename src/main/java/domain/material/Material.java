@@ -54,6 +54,20 @@ public class Material{
     public int getOverlap() {
         return overlap;
     }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "id=" + id +
+                ", nametype='" + nametype + '\'' +
+                ", color='" + color + '\'' +
+                ", price=" + price +
+                ", type='" + type + '\'' +
+                ", category='" + category + '\'' +
+                ", height=" + height +
+                ", overlap=" + overlap +
+                '}';
+    }
 }
 
 /*
@@ -68,5 +82,6 @@ public class Material{
             throw new IllegalArgumentException("There is no such material name with that format"); //TODO IllegalFormatException?
         }
     }
+
 
  */
