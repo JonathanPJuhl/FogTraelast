@@ -232,7 +232,7 @@ public class NoWaistHelperTest extends TestCase {
             }
         }
         int actual = qnty;
-        int excepted = 4;
+        int excepted = 6;
 
         //Assert
         assertEquals(excepted, actual);
