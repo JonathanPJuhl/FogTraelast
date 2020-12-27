@@ -94,6 +94,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                             lengthOption = optionsAndQnty[0];
                             widthOptionToAdd = optionsAndQnty[1];
                             int quantity = optionsAndQnty[2];
+
                             quantityWidthToAdd = quantitySideCounter(lengthOption, constructionPartLength, material.getOverlap());
                             double restWidthPercentagePrOption = (double) widthRest / (double) widthOptionToAdd;
                             if (restWidthPercentagePrOption <= 0.5) {
@@ -111,12 +112,14 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                         }
                     }
                     materialLengthWidthQuanity = new HashMap<>();
-                    optionsAndQnty[0] = lengthOption;
-                    optionsAndQnty[1] = widthOptionToAdd;
-                    optionsAndQnty[2] = quantityWidthFinal;
-                    materialLengthWidthQuanity.put(material, optionsAndQnty);
+                    int[] optionsAndQntyFinally = new int[3];
+                    optionsAndQntyFinally[0] = lengthOption;
+                    optionsAndQntyFinally[1] = widthOptionToAdd;
+                    optionsAndQntyFinally[2] = quantityWidthFinal;
+                    materialLengthWidthQuanity.put(material, optionsAndQntyFinally);
                     mapOfQts.put((IDToAdd), materialLengthWidthQuanity);
                 }
+
                 if (this.lengthRest != 0) {
                     Iterator<Integer> lengthOptionsBiggestFirstNew = materialOptionsLength.iterator();//TODO Ændrer big til small
                     while (lengthOptionsBiggestFirstNew.hasNext()) {
@@ -126,7 +129,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                             materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
                             optionsAndQnty = materialOptionsAndQnty.get(material);
                             int widthOptionToCompare = optionsAndQnty[0];
-                            if (quantityWidthFinal > 0 && constructionPartWidth > widthOptionToCompare ) {//
+                            if (quantityLengthFinal > 0 && constructionPartWidth > widthOptionToCompare ) {//
                                 addedEkstraLengthQnt = true;//
                                 break;
                             }
@@ -140,7 +143,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                                 double qntyMaterialsForRow = restWidthPercentagePrOption * quantityWidthToAdd;
                                 qntyWholeMaterialsForLastRow = (int) qntyMaterialsForRow;
                             }
-                            if (lengthOptionToAdd == materialWidthOptionBigFirst) {
+                            if (lengthOptionToAdd == materialLengthOptionBigFirst) {
                                 quantityLengthFinal = quantityLengthToAdd + quantity - qntyWholeMaterialsForLastRow;
                             }
                             IDToAdd = ID;
@@ -150,10 +153,11 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                         }
                     }
                     materialLengthWidthQuanity = new HashMap<>();
-                    optionsAndQnty[0] = lengthOptionToAdd;
-                    optionsAndQnty[1] = widthOption;
-                    optionsAndQnty[2] = quantityLengthFinal;
-                    materialLengthWidthQuanity.put(material, optionsAndQnty);
+                    int[] optionsAndQntyFinally = new int[3];
+                    optionsAndQntyFinally[0] = lengthOptionToAdd;
+                    optionsAndQntyFinally[1] = widthOption;
+                    optionsAndQntyFinally[2] = quantityLengthFinal;
+                    materialLengthWidthQuanity.put(material, optionsAndQntyFinally);
                     mapOfQts.put(IDToAdd, materialLengthWidthQuanity);
                 }
 
@@ -342,10 +346,10 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
 
     //Så sørge vi får at areal beregningen ikke bliver 0, hvis den ene side har et antal
     public int validationOfSideRest(int quantitySideQnty, int oppsiteSideQtny) {
-        if (quantitySide == 0 && oppsiteSideQtny > 0) {
+        if (quantitySideQnty == 0 && oppsiteSideQtny > 0) {
             return 1;
         } else {
-            return quantitySide;
+            return quantitySideQnty;
         }
     }
 
