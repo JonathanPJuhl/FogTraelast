@@ -2,12 +2,11 @@ package domain.construction;
 
 public enum Category {
 
-    flatRoof("fladt tag"),
-    pitchedRoof ("tag med rejsning"),
-    carport ("carport"),
-    shed("skur"),
-    cladding("beklædning"),
-    nothing(null);
+    Flat("fladt tag"),
+    Pitched("tag med rejsning"),
+    Carport ("carport"),
+    Shed("skur"),
+    Cladding("beklædning");
 
     Category(String danish) {
     this.danish = danish;

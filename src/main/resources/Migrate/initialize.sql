@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS orders(
     roofType ENUM('Pitched', 'Flat') DEFAULT 'Flat' NOT NULL,
     shedOrNo tinyint(1) NOT NULL,
     cladding tinyint(1) NOT NULL,
-    salesmanID int, /*TODO kunne dette være en role istedet? Lige nu overholder vi ikke første normalform f.eks.*/
+    salesmanID int, /*TODO kunne dette være en role istedet? Lige nu overholder vi ikke første normalform f.eks. Det ville vi da ikke komme til regardless?*/
     FOREIGN KEY (salesmanID) REFERENCES salesmen(salesmanID)
 );
 INSERT INTO orders (length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding) VALUES(500, 500, '+4512345678', 'test@test.dk', 'Pitched', 1,1);

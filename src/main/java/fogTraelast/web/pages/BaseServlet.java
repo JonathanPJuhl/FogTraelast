@@ -1,7 +1,7 @@
 package fogTraelast.web.pages;
 
 import api.FogTraelast;
-import domain.construction.Roof.RoofFactory;
+import domain.construction.Roof.ConstructionFactory;
 import domain.construction.Roof.RoofSizeCalculator;
 import fogTraelast.web.widget.NavBar;
 import infrastructure.DBMaterialRepository;
@@ -20,19 +20,21 @@ public class BaseServlet extends HttpServlet {
 
     protected static final FogTraelast api;
     protected static final RoofSizeCalculator roofSizing;
+    protected static final Database db;
+    protected static final ConstructionFactory constructionFactory;
 
     //Dette er gjort på dette format, da vi ikke har lyst til at instantiere et nyt API hver gang render køres, i det
     //kan give problemer med at dele det imellem vores servlets. Til dette bruges en class-constructor, fordi emnet
     //er static.
     static {
-        Database db = new Database();
+        db = new Database();
         api = createOrder(); //TODO bedre navngivning
         roofSizing = new RoofSizeCalculator();
+        constructionFactory = new ConstructionFactory();
     }
 
     private static FogTraelast createOrder() {
-        Database db = new Database();
-        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db), new RoofFactory());
+        return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db), constructionFactory);
     }
 
     protected void render(String title, String content, HttpServletRequest req, HttpServletResponse resp) throws

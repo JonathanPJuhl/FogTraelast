@@ -1,9 +1,12 @@
 package domain.bom.calculators;
 
 import domain.construction.Construction;
+import domain.construction.Roof.Roof;
 import domain.construction.Roof.RoofSizeCalculator;
+import domain.construction.UsersChoice;
+import domain.construction.carport.Carport;
 
-import static domain.bom.calculators.CarportMaterialCalculator.roofSpaerAmount;
+import java.util.HashMap;
 
 public class PitchedRoofMaterialCalculator {
 
@@ -25,19 +28,24 @@ public class PitchedRoofMaterialCalculator {
     private int vindskedeLængde;
     private int vandBrætsLength;
     private int tagstenEntirePitchedRoof;
-    //NOTE: tagpladerne fylder 307mm i længden og vi antager 200mm i bredden, derfor disse værdier for tagsten.
-    private int tagstenBredde;
+    private int roofTilesWidth = 200;
     private int rygstenBeslag;
     private int spærFullPlankLength;
     private int spærAmount;
     private int spærFullQuatityOfPlanks;
     private int amountOfRygsten;
 
-    private final Construction construction;
+    private final Carport carport;
+    private final Roof roof;
+
+    private final UsersChoice construction;
     private final RoofSizeCalculator roofSizeCalculator;
 
-    public PitchedRoofMaterialCalculator(Construction construction) {
+    public PitchedRoofMaterialCalculator(UsersChoice construction, HashMap constructionList) {
         this.construction = construction;
+        this.carport = (Carport) constructionList.get("carport");
+        this.roof = (Roof) constructionList.get("roof");
+
         roofSizeCalculator = new RoofSizeCalculator();
     }
 
@@ -47,14 +55,13 @@ public class PitchedRoofMaterialCalculator {
     }
 
 
-    public int amountOfTagsten(){
-        //NOTE: tagpladerne fylder 307mm i længden og vi antager 200mm i bredden, derfor disse værdier.
-        tagstenBredde = 200;
+    public int amountOfRoofTiles(){
         int tagstenHalfePitchedRoof = 0;
         //Vi trækker ikke en tagstenbredde fra i tagets længde i for-loopet fordi vi vil have det hele antal + en hvis
         // der er en rest
-        for (int i = 0; i < roofSizeCalculator.roofWidthSurface(construction)- LÆGTESTENDISTANCE; i= i + LÆGTESTENDISTANCE) {
-            for (int j = 0; j < roofSizeCalculator.roofLengthSurface(construction); j = j + tagstenBredde) {
+        for (int i = 0; i < roofSizeCalculator.roofWidthSurface(construction.roofChoiceConverter(construction.getRoofChoice()), construction.getWidth(),
+                construction.getDegree())- LÆGTESTENDISTANCE; i= i + LÆGTESTENDISTANCE) {
+            for (int j = 0; j < roofSizeCalculator.roofLengthSurface(false,construction.getLength(),construction.getDegree()); j = j + roofTilesWidth) {
                 tagstenHalfePitchedRoof++;
             }
         }
@@ -63,7 +70,7 @@ public class PitchedRoofMaterialCalculator {
     }
 
     public int tagstenBindereCalculated(){
-        int tagstenBinder = amountOfTagsten();
+        int tagstenBinder = amountOfRoofTiles();
         for (int i = 0; i < tagstenBinder; i = i+2) {
             tagstenBinder ++;
         }
@@ -72,21 +79,13 @@ public class PitchedRoofMaterialCalculator {
 
     public int tagstenNakkekrogeCalculated(){
         //Vi formoder der er en tagstensnakkekrog pr. tagsten
-        tagstenNakkekrog = amountOfTagsten();
+        tagstenNakkekrog = amountOfRoofTiles();
         return tagstenNakkekrog;
-    }
-
-    public int screwForTaglægterCalculated(){
-        //Vi antager der er er en skrue pr toplægteholder + samt et pr spær for at sætte toplægten fast
-        screwForTaglægter = amountOfToplaegteHolder() * SCREWSPERTAGLÆGTEHOLDER;
-        return screwForTaglægter;
     }
 
     public int screwsForVindskederCalculated(){
         //Vi antager der bruges en skrue for hvert 50cm
-        vindskedeLængde = (int)(Math.hypot((construction.getWidth()/2.0), (double) (roofSizeCalculator.roofHeight(construction,
-                construction.getRoof().isFlat(), construction.getLength(),
-                construction.getWidth()))));
+        vindskedeLængde = (int)(Math.hypot((construction.getWidth()/2.0), roofSizeCalculator.roofHeight(construction.getWidth(),construction.getDegree())));
         for (int i = 50; i < vindskedeLængde-50 ; i = i + 50) {
             screwsForVindskeder++;
         }
@@ -95,7 +94,7 @@ public class PitchedRoofMaterialCalculator {
 
     public int screwsForVandbrætCalculated(){
         //Vi antager der skal bruges til hver 300 mm en skrue, med mindst 10 mm fra sidste kant
-        vandBrætsLength = construction.getRoof().getLength();
+        vandBrætsLength = construction.getLength();
         for (int i = 300; i < vandBrætsLength -10 ; i = i + 300) {
             screwsForVandbræt++;
         }
@@ -117,19 +116,19 @@ public class PitchedRoofMaterialCalculator {
 
 
     public int spærPlankLengthPerSpær(){
-        int spærfodLength = construction.getCarport().getWidth();
-        int spærArm = (int) (spærfodLength/(Math.cos(Math.toRadians(construction.getRoof().getDegree()))))*2;
+        int spærfodLength = carport.getLength();
+        int spærArm = (int) (spærfodLength/(Math.cos(Math.toRadians(roof.getDegree()))))*2;
         spærFullPlankLength = (spærArm*2)+spærfodLength;
         return spærFullPlankLength;
     }
     //TODO beregning af ekstra spær (til sidst)
     public int spærQuantity(){
-        int carportLength = construction.getCarport().getLength();
+        int carportLength = carport.getLength();
         int distanceBestweenSpær = 89;
         for (int i = 0; i < carportLength; i = 1 + distanceBestweenSpær) {
             spærAmount++;
         }
-        if (construction.getShed() != null) {
+        if (construction.getShedOrNo()==0) {
             spærAmount = spærAmount+ 2;
         }
         return spærAmount;
@@ -142,14 +141,15 @@ public class PitchedRoofMaterialCalculator {
 
     public int gavlOverlayQuantity(int overlayPlankWidthKonstant, int overlayPlankLenghtAvailable){
         int gavlOverlayPlanksQuantity = 0;
-        int lengthOfTriangleGavl = construction.getCarport().getLength();
-        int lenghtOfTriangleGavlShorter = construction.getCarport().getWidth();
+        int lengthOfTriangleGavl = carport.getLength();
+        int lenghtOfTriangleGavlShorter = carport.getWidth();
         int restTotal;
         int restUseable = 1;
-        int roofHeight = construction.getRoof().getHeight();
-        double newHeight = construction.getRoof().getHeight();
-        int roofAngleInTop = (int)(construction.getRoof().getDegree())*2;
-        int lengthOfHalfRoofWidthSurface = roofSizeCalculator.roofWidthSurface(construction);
+        int roofHeight = (int) roof.getHeight();
+        double newHeight = roof.getHeight();
+        int roofAngleInTop = (int)(roof.getDegree())*2;
+        int lengthOfHalfRoofWidthSurface = roofSizeCalculator.roofWidthSurface(construction.roofChoiceConverter
+                (construction.getRoofChoice()),construction.getWidth(),roof.getDegree());
         int overlayPlankWidth;
         double kFactor;
         double tempHeigth;
@@ -191,7 +191,7 @@ public class PitchedRoofMaterialCalculator {
     //** Beregning af antal taglægter i forhold til tagets bredde - Remember: tilpas med t1_SpaerLength!? **
     private int amountOfT1_Spaer_Taglaegter()
     {
-        int roofWidth = construction.getRoof().getWidth();
+        int roofWidth = roof.getWidth();
         int T1_SpaerDistance = 307; // 307 mm mellem hvert lægte - dog ikke den første
         int topDistance = 30; // 30 mm på hver side dvs * 2
 
@@ -202,7 +202,7 @@ public class PitchedRoofMaterialCalculator {
     // ** Beregning af antal sternbrædder i forhold til tagets længde - stern skal have samme længde som taget + 300 mm**
     public int amountOfStern()
     {
-        int roofLength = construction.getRoof().getLength();
+        int roofLength = roof.getLength();
         int sternLength = roofLength + 300; //tag længde + 300mm lægte udhæng
 
         if (roofLength <= 600 ) //600 mm = 1 stern længde - if roofLength equal/smaller than 600
@@ -221,20 +221,10 @@ public class PitchedRoofMaterialCalculator {
         return numberOfStern;
     }
 
-    //** Beregning af antal Toplægteholdere i forhold til spær (beslag)
-    private int amountOfToplaegteHolder()
-    {
-        int spaer = roofSpaerAmount(construction);
-        int toplaegteholder = spaer;
-
-        numberOfToplaegteHolder = toplaegteholder * spaer;
-        return numberOfToplaegteHolder;
-    }
-
     //** Beregning af T1 toplægte (til rygsten) i forhold til tag længde **
     public int amountOfT1_RygstenLength()
     {
-        int roofLength = construction.getRoof().getLength();
+        int roofLength = roof.getLength();
 
         //int toplaegteLength = 420; // 420 mm = 1 toplægte længde
 
@@ -256,7 +246,7 @@ public class PitchedRoofMaterialCalculator {
     //** Beregning af antal tagfodslægte i forhold til taget længde **
     public int amountOfTagfodsLaegte ()
     {
-        int roofLength = construction.getRoof().getLength();
+        int roofLength = roof.getLength();
 
         if (roofLength <= 1620 ) //340 * 3stk ---> 340 mm = længde af 1 tagfodslægte
         {
@@ -275,7 +265,7 @@ public class PitchedRoofMaterialCalculator {
     //** Beregning af antal vindskeder i forhold til tagets længde**
     public int amountOfVindskeder ()
     {
-        int  roofLength = construction.getRoof().getLength();
+        int  roofLength = roof.getLength();
         if (roofLength <= 480 ) //if roofLength equal/smaller than 480 - længde af 1 vindskede bræt
         {
             numberOfVindskeder = 2;
@@ -291,7 +281,7 @@ public class PitchedRoofMaterialCalculator {
     //Note: antal vandbræt = antal vindskeder.
     public  int amountOfVandbraet()
     {
-        int roofLength = construction.getRoof().getLength();
+        int roofLength = roof.getLength();
 
         if (roofLength <= 480 ) //if roofLength equal/smaller than 480 - længde af 1 vandbræt
         {
@@ -304,4 +294,7 @@ public class PitchedRoofMaterialCalculator {
         return numberOfVandbraet;
     }
 
+    public int getRoofTilesWidth() {
+        return roofTilesWidth;
+    }
 }

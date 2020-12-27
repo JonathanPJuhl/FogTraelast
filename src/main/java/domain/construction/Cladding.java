@@ -2,16 +2,26 @@ package domain.construction;
 
 import domain.material.Material;
 
-import java.util.List;
-
-public class Cladding {
-    private final List<Material> bom;
+public class Cladding extends ConstructionPart{
     private final Category category;
     private final int sidesQuanitatyForCarport;
+    private final Material material;
 
-    public Cladding(List<Material> bom, Category category) {
-        this.bom = bom;
+    public Cladding(int side, int hight, Category category, Material material) {
         this.category = category;
+        this.material = material;
         this.sidesQuanitatyForCarport = 3;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public int getSidesQuanitatyForCarport() {
+        return sidesQuanitatyForCarport;
+    }
+
+    public Material getMaterial() {
+        return material;
     }
 }
