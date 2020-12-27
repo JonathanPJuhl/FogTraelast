@@ -96,9 +96,9 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                             int quantity = optionsAndQnty[2];
 
                             quantityWidthToAdd = quantitySideCounter(lengthOption, constructionPartLength, material.getOverlap());
-                            double restWidthPercentagePrOption = (double) widthRest / (double) widthOptionToAdd;
+                            double restWidthPercentagePrOption = (double) widthRest / (double) (widthOptionToAdd - material.getOverlap());
                             if (restWidthPercentagePrOption <= 0.5) {
-                                double qntyMaterialsForRow = restWidthPercentagePrOption * quantityLengthToAdd;
+                                double qntyMaterialsForRow = restWidthPercentagePrOption * quantityWidthToAdd;
                                 qntyWholeMaterialsForLastRow = (int) qntyMaterialsForRow;
                             }
                             if (widthOptionToAdd == materialWidthOptionBigFirst) {
@@ -138,9 +138,9 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                             int quantity = optionsAndQnty[2];
 
                             quantityLengthToAdd = quantitySideCounter(widthOption, constructionPartWidth, material.getOverlap());
-                            double restWidthPercentagePrOption = (double) lengthRest / (double) lengthOptionToAdd;
+                            double restWidthPercentagePrOption = (double) lengthRest / (double) (lengthOptionToAdd - material.getOverlap());
                             if (restWidthPercentagePrOption <= 0.5) {
-                                double qntyMaterialsForRow = restWidthPercentagePrOption * quantityWidthToAdd;
+                                double qntyMaterialsForRow = restWidthPercentagePrOption * quantityLengthToAdd;
                                 qntyWholeMaterialsForLastRow = (int) qntyMaterialsForRow;
                             }
                             if (lengthOptionToAdd == materialLengthOptionBigFirst) {
