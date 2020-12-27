@@ -275,6 +275,43 @@ public class NoWaistHelperTest extends TestCase {
         assertEquals(excepted, actual);
     }
 
+    @Test
+    public void testQuantitiesMoreThanOneForT300PlatesArea2900WitdhRecycling() throws Exception {
+        //Arrange
+        setUp();
+        int lengthT600 = 3000;
+        int widthT600 = 2900;
+        usersChoice = new UsersChoice(5700, 7500, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        roof = new FlatRoof(usersChoice, roofSizeCalculator);
+        carport = new Carport(usersChoice);
+        construction = new Construction(roof, carport);
+        int qnty = 0;
+        int roofLengthSurface = roofSizeCalculator.roofLengthSurface(construction.getRoof().isFlat(), construction.getRoof().getLength(), construction.getRoof().getDegree());
+        int roofwidthSurface = roofSizeCalculator.roofWidthSurface(construction.getRoof().isFlat(), construction.getRoof().getWidth(), construction.getRoof().getDegree());
+
+        //Act
+        HashMap<Integer, HashMap<Material, int[]>> testMethod = waistHelper.quantitiesPlatesAreaCalculated(roofLengthSurface, roofwidthSurface, roofTrapezPlates, widths, lengths);
+        for (int i = 1; i <= testMethod.size(); i++) {
+            for (Map.Entry materialAndMeassures : testMethod.get(i).entrySet()) {
+                int[] messauresQnty = (int[]) materialAndMeassures.getValue();
+                int lengthOption = messauresQnty[0];
+                int widthOption = messauresQnty[1];
+                if (widthOption == widthT600 && lengthOption == lengthT600) {
+                    qnty = messauresQnty[2];
+                    break;
+                }
+            }
+            if (qnty != 0) {
+                break;
+            }
+        }
+        int actual = qnty;
+        int excepted = 2;
+
+        //Assert
+        assertEquals(excepted, actual);
+    }
+
     /*//TODO Lav strategy Pattern
     @Test
     public void testQuantitiesAtSideCalculatedCarport2000Post() throws Exception {
