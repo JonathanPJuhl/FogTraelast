@@ -49,7 +49,7 @@ public class NoWaistHelperTest extends TestCase {
 
     //TODO IntegrationTest?
     @Test
-    public void testQuantitiesT600PlatesAreaForFlatRoof2090Width() throws Exception {
+    public void testQuantitiesT600PlatesAreaForFlatRoof2900Width() throws Exception {
         //Arrange
         setUp();
         int lengthT600 = 6000;
@@ -87,11 +87,11 @@ public class NoWaistHelperTest extends TestCase {
     }
 
     @Test
-    public void testQuantitiesT600PlatesAreaForFlatRoof1090Width() throws Exception {
+    public void testQuantitiesT600PlatesAreaForFlatRoof1900Width() throws Exception {
         //Arrange
         setUp();
         int lengthT600 = 6000;
-        int widthT600 = 2900;
+        int widthT600 = 1900;
         usersChoice = new UsersChoice(4600, 8800, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
@@ -125,7 +125,7 @@ public class NoWaistHelperTest extends TestCase {
     }
 
     @Test
-    public void testQuantitiesT300PlatesAreaForFlatRoof1090Width() throws Exception {
+    public void testQuantitiesT300PlatesAreaForFlatRoof1900Width() throws Exception {
         //Arrange
         setUp();
         int lengthT300 = 3000;
@@ -163,7 +163,7 @@ public class NoWaistHelperTest extends TestCase {
 
     }
     @Test
-    public void testQuantitiesT300PlatesAreaForFlatRoof2090Width() throws Exception {
+    public void testQuantitiesT300PlatesAreaForFlatRoof2900Width() throws Exception {
         //Arrange
         setUp();
         int lengthT300 = 3000;

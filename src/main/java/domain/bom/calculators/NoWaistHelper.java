@@ -20,7 +20,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
         // Vi har fået at vide af vores product owvner, FOG, på andet springmøde (i virkeligheden første møde med læreren, Christian) at der er f.eks. alle mål med 30 cm mellem
         // størrelserne på diverse længder (Gælder dog kun træ materialer). Dog er bredderne forskellige afhængigt af materiale. Et type materiale kan dog godt fås i forskellige bredder;
 
-        HashMap<Integer, Map<Material, int[]>> mapOfQts = new HashMap();
+        HashMap<Integer, HashMap<Material, int[]>> mapOfQts = new HashMap();
         lengthRest = constructionPartLength;
         widthRest = constructionPartWidth;
         int quantityWidth = 0;
@@ -36,6 +36,26 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
         int[] meassuresOptions;
         boolean isLastWidthLenghtComboOptions = false;
         int ID = 0;
+
+        HashMap<Material, int[]> materialOptionsAndQnty;
+        int quantityLengthFinal = quantityLength;
+        HashMap<Material, int[]> materialLengthWidthQuanity = new HashMap<>();
+        int[] optionsAndQnty = new int[3];
+        int quantityWidthFinal = quantityWidth;
+        int widthOption = 0;
+        int materialWidthOptionBigFirst = 0;
+        int materialLengthOptionBigFirst = 0;
+        int optionLength = 0;
+        int lengthOption = 0;
+        int quantityWidthToAdd = 0;
+        int quantityLengthToAdd = 0;
+        int qntyWholeMaterialsForLastRow = 0;
+        boolean addedEkstraWidthQnt = false;
+        boolean addedEkstraLengthQnt = false;
+        int widthOptionToAdd = 0;
+        int lengthOptionToAdd = 0;
+        int IDToAdd = 0;
+
         //Kører alle målemuligheder igennem for at hente hhv længde og bredde ud til beregninger
         // Vi kører den en gang til for at sammenligne restlængden af beregningen med det sidste
         // mål kombination for at se om en i det samlede map af antal, målCombo og materiale skal ændres
@@ -45,15 +65,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
             //For at sikre sig man ikke sammenligner med et tomt materiale har ID dette kriterie
             //Denne beregning skal ske hvis der er en tilbagestående rest efter at have kørt alle potentielle mål
             //igennem for materialet
-            int quantityLengthFinal = quantityLength;
-            Map<Material, int[]> materialLengthWidthQuanity = new HashMap<>();
-            int[] optionsAndQnty = new int[3];
-            int quantityWidthFinal = quantityWidth;
-            int widthOption = 0;
-            int materialWidthOptionBigFirst = 0;
-            int materialLengthOptionBigFirst = 0;
-            int optionLength = 0;
-            int lengthOption = 0;
+
 
             if (meassuresCombo.size() >= i) {
                 meassuresOptions = meassuresCombo.get(i - 1);
@@ -63,106 +75,144 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                 isLastWidthLenghtComboOptions = true;
             }
 
-            boolean addedEkstraWidthQnt = false;
-            boolean addedEkstraLengthQnt = false;
+
 
             if (isLastWidthLenghtComboOptions) {
-                if (this.lengthRest != 0) {
+                if (this.widthRest != 0) {
                     Iterator<Integer> widthOptionsBiggestFirstNew = materialOptionsWidth.iterator(); //TODO Ændrer big til small
                     while (widthOptionsBiggestFirstNew.hasNext()) {
                         materialWidthOptionBigFirst = widthOptionsBiggestFirstNew.next();
                         for (Map.Entry toCompareFromCountedMap : mapOfQts.entrySet()) {
                             ID = (int) toCompareFromCountedMap.getKey();
-                            HashMap<Material, int[]> materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
+                            materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
                             optionsAndQnty = materialOptionsAndQnty.get(material);
-                            widthOption = optionsAndQnty[1];
-                            lengthOption = optionsAndQnty[0];
-                            int quantityWidthToAdd = quantitySideCounter(widthOption, constructionPartWidth, material.getOverlap());
-                            int quantity = optionsAndQnty[2];
-                            if (widthOption == materialWidthOptionBigFirst) {
-                                quantityWidthFinal = quantityWidthToAdd + quantity;
-                            }
-                            if (quantityWidthFinal > 0) {
+                            int lengthOptionToCompare = optionsAndQnty[0];
+                            if (quantityWidthFinal > 0 && constructionPartLength > lengthOptionToCompare) {
                                 addedEkstraWidthQnt = true;
                                 break;
                             }
+                            lengthOption = optionsAndQnty[0];
+                            widthOptionToAdd = optionsAndQnty[1];
+                            int quantity = optionsAndQnty[2];
+                            quantityWidthToAdd = quantitySideCounter(lengthOption, constructionPartLength, material.getOverlap());
+                            double restWidthPercentagePrOption = (double) widthRest / (double) widthOptionToAdd;
+                            if (restWidthPercentagePrOption <= 0.5) {
+                                double qntyMaterialsForRow = restWidthPercentagePrOption * quantityLengthToAdd;
+                                qntyWholeMaterialsForLastRow = (int) qntyMaterialsForRow;
+                            }
+                            if (widthOptionToAdd == materialWidthOptionBigFirst) {
+                                quantityWidthFinal = quantityWidthToAdd + quantity - qntyWholeMaterialsForLastRow;
+                            }
+                            IDToAdd = ID;
 
                         }
                         if (addedEkstraWidthQnt) {
                             break;
                         }
                     }
+                    materialLengthWidthQuanity = new HashMap<>();
                     optionsAndQnty[0] = lengthOption;
-                    optionsAndQnty[1] = materialWidthOptionBigFirst;
+                    optionsAndQnty[1] = widthOptionToAdd;
                     optionsAndQnty[2] = quantityWidthFinal;
                     materialLengthWidthQuanity.put(material, optionsAndQnty);
-                    mapOfQts.put(ID, materialLengthWidthQuanity);
-
+                    mapOfQts.put((IDToAdd), materialLengthWidthQuanity);
                 }
-                if (this.widthRest != 0) {
+                if (this.lengthRest != 0) {
                     Iterator<Integer> lengthOptionsBiggestFirstNew = materialOptionsLength.iterator();//TODO Ændrer big til small
                     while (lengthOptionsBiggestFirstNew.hasNext()) {
                         materialLengthOptionBigFirst = lengthOptionsBiggestFirstNew.next();
                         for (Map.Entry toCompareFromCountedMap : mapOfQts.entrySet()) {
                             ID = (int) toCompareFromCountedMap.getKey();
-                            HashMap<Material, int[]> materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
+                            materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
                             optionsAndQnty = materialOptionsAndQnty.get(material);
-                            optionLength = optionsAndQnty[0];
-                            int quantityLengthToAdd = quantitySideCounter(optionLength, constructionPartLength, material.getOverlap());
-                            int quantity = optionsAndQnty[2];
-                            if (optionLength == materialLengthOptionBigFirst) {
-                                quantityLengthFinal = quantityLengthToAdd + quantity;
-                            }
-                            if (quantityLengthFinal > 0) {
-                                addedEkstraLengthQnt = true;
+                            int widthOptionToCompare = optionsAndQnty[0];
+                            if (quantityWidthFinal > 0 && constructionPartWidth > widthOptionToCompare ) {//
+                                addedEkstraLengthQnt = true;//
                                 break;
                             }
+                            lengthOptionToAdd = optionsAndQnty[0];
+                            widthOption = optionsAndQnty[1];
+                            int quantity = optionsAndQnty[2];
+
+                            quantityLengthToAdd = quantitySideCounter(widthOption, constructionPartWidth, material.getOverlap());
+                            double restWidthPercentagePrOption = (double) lengthRest / (double) lengthOptionToAdd;
+                            if (restWidthPercentagePrOption <= 0.5) {
+                                double qntyMaterialsForRow = restWidthPercentagePrOption * quantityWidthToAdd;
+                                qntyWholeMaterialsForLastRow = (int) qntyMaterialsForRow;
+                            }
+                            if (lengthOptionToAdd == materialWidthOptionBigFirst) {
+                                quantityLengthFinal = quantityLengthToAdd + quantity - qntyWholeMaterialsForLastRow;
+                            }
+                            IDToAdd = ID;
                         }
                         if (addedEkstraLengthQnt) {
                             break;
                         }
                     }
-                    optionsAndQnty[0] = materialLengthOptionBigFirst;
+                    materialLengthWidthQuanity = new HashMap<>();
+                    optionsAndQnty[0] = lengthOptionToAdd;
                     optionsAndQnty[1] = widthOption;
                     optionsAndQnty[2] = quantityLengthFinal;
                     materialLengthWidthQuanity.put(material, optionsAndQnty);
-                    mapOfQts.put(ID, materialLengthWidthQuanity);
+                    mapOfQts.put(IDToAdd, materialLengthWidthQuanity);
                 }
 
-                HashMap<Material, int[]> changeSmallestMaterialOption = new HashMap<>();
-                int[] smallestMaterialOptionsCalc = new int[3];
-                if (addedEkstraLengthQnt && addedEkstraWidthQnt) {
-                    for (int j = 1; j <= mapOfQts.size(); j++) {
-                        ID = j;
-                        for (Map.Entry smallestInMap : mapOfQts.get(j).entrySet()) {
-                            smallestMaterialOptionsCalc = (int[]) smallestInMap.getValue();
-                            if (smallestMaterialOptionsCalc[0] == materialOptionsLength.iterator().next()) {
-                                if (smallestMaterialOptionsCalc[1] == materialOptionsWidth.iterator().next()) {
-                                    int qnty = smallestMaterialOptionsCalc[2];
-                                    smallestMaterialOptionsCalc[2] = qnty + 1;
-                                    changeSmallestMaterialOption.put(material, smallestMaterialOptionsCalc);
-                                    break;
-                                }
-                            }
+//                HashMap<Material, int[]> changeSmallestMaterialOption = new HashMap<>();
+//                int[] smallestMaterialOptionsCalc;
+//                if (addedEkstraLengthQnt && addedEkstraWidthQnt) {
+//                    for (int j = 1; j <= mapOfQts.size(); j++) {
+//                        ID = j;
+//                        for (Map.Entry smallestInMap : mapOfQts.get(j).entrySet()) {
+//                            smallestMaterialOptionsCalc = (int[]) smallestInMap.getValue();
+//                            if (smallestMaterialOptionsCalc[0] == materialOptionsLength.iterator().next()) {
+//                                if (smallestMaterialOptionsCalc[1] == materialOptionsWidth.iterator().next()) {
+//                                    int qnty = smallestMaterialOptionsCalc[2];
+//                                    smallestMaterialOptionsCalc[2] = qnty + 1;
+//                                    changeSmallestMaterialOption.put(material, smallestMaterialOptionsCalc);
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+
+                //mapOfQts.put(ID, changeSmallestMaterialOption);
+                int lengthOptionLooping = 0;
+                int widthOptionLooping = 0;
+                materialLengthWidthQuanity = new HashMap<>();
+
+                if (lengthRest > 0 && widthRest > 0) {
+                    for (Map.Entry toCompareFromCountedMap : mapOfQts.entrySet()) {
+                        ID = (int) toCompareFromCountedMap.getKey();
+                        materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
+                        optionsAndQnty = materialOptionsAndQnty.get(material);
+                        lengthOptionLooping = optionsAndQnty[0];
+                        widthOptionLooping = optionsAndQnty[1];
+                        if (materialLengthOptionBigFirst == lengthOptionLooping && widthOptionLooping == materialWidthOptionBigFirst) {
+                            optionsAndQnty[0] = lengthOptionToAdd;
+                            optionsAndQnty[1] = widthOptionToAdd;
+                            optionsAndQnty[2] = quantityLengthFinal++;
+                            materialLengthWidthQuanity.put(material, optionsAndQnty);
+                            mapOfQts.put(ID, materialLengthWidthQuanity);
                         }
                     }
-                }
 
-                mapOfQts.put(ID, changeSmallestMaterialOption);
-                this.lengthRest = 0;
-                this.widthRest = 0;
-            }
-            if (lengthRest == 0 && widthRest == 0) {
-                return mapOfQts;
+                    this.lengthRest = 0;
+                    this.widthRest = 0;
+                }
+                if (lengthRest == 0 && widthRest == 0) {
+                    return mapOfQts;
+                }
             }
 
             /////Regnestykkerne er baseret på at hver stykke materiale har et overlap, hvis overlap ikke er 0, undtagen det første stykke materiale
 
             //Beregner antal for bredde og længde af konstrucitonsdelen
             //int startMaterialWidth = startValueForQntySideArea(this.materialWidth, material.getOverlap(), mapOfQts); //TODO If qtny er 0 på forrtige materiale
-            quantityWidth = quantitySideCounter(this.materialWidth, widthRest, material.getOverlap());
-            //int startMaterialLength = startValueForQntySideArea(this.materialLength, material.getOverlap(), mapOfQts);
-            quantityLength = quantitySideCounter(this.materialLength, lengthRest, material.getOverlap());
+            int valQntyWidth= quantitySideCounter(this.materialWidth, widthRest, material.getOverlap());
+            int valQntyLength= quantitySideCounter(this.materialLength, lengthRest, material.getOverlap());
+            quantityWidth= validationOfSideRest(valQntyWidth, valQntyLength);
+            quantityLength = validationOfSideRest(valQntyLength, valQntyWidth);
 
 //            /*//Materialet bliver ikke tilføjet hvis antallet er 0
 //            if (!(quantityLength == 0) && !(quantityWidth == 0)) {
@@ -197,6 +247,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                 finalMaterialMeauseresAndQt[1] = materialWidth;
                 finalMaterialMeauseresAndQt[2] = qntyExtra;
 
+                materialLengthWidthQuanity = new HashMap<>();
                 materialLengthWidthQuanity.put(material, finalMaterialMeauseresAndQt);
                 mapOfQts.put(i, materialLengthWidthQuanity);
             }
@@ -290,7 +341,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
     }
 
     //Så sørge vi får at areal beregningen ikke bliver 0, hvis den ene side har et antal
-    public int validationOfSideRest(int quantitySide, int oppsiteSideQtny, int oppsiteSideConstructionTotal, int materialOppisiteSide, int overlap, HashMap<Integer, HashMap<Material, int[]>> listToValidateStartMaterial) {
+    public int validationOfSideRest(int quantitySideQnty, int oppsiteSideQtny) {
         if (quantitySide == 0 && oppsiteSideQtny > 0) {
             return 1;
         } else {
@@ -357,7 +408,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
     }
 
     public HashMap<Material, int[]> addQuantityForSquare(int quantityLength, int quantityWidth, Material material,
-                                                         int materialLength, int materialWidth, HashMap<Integer, Map<Material, int[]>> listToValidate,
+                                                         int materialLength, int materialWidth, HashMap<Integer, HashMap<Material, int[]>> listToValidate,
                                                          int constructionPartTotalLength, int constructionPartTotalWidth) {
         int tmpMaterialWidthStartValue;
         int tmpMaterialLengthStartValue;
