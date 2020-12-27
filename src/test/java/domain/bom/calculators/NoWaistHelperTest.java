@@ -239,7 +239,7 @@ public class NoWaistHelperTest extends TestCase {
     }
 
     @Test
-    public void testQuantitiesMoreThanOneForT600PlatesArea1900WitdhRecycling() throws Exception {
+    public void testQuantitiesMoreThanOneForT600PlatesArea1900WidthRecycling() throws Exception {
         //Arrange
         setUp();
         int lengthT600 = 6000;
@@ -276,12 +276,12 @@ public class NoWaistHelperTest extends TestCase {
     }
 
     @Test
-    public void testQuantitiesMoreThanOneForT300PlatesArea2900WitdhRecycling() throws Exception {
+    public void testQuantitiesMoreThanOneForT300PlatesArea2900WidthRecycling() throws Exception {
         //Arrange
         setUp();
         int lengthT600 = 3000;
         int widthT600 = 2900;
-        usersChoice = new UsersChoice(5700, 7500, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(6700, 6000, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
@@ -306,7 +306,7 @@ public class NoWaistHelperTest extends TestCase {
             }
         }
         int actual = qnty;
-        int excepted = 2;
+        int excepted = 1;
 
         //Assert
         assertEquals(excepted, actual);

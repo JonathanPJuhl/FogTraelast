@@ -76,7 +76,6 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
             }
 
 
-
             if (isLastWidthLenghtComboOptions) {
                 if (this.widthRest != 0) {
                     Iterator<Integer> widthOptionsBiggestFirstNew = materialOptionsWidth.iterator(); //TODO Ændrer big til small
@@ -95,14 +94,32 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                             widthOptionToAdd = optionsAndQnty[1];
                             int quantity = optionsAndQnty[2];
 
+                            qntyWholeMaterialsForLastRow = 0;
+
                             quantityWidthToAdd = quantitySideCounter(lengthOption, constructionPartLength, material.getOverlap());
-                            double restWidthPercentagePrOption = (double) widthRest / (double) (widthOptionToAdd - material.getOverlap());
+                            /*double restWidthPercentagePrOption = (double) widthRest / (double) (widthOptionToAdd - material.getOverlap());
                             if (restWidthPercentagePrOption <= 0.5) {
                                 double qntyMaterialsForRow = restWidthPercentagePrOption * quantityWidthToAdd;
                                 qntyWholeMaterialsForLastRow = (int) qntyMaterialsForRow;
+                            }*/
+                            int widthOptionToCount = widthOptionToAdd;
+                            int widthRestWithOverlap = widthRest + material.getOverlap();
+                            while (widthOptionToCount > widthRestWithOverlap) {
+                                qntyWholeMaterialsForLastRow++;
+                                widthOptionToCount = widthOptionToCount - widthRestWithOverlap;
                             }
+                            if (qntyWholeMaterialsForLastRow != 0 ) {
+                                quantityWidthToAdd = quantityWidthToAdd / qntyWholeMaterialsForLastRow;
+                                int quantityWidthToAddOneExtra = quantityWidthToAdd % qntyWholeMaterialsForLastRow;
+                                if (quantityWidthToAddOneExtra > 0 || quantityWidthToAdd == 0) {
+                                    quantityWidthToAdd++;
+                                }
+                            } else {
+                                quantityLengthToAdd++;
+                            }
+
                             if (widthOptionToAdd == materialWidthOptionBigFirst) {
-                                quantityWidthFinal = quantityWidthToAdd + quantity - qntyWholeMaterialsForLastRow;
+                                quantityWidthFinal = quantityWidthToAdd + quantity;
                             }
                             IDToAdd = ID;
 
@@ -129,7 +146,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                             materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
                             optionsAndQnty = materialOptionsAndQnty.get(material);
                             int widthOptionToCompare = optionsAndQnty[0];
-                            if (quantityLengthFinal > 0 && constructionPartWidth > widthOptionToCompare ) {//
+                            if (quantityLengthFinal > 0 && constructionPartWidth > widthOptionToCompare) {//
                                 addedEkstraLengthQnt = true;//
                                 break;
                             }
@@ -137,14 +154,32 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                             widthOption = optionsAndQnty[1];
                             int quantity = optionsAndQnty[2];
 
+                            qntyWholeMaterialsForLastRow = 0;
+
                             quantityLengthToAdd = quantitySideCounter(widthOption, constructionPartWidth, material.getOverlap());
-                            double restWidthPercentagePrOption = (double) lengthRest / (double) (lengthOptionToAdd - material.getOverlap());
-                            if (restWidthPercentagePrOption <= 0.5) {
-                                double qntyMaterialsForRow = restWidthPercentagePrOption * quantityLengthToAdd;
+                            /*double restLengthPercentagePrOption = (double) (lengthOptionToAdd - material.getOverlap())/(double) lengthRest;
+                            if (restLengthPercentagePrOption <= 0.5) {
+                                double qntyMaterialsForRow = quantityLengthToAdd *  restLengthPercentagePrOption;
                                 qntyWholeMaterialsForLastRow = (int) qntyMaterialsForRow;
+                            }*/
+                            int lengthOptionToCount = lengthOptionToAdd;
+                            int lengthRestWithOverlap = lengthRest + material.getOverlap();
+                            while (lengthOptionToCount > lengthRestWithOverlap) {
+                                qntyWholeMaterialsForLastRow++;
+                                lengthOptionToCount = lengthOptionToCount - lengthRestWithOverlap;
+                            }
+
+                            if (qntyWholeMaterialsForLastRow != 0) {
+                                quantityLengthToAdd = quantityLengthToAdd / qntyWholeMaterialsForLastRow;
+                                int quantityLengthToAddOneExtra = quantityLengthToAdd % qntyWholeMaterialsForLastRow;
+                                if (quantityLengthToAddOneExtra > 0 || quantityLengthToAdd == 0) {
+                                    quantityLengthToAdd++;
+                                }
+                            } else {
+                                quantityLengthToAdd++;
                             }
                             if (lengthOptionToAdd == materialLengthOptionBigFirst) {
-                                quantityLengthFinal = quantityLengthToAdd + quantity - qntyWholeMaterialsForLastRow;
+                                quantityLengthFinal = quantityLengthToAdd + quantity;
                             }
                             IDToAdd = ID;
                         }
@@ -213,9 +248,9 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
 
             //Beregner antal for bredde og længde af konstrucitonsdelen
             //int startMaterialWidth = startValueForQntySideArea(this.materialWidth, material.getOverlap(), mapOfQts); //TODO If qtny er 0 på forrtige materiale
-            int valQntyWidth= quantitySideCounter(this.materialWidth, widthRest, material.getOverlap());
-            int valQntyLength= quantitySideCounter(this.materialLength, lengthRest, material.getOverlap());
-            quantityWidth= validationOfSideRest(valQntyWidth, valQntyLength);
+            int valQntyWidth = quantitySideCounter(this.materialWidth, widthRest, material.getOverlap());
+            int valQntyLength = quantitySideCounter(this.materialLength, lengthRest, material.getOverlap());
+            quantityWidth = validationOfSideRest(valQntyWidth, valQntyLength);
             quantityLength = validationOfSideRest(valQntyLength, valQntyWidth);
 
 //            /*//Materialet bliver ikke tilføjet hvis antallet er 0
