@@ -1,6 +1,6 @@
 package domain.construction.SVG;
 
-public class svgCarportSide {
+public class SvgCarportSide {
 
     StringBuilder SvgCarportText = new StringBuilder();
 

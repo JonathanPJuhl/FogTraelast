@@ -35,17 +35,20 @@
 
 
 <body>
+<div id="page-container">
+    <div id="content-wrap">
 <!--navbar-->
 <jsp:include page="../contains/navbar.jsp" flush="true"/><!-- TODO hvad gør flush ? -->
 
 <main class="container">
+
     <jsp:include page="${requestScope.content}" flush="true"/>
 
 </main>
-
+    </div>
 <!--footer-->
 <jsp:include page="../contains/footer.jsp" flush="true"/>
-
+</div>
 
 </body>
 

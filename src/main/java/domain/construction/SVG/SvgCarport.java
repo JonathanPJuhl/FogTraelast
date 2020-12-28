@@ -18,7 +18,6 @@ public class SvgCarport {
 
     public String Build(int lenght, int width, int skurBredde, int skurLængde){
         skur = new Skur(skurBredde, skurLængde);
-
         SvgCarportText.append(tag.draw(lenght,width));
         SvgCarportText.append(spær.draw(lenght,width));
         SvgCarportText.append(rem.draw(lenght,width));
