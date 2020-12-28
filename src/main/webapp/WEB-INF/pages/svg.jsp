@@ -22,7 +22,7 @@ VIRKER IKKE YET
     ${sessionScope.svgCarportSide}
 </svg>--%>
 
-<form id="login_button" action="${pageContext.request.contextPath}/BOM">
+<form id="pay" action="${pageContext.request.contextPath}/BOM">
     <input type="hidden" value=true name="payCheck">
     <input type="submit" value="Accepter og betal carport" />
 </form>
