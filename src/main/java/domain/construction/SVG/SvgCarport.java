@@ -1,7 +1,7 @@
 package domain.construction.SVG;
 
 
-class SvgCarport {
+public class SvgCarport {
 
     private Tag tag = new Tag();
     private Spær spær = new Spær();
