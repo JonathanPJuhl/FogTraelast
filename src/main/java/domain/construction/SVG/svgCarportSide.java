@@ -5,6 +5,7 @@ public class svgCarportSide {
     StringBuilder SvgCarportText = new StringBuilder();
 
 
+
     public String Build(int length, int width, int ShedWidth, int ShedLength, double gableHeight) {
 
         int xShed = 600 - ShedLength;
@@ -21,6 +22,7 @@ public class svgCarportSide {
         SvgCarportText.append("<rect x=\""+xShed+"\" y=\"155\" rx=\"0\" ry=\"0\" width=\"15\" height=\"230\" style=\"fill:blue;stroke:black;stroke-width:3;opacity:1\" />");
 
         //Stolpe
+
         SvgCarportText.append("<rect x=\""+xStolpeStart+"\" y=\"155\" rx=\"0\" ry=\"0\" width=\"15\" height=\"230\" style=\"fill:white;stroke:black;stroke-width:3;opacity:1\" />");
 
         SvgCarportText.append("<rect x=\""+xStolpe+"\" y=\"155\" rx=\"0\" ry=\"0\" width=\"15\" height=\"230\" style=\"fill:white;stroke:black;stroke-width:3;opacity:1\" />");
@@ -48,6 +50,7 @@ public class svgCarportSide {
 
         SvgCarportText.append("<text x=\"602\" y=\"415\" fill=\"red\" transform=\"rotate(0 20,40)\">65cm</text>");
         SvgCarportText.append("<line x1=\"640\" y1=\"390\" x2=\"640\" y2=\"410\" style=\"stroke:rgb(0,0,0);stroke-width:1\" />");
+
 
 
         SvgCarportText.append("</svg>");

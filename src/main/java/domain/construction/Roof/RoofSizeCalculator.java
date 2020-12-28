@@ -1,61 +1,57 @@
 package domain.construction.Roof;
 
-import domain.construction.Construction;
-import domain.construction.ConstructionRepository;
-
-import java.util.spi.CalendarDataProvider;
+import domain.construction.UsersChoice;
 
 public class RoofSizeCalculator{
 
-    private double roofHeigth;
     private final int MINPITCHDEGREEOPTION = 15;
     private final int MAXPITCHDEGREEOPTION = 45 - 1; //TODO Admin skal kunne indsætte andre tal
 
+    public RoofSizeCalculator() {
+    }
+
     //Hjælpemetode for bredde af tag afhægnig af type
-    public int roofWidthSurface(Construction construction) {
+    public int roofWidthSurface(boolean roofChoiceIsFlat, int width, double degree) {
         int roofwidth;
-        if (!(construction.getRoof().isFlat()))
-            roofwidth = pitchedRoofCalcutatedSurfaceWidth(construction);
+        if (!(roofChoiceIsFlat))
+            roofwidth = pitchedRoofCalcutatedSurfaceWidth(width,degree);
         else
-            roofwidth = construction.getWidth();
+            roofwidth = width;
         return roofwidth;
     }
 
     //Hjælpemetode for længde af tag afhængnig af type
-    public int roofLengthSurface(Construction construction) {
+    public int roofLengthSurface(boolean roofChoiceIsFlat, int length, double degree) {
         int roofLength;
-        if (!(construction.getRoof().isFlat()))
-            roofLength = construction.getLength();
+        if (!(roofChoiceIsFlat))
+            roofLength = length;
         else
-            roofLength = flatRoofCalcutatedSurfaceLength(construction);
+            roofLength = flatRoofCalcutatedSurfaceLength(length, degree);
 
         return roofLength;
     }
 
     //Beregning af tagets højde fra top rem og til øverst på tag eller tagryg
-    public int roofHeight(Construction construction, boolean flatRoof, int length, int width) {
-        if (!(flatRoof))
-            roofHeigth = (Math.tan(Math.toRadians(construction.getRoof().getDegree())) * width / 2);
-        else
-            roofHeigth = (Math.tan(Math.toRadians(construction.getRoof().getDegree())) * length);
-        return (int) roofHeigth;
+    public double roofHeight(int size, double degree) {
+            double roofHeigth = (Math.tan(Math.toRadians(degree)) * size);
+        return roofHeigth;
     }
 
 
     //Areal hjælpeberegning af længde af fladt tags overflade
-    public int flatRoofCalcutatedSurfaceLength(Construction construction) {
-        int roofLength;
-        roofHeigth = roofHeight(construction,false, construction.getLength(), construction.getWidth());
-        roofLength = (int) Math.hypot((double) construction.getLength(), (double) roofHeigth);
-        return roofLength;
+    public int flatRoofCalcutatedSurfaceLength(int length, double degree) {
+        int roofSurfaceLength;
+        double roofHeigthFlatRoof = roofHeight(length, degree);
+        roofSurfaceLength = (int) Math.hypot((double) length, roofHeigthFlatRoof);
+        return roofSurfaceLength;
     }
 
     //Areal hjælpeberegning af halv bredde af tagoverflade altså den ene side af fra tagfod til tagryg
-    public int pitchedRoofCalcutatedSurfaceWidth(Construction construction) {
-        int halfRaftWidthForPitchedRoof = construction.getWidth() / 2;
-        int roofHalfWidth = (int) (halfRaftWidthForPitchedRoof / (Math.cos(
-                Math.toRadians(construction.getRoof().getDegree()))));
-        return roofHalfWidth;
+    public int pitchedRoofCalcutatedSurfaceWidth(int width, double degree) {
+        double roofHeigth = roofHeight(width, degree);
+        int halfRaftWidth = width / 2;
+        int roofSurfaceHalfWidth = (int) (halfRaftWidth / (Math.sin(Math.toRadians(degree))));
+        return roofSurfaceHalfWidth;
     }
 
 }

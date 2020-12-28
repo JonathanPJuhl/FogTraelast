@@ -1,14 +1,9 @@
 package api;
 
 import domain.construction.Category;
-import domain.construction.Construction;
-import domain.construction.ConstructionRepository;
-import domain.construction.Roof.Roof;
-import domain.construction.Roof.RoofSizeCalculator;
+import domain.construction.Roof.ConstructionFactory;
 import domain.material.Material;
-import domain.material.NoSuchMaterialExists;
 import domain.material.MaterialService;
-import domain.material.MaterialType;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
@@ -23,13 +18,13 @@ public class FogTraelast {
     private final UserRepository userLists;
     private final OrderRepository orderLists;
     private final MaterialService materialService;
-    private final ConstructionRepository constructionRepository;
+    private final ConstructionFactory constructionFactory;
 
-    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, ConstructionRepository constructionRepository) {
+    public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, ConstructionFactory constructionFactory) {
         this.userLists = userLists;
         this.orderLists = orderLists;
         this.materialService = materialService;
-        this.constructionRepository = constructionRepository;
+        this.constructionFactory = constructionFactory;
     }
 
     public Object getVERSION() {
@@ -61,18 +56,21 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    public Material findMaterial (int id, String typeName, String type, int width, String color, double price, String category, int height) throws NoSuchMaterialExists{
-        return materialService.findMaterial(id, typeName, color, price, type, category, height);
-    }
+    /*public Material findMaterial (String typeName, String type, int width, String color, String category, int height) throws NoSuchMaterialExists{
+        return materialService.findMaterial(typeName, color, type, category, height);
+    }*/
 
     public List<Material> roofMaterials(String roofType){
         return materialService.roofMaterials(roofType);
     }
 
-    public Roof createRoof(String choiceTypeRoof, int roofheight, Construction construction,  Material roofCladding, int degree){
-        return constructionRepository.createRoof(choiceTypeRoof , roofheight , construction, roofCladding, degree);
-    }
+    /*public Roof createRoof(UsersChoice usersChoice){
+        return constructionRepository.createRoof(usersChoice);
+    }*/
 
+    public List<Material> findMaterialsByCategory(Category category){
+        return materialService.findMaterialsByCategory(category);
+    }
     public void insertMaterialIntoDB(Material material){
         materialService.insertMaterialIntoDB(material);
     }
@@ -106,4 +104,10 @@ public class FogTraelast {
         return orderLists.displayOrdersBySalesman(wantedSalesman);
     }
 
+    public Material findMaterial(String name){
+        return materialService.findMaterial(name);
+}
+public Material findMaterialByID(int id){
+        return materialService.findMaterialByID(id);
+    }
 }

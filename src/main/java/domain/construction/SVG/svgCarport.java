@@ -1,5 +1,6 @@
 package domain.construction.SVG;
 
+
 class SvgCarport {
 
     private Tag tag = new Tag();
@@ -9,7 +10,10 @@ class SvgCarport {
     private Pile pile = new Pile();
     private Skur skur;
 
+
+
     StringBuilder SvgCarportText = new StringBuilder();
+
 
 
     public String Build(int lenght, int width, int skurBredde, int skurLængde){
