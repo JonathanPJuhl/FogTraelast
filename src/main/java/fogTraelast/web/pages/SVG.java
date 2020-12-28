@@ -6,6 +6,7 @@ import domain.bom.BOMService;
 import domain.construction.Construction;
 import domain.construction.Roof.ConstructionFactory;
 import domain.construction.Roof.Roof;
+import domain.construction.Roof.RoofSizeCalculator;
 import domain.construction.SVG.SvgCarport;
 import domain.construction.SVG.SvgCarportFront;
 import domain.construction.SVG.SvgCarportSide;
@@ -36,14 +37,15 @@ public class SVG extends BaseServlet {
         Construction cons = cf.createConstruction(roof, carport);
         Shed shed = cf.createShed(usersChoice, cons);
         SvgCarport svgCarport = new SvgCarport();
+        RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
         SvgCarportFront svgCarportFront = new SvgCarportFront();
         SvgCarportSide svgCarportSide = new SvgCarportSide();
         HttpSession session = req.getSession();
 
         session.setAttribute("construction1", cons);
         session.setAttribute("svgCarport", svgCarport.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength()));
-        session.setAttribute("svgCarportFront", svgCarportFront.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roof.getHeight()));
-        session.setAttribute("svgCarportSide", svgCarportSide.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roof.getHeight()));
+        session.setAttribute("svgCarportFront", svgCarportFront.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roofSizeCalculator.getRoofHeight(roof)));
+        session.setAttribute("svgCarportSide", svgCarportSide.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roofSizeCalculator.getRoofHeight(roof)));
         render("Fog Trælast", "/WEB-INF/pages/svg.jsp", req, resp);
 
         if (!(usersChoice.getRoofCladding()==null)) {
