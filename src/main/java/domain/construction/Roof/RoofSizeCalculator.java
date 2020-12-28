@@ -37,6 +37,15 @@ public class RoofSizeCalculator {
         return roofHeigth;
     }
 
+    public double getRoofHeight(Roof roof) {
+        double roofHeigth;
+        if(roof.isFlat()) {
+            roofHeigth = (Math.tan(Math.toRadians(roof.getDegree())) * roof.getLength());
+        }else{
+            roofHeigth = (Math.tan(Math.toRadians(roof.getDegree())) * roof.getWidth());
+        }
+        return roofHeigth;
+    }
 
     //Areal hjælpeberegning af længde af fladt tags overflade
     public int flatRoofCalcutatedSurfaceLength(int constructionLength, double degree) {
