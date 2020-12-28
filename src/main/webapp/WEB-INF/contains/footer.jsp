@@ -7,7 +7,7 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<footer class="fixed-footer">
+<footer id="footer">
     <div class="container bg-light pl-10">
         <div class="row text-white">
             <div class="col pt-2 ">
