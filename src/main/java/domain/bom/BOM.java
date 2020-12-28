@@ -7,7 +7,7 @@ public class BOM {
     private final ArrayList<BOMItem> items = new ArrayList<>();
 
     public void addItem(BOMItem bomItem) {
-        items.add(new BOMItem(bomItem.getMaterial(), bomItem.getQuantity(), bomItem.getLength(), bomItem.getDescription()));
+        items.add(new BOMItem(bomItem.getMaterial(), bomItem.getQuantity(), bomItem.getLength(), bomItem.getDescription(), bomItem.getWidth()));
     }
 
     public ArrayList<BOMItem> getItems() {

@@ -12,24 +12,20 @@ import java.util.List;
 public class Carport extends ConstructionPart {
 
     private final int height;
-    private final int length;
-    private final int width;
     private final int fromRoofToCarportMin;
 
     public Carport(UsersChoice usersChoice) {
+        super(usersChoice.getLength()-180 ,usersChoice.getWidth(), Category.Carport);
         this.fromRoofToCarportMin = 180;
         this.height = 2500; //TODO
-        this.length = usersChoice.getLength()-fromRoofToCarportMin;
-        this.width = usersChoice.getWidth()-fromRoofToCarportMin;
-
     }
 
     public Cladding[] threeWallswithCladding(Material claddingMaterial){
 
         Cladding[] threeWalls = new Cladding[3]; //TODO
 
-        Cladding claddingBack = new Cladding(width, height, Category.Carport, claddingMaterial);
-        Cladding claddingSide = new Cladding(length, height, Category.Carport, claddingMaterial);
+        Cladding claddingBack = new Cladding(getWidth(), height, Category.Carport, claddingMaterial);
+        Cladding claddingSide = new Cladding(getLength(), height, Category.Carport, claddingMaterial);
 
         threeWalls[0] = claddingBack;
         threeWalls[1] = claddingSide;
@@ -51,20 +47,12 @@ public class Carport extends ConstructionPart {
         return height;
     }
 
-    public int getLength() {
-        return length;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
     @Override
     public String toString() {
         return "Carport{" +
                 "height=" + height +
-                ", length=" + length +
-                ", width=" + width +
+                ", length=" + getLength() +
+                ", width=" + getWidth()+
                 ", fromRoofToCarportMin=" + fromRoofToCarportMin +
                 '}';
     }

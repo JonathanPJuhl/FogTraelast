@@ -32,6 +32,7 @@
             <tr>
                 <th>Materialets beskrivelse</th>
                 <th>Længde (i mm)</th>
+                <th>Bredde (i mm)</th>
                 <th>Antal</th>
                 <th>Enhed</th>
                 <th>Beskrivelse</th>
@@ -40,8 +41,9 @@
                 <tr>
                     <td>${BOMItem.material.nametype}</td>
                     <td>${BOMItem.length}</td>
+                    <td>${BOMItem.width}</td>
                     <td>${BOMItem.quantity}</td>
-                    <!--SKAL FIXES -->
+                    <!--TODO SKAL FIXES -->
                     <td>${BOMItem.material.color}</td>
                     <td>${BOMItem.description}</td>
                 </tr>

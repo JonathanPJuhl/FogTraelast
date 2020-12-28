@@ -5,28 +5,23 @@ import domain.construction.carport.Carport;
 import domain.material.Material;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Shed extends ConstructionPart {
-    private final int length;
-    private final int width;
-    private final Category category;
     private final int heigth;
-    Construction construction;
+    private final Construction construction;
 
     public Shed(UsersChoice usersChoice, Construction construction) {
-        this.length = usersChoice.getShedLength();
-        this.width = usersChoice.getShedwidth();
-        this.category = Category.Shed;
+        super(usersChoice.getShedLength(), usersChoice.getShedwidth(), Category.Shed);
         this.heigth = construction.getCarport().getHeight();
+        this.construction = construction;
     }
 
     public Cladding[] addCladdingToShed(Material material, Carport carport){
         Cladding[] wallsForShed = new Cladding[4];
 
-        Cladding claddingBack = new Cladding(width, carport.getHeight(), Category.Carport,material);
-        Cladding claddingFront = new Cladding(width, carport.getHeight(), Category.Carport,material);
-        Cladding claddingSide = new Cladding(length, carport.getHeight(), Category.Carport, material);
+        Cladding claddingBack = new Cladding(getWidth(), carport.getHeight(), Category.Carport,material);
+        Cladding claddingFront = new Cladding(getWidth(), carport.getHeight(), Category.Carport,material);
+        Cladding claddingSide = new Cladding(getLength(), carport.getHeight(), Category.Carport, material);
 
         wallsForShed[0] = claddingBack;
         wallsForShed[1] = claddingSide;
@@ -45,18 +40,6 @@ public class Shed extends ConstructionPart {
         return claddingShed;
     }
 
-    public int getLength() {
-        return length;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
     public int getHeigth() {
         return heigth;
     }
@@ -64,9 +47,9 @@ public class Shed extends ConstructionPart {
     @Override
     public String toString() {
         return "Shed{" +
-                "length=" + length +
-                ", width=" + width +
-                ", category=" + category +
+                "length=" + getLength() +
+                ", width=" + getWidth() +
+                ", category=" + getCategory() +
                 '}';
     }
 }

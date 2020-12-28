@@ -3,8 +3,12 @@ package domain.bom.calculators;
 import domain.bom.BOMItemSpecifications;
 import domain.construction.Construction;
 import domain.construction.Roof.RoofSizeCalculator;
+import domain.material.Material;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeSet;
 
 public class FlatRoofMaterialCalculator {
     private final TrapezPlates trapezPlates;
@@ -16,24 +20,56 @@ public class FlatRoofMaterialCalculator {
     private final Stern underSternLength;
     private final Stern underSternWidth;
     public final int WOODDIFFERENCES = 3000;
-    private int quantityOfT300temp;
+    //private int quantityOfT300temp;
+    private NoWaistHelper noWaistHelper;
 
-    public FlatRoofMaterialCalculator(Construction construction, RoofSizeCalculator roofSizeCalculator) {
+    public FlatRoofMaterialCalculator(Construction construction, RoofSizeCalculator roofSizeCalculator, NoWaistHelper noWaistHelper) {
+        this.noWaistHelper = noWaistHelper;
         this.construction = construction;
         this.roofSizeCalculator = roofSizeCalculator;
-        this.trapezPlates = new TrapezPlates(roofSizeCalculator, construction);
+
+        this.trapezPlates = new TrapezPlates(construction, noWaistHelper);
         this.raft = new Raft(construction, WOODDIFFERENCES);
         this.overSternFront = new Stern(construction.getRoof().getWidth());
         this.overSternSide = new Stern(construction.getRoof().getLength());
-        this.underSternLength =  new Stern(construction.getRoof().getLength());
+        this.underSternLength = new Stern(construction.getRoof().getLength());
         this.underSternWidth = new Stern(construction.getRoof().getWidth());
+
     }
 
 
-
     //Denne implementerer ikke BOMItemsSpecifications, da der er tale om flere længder og undgå af spilmateriale, så pladerne har ikke kun en længde pr. slags materiale objekt
-    public class TrapezPlates {
-        //TODO ændre bredde
+    public class TrapezPlates implements BOMItemSpecifications {
+
+        private final Construction construction;
+        private final NoWaistHelper noWaistHelper;
+
+        public TrapezPlates(Construction construction, NoWaistHelper noWaistHelper) {
+            this.construction = construction;
+            this.noWaistHelper = noWaistHelper;
+        }
+
+
+        @Override
+        public int length() {
+            return 0;
+        }
+
+        @Override
+        public int width(int widthFromDB) {
+            return widthFromDB;
+        }
+
+        @Override
+        public int quantity() {
+            return 0;
+        }
+
+        @Override
+        public String description(String adminDescription) {
+            return null;
+        }
+        /*//TODO ændre bredde
         private final int T300ROOFPLADELENGTH = 3000; //TODO Dette skulle rigtig beregnes ud fra 360 cm istedet
         private final int T600ROOFPLADELENGTH = 6000;
         private final int OVERLAP = 200;
@@ -51,7 +87,7 @@ public class FlatRoofMaterialCalculator {
             this.construction = construction;
             this.roofSizeCalculator = roofSizeCalculator;
             roofWidthSurfaceCalc = roofSizeCalculator.roofWidthSurface(construction.getRoof().isFlat(),construction.getRoof().getWidth(), construction.getRoof().getDegree());
-            roofLength =  roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(), construction.getRoof().getDegree());
+            roofLength =  roofSizeCalculator.flatRoofCalcutatedSurfaceWidth(construction.getRoof().getLength(), construction.getRoof().getDegree());
         }
 
         public HashMap whichTrapezShouldBeUsed(int trapezPladeWidth){
@@ -118,12 +154,12 @@ public class FlatRoofMaterialCalculator {
 
                 }
             }
-            /*TODO FÅ DEN TIL AT REGNE PÅ OVERSKYDENDE LÆNGDE
+            *//*TODO FÅ DEN TIL AT REGNE PÅ OVERSKYDENDE LÆNGDE
             if (leftOverRoofLength != 0) {
                 restPart = tempTrapezPladeWidth / restWidth;
                 temp2 = Math.round((double) square2numberOfT600Trapezplates / restPart);
                 square2numberOfT600Trapezplates = (int) temp2;
-            }*/
+            }*//*
             /////////////////////////////////////////////////////
 
             //Mellemregning til samlet antal plader
@@ -175,13 +211,14 @@ public class FlatRoofMaterialCalculator {
             return numberOfT300Trapezplates + numberOfT600Trapezplates;
         }
 
+    */
     }
 
     public class Raft implements BOMItemSpecifications {
         private Construction construction;
 
         public Raft(Construction construction, int woodDifferences) {
-        this.construction = construction;
+            this.construction = construction;
         }
 
         @Override
@@ -198,10 +235,15 @@ public class FlatRoofMaterialCalculator {
         }
 
         @Override
+        public int width(int widthFromDB) {
+            return widthFromDB;
+        }
+
+        @Override
         public int quantity() {
             int quantityRafters = 0;
             int constructionLength = construction.getRoof().getLength();
-            for (int i = 0; i < constructionLength; i =( i + 60)) {
+            for (int i = 0; i < constructionLength; i = (i + 60)) {
                 quantityRafters++;
             }
             return quantityRafters;
@@ -224,11 +266,16 @@ public class FlatRoofMaterialCalculator {
 
         @Override
         public int length() {
-            if(size==construction.getRoof().getLength())
-            construction.getRoof().getLength();
+            if (size == construction.getRoof().getLength())
+                construction.getRoof().getLength();
             else
                 construction.getRoof().getWidth();
             return size;
+        }
+
+        @Override
+        public int width(int widthFromDB) {
+            return widthFromDB;
         }
 
         @Override
@@ -267,7 +314,4 @@ public class FlatRoofMaterialCalculator {
         return trapezPlates;
     }
 
-    public int getQuantityOfT300temp() {
-        return quantityOfT300temp;
-    }
 }
