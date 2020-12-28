@@ -8,6 +8,11 @@
     margin-top: -6px;
 }
 
+svg.banner{
+    height: 50vh;
+    width: 50vw;
+}
+
 body{
     background-image: url("images/BackgroundFOG.jpeg");
     background-repeat: no-repeat;
