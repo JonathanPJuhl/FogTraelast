@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="scrollbar" id="styleFog">
     <div align="center">
-        <H1 class="text-white">Tillykke med din nye carport!</H1>
+        <H1>Tillykke med din nye carport!</H1>
         <br>
         <H3 class="text-white" align="left">&nbsp;&nbsp;&nbsp;&nbsp;Din carports egenskaber:</H3>
         <H5 class="text-white" align="left"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-

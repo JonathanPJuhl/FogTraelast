@@ -13,9 +13,9 @@
     <input type="submit" value="login " />
 
 </form>-->
-<div class="vertical-center"><p class="pb-4"><strong>
-    <h1 style="color:blue;" >Mangler du en splinter ny carport?</h1>
-    <h3 style="color: cornflowerblue" >Så er du det helt rigtige sted!</h3>
-<!-- <iframe class="logo-image" width="420" height="315" src="https://www.youtube.com/embed/Reha9g4meBs?autoplay=1&mute=1"></iframe>
---></strong></p>
+
+<div class="scrollbar" id="styleFog" align="center"><h1 style="color:blue;" ><p class="pb-4"><strong>Mangler du en splinter ny carport?</strong></h1>
+    <h3 style="color: cornflowerblue" ><strong>Så er du det helt rigtige sted!</strong></h3>
+<br> <iframe class="logo-image" width="420" height="315" src="https://www.youtube.com/embed/Reha9g4meBs?autoplay=1&mute=1"></iframe>
+</p>
 </div>

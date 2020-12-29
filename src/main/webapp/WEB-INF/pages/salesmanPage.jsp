@@ -8,4 +8,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
+<div class="scrollbar" id="styleFog"><div align="center">
+        <h1>Velkommen!</h1>
+        <h1>${requestScope.salesmen}</h1>
+    </div>
+    </div>

@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="scrollbar" id="styleFog">
-    <div class="text-white" align="center">
+    <div align="center">
 
         <h1>Vælg dit tags og beklædnings egenskaber</h1>
 
@@ -51,7 +51,7 @@
                 <input type="number" name="shedWidth" id="shedWidth" class="form-control">
             </c:if>
 <br>
-<button class="btn btn-primary" type="submit">Se Stykliste (pt)</button>
+<button class="btn btn-primary" type="submit">Se tegning!</button>
         </form>
     </div>
 </div>
