@@ -9,6 +9,7 @@ import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
 import domain.users.User;
+import infrastructure.DBUserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

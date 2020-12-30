@@ -12,14 +12,14 @@
     <div align="center">
         <H1>Tillykke med din nye carport!</H1>
         <br>
-        <H3 class="text-white" align="left">&nbsp;&nbsp;&nbsp;&nbsp;Din carports egenskaber:</H3>
-        <H5 class="text-white" align="left"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+        <H3 align="left">&nbsp;&nbsp;&nbsp;&nbsp;Din carports egenskaber:</H3>
+        <H5 align="left"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
             Bredde: ${(sessionScope.tempConstruction.width)/1000} m -
             Længde: ${(sessionScope.tempConstruction.length)/1000} m
             - Tagtype: ${(sessionScope.tempConstruction.roofChoice)}
             - Skur? ${(sessionScope.tempConstruction.shedOrNo)}
             - Beklædning? ${(sessionScope.tempConstruction.claddingChoice)}</H5>
-        <H5 class="text-white" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <H5 align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <c:if test="${sessionScope.tempConstruction.shedOrNo==1}">
                 - Beklædnings materiale ${(sessionScope.tempConstruction.shedAndCarportCladding.nametype)} - ${(sessionScope.tempConstruction.shedAndCarportCladding.color)}
             </c:if>
@@ -27,8 +27,8 @@
             - Tag materiale ${(sessionScope.tempConstruction.roofCladding.nametype)}
             - ${sessionScope.tempConstruction.roofCladding.color} -</H5>
         </c:if>
-        <table class="text-white" border="1" cellpadding="5">
-            <h2 class="text-white">Stykliste</h2>
+        <table border="1" cellpadding="5">
+            <h2>Stykliste</h2>
             <tr>
                 <th>Materialets beskrivelse</th>
                 <th>Længde (i mm)</th>
