@@ -1,14 +1,37 @@
 @startuml
 
-package "Some Group" {
-HTTP - [First Component]
-[Another Component]
+title Domain model
+object Material
+object BOM
+object SVGDrawings
+object Order
+object Customer
+object Employee
+object Carport
+object Construction
+object Roof{
+pitchedOrNot
+}
+object Shed
+object Cladding
+object Invoice{
+price
 }
 
-package "Other Groups" {
-FTP - [Second Component]
 
-[First Component] --> FTP
-}
-
+Order "1" -- "1" Construction : stores information
+Order "1" -- "1" Invoice : contains
+Construction "1" -- "1" Roof : contains
+Construction "1" -- "1" Carport : contains
+Construction "1" -- "0..1" Shed : maybe contains
+Construction "1" -- "0..3" Cladding : maybe contains
+Construction "1" -- "3" SVGDrawings : draws
+Employee "1..2" -- "*" Order : administrates
+BOM "*" -- "*" Material : contains
+'Material "*" -- "1..2" Employee : administrates
+Order "1" -- "1" BOM : stores
+Customer "*" -- "1..2" Employee : communicats
+Customer "1" -- "1..*" Order : can see
+Customer "1" -- "3" SVGDrawings : can see
+Customer "1" -- "*" Construction : chooses
 @enduml
