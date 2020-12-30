@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container">
 <div class="scrollbar" id="styleFog">
-    <div class="text-white" align="center">
+    <div align="center">
         <h1>Vælg dine mål</h1>
         <form method="post" action="${pageContext.request.contextPath}/Orders/create">
 

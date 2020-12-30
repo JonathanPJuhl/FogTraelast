@@ -12,7 +12,7 @@
     <div align="center" >
 
         <form method="post"  action="${pageContext.request.contextPath}/Orders/editOrder">
-        <table class="text-white" border="1" cellpadding="5">
+        <table border="1" cellpadding="5">
             <h2 class="text-white">Rediger ordre</h2>
 
             <tr>

@@ -6,9 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="scrollbar text-white" id="styleFog">
+<div class="scrollbar" id="styleFog">
 <form method="post">
-    <div class="text-blue" align="center">
+    <div align="center">
     <h1>Velkommen - bare log ind</h1>
         <label for="emailName">Email address</label>
     <input type="email" class="form-control" id="emailName" aria-describedby="emailNameHelp" name="email">
