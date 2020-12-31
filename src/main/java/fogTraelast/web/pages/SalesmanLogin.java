@@ -18,8 +18,12 @@ public class SalesmanLogin  extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() == null) {
+
             render("Fog Trælast", "/WEB-INF/pages/loginSalesman.jsp", req, resp);
-        } else if (req.getPathInfo().substring(1).equals("Logout")){
+        } else if (req.getPathInfo().substring(1).equals("Error")){
+            req.setAttribute("Error", "Forkert email eller password, prøv igen");
+            render("Fog Trælast", "/WEB-INF/pages/loginSalesman.jsp", req, resp);
+        }else if (req.getPathInfo().substring(1).equals("Logout")){
             HttpSession session = req.getSession(true);
             session.setAttribute("user", null);
             session.setAttribute("userID", null);
@@ -67,10 +71,16 @@ public class SalesmanLogin  extends BaseServlet {
                     HttpSession session = req.getSession(true);
                     session.setAttribute("user", list);
                     session.setAttribute("userID", list.getID());
+                    resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/");
                 } catch (NoSuchUserExists noSuchUserExists) {
                     noSuchUserExists.printStackTrace();
                 }
-                resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/");
+                catch (NullPointerException nullpoint) {
+                    nullpoint.printStackTrace();
+                    req.setAttribute("Error", true);
+                    resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/Error");
+                }
+
             }
 
     }

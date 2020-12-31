@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 public class SHA256 {
 
 
-    public  String sha256(String base) {
+    public String sha256(String base) {
 
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
