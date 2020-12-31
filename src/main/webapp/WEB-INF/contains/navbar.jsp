@@ -19,7 +19,7 @@
                 <a class="navbar-brand" href="${navBar.findUrl("Index")}">
                     <img src="<c:url value="/images/FogLogo.png"></c:url>" style="width:5vw"
                          class="d-inline-block">
-                    Byggemarked
+                    Trælast
                 </a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
