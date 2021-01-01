@@ -54,6 +54,8 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
         boolean addedEkstraLengthQnt = false;
         int widthOptionToAdd = 0;
         int lengthOptionToAdd = 0;
+        int lengthOptionToCount;
+        int lengthRestWithOverlap;
         int IDToAdd = 0;
 
         //Kører alle målemuligheder igennem for at hente hhv længde og bredde ud til beregninger
@@ -145,7 +147,7 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                             ID = (int) toCompareFromCountedMap.getKey();
                             materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
                             optionsAndQnty = materialOptionsAndQnty.get(material);
-                            int widthOptionToCompare = optionsAndQnty[0];
+                            int widthOptionToCompare = optionsAndQnty[1];
                             if (quantityLengthFinal > 0 && constructionPartWidth > widthOptionToCompare) {//
                                 addedEkstraLengthQnt = true;//
                                 break;
@@ -162,8 +164,8 @@ public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
                                 double qntyMaterialsForRow = quantityLengthToAdd *  restLengthPercentagePrOption;
                                 qntyWholeMaterialsForLastRow = (int) qntyMaterialsForRow;
                             }*/
-                            int lengthOptionToCount = lengthOptionToAdd;
-                            int lengthRestWithOverlap = lengthRest + material.getOverlap();
+                            lengthOptionToCount = lengthOptionToAdd;
+                            lengthRestWithOverlap = lengthRest + material.getOverlap();
                             while (lengthOptionToCount > lengthRestWithOverlap) {
                                 qntyWholeMaterialsForLastRow++;
                                 lengthOptionToCount = lengthOptionToCount - lengthRestWithOverlap;

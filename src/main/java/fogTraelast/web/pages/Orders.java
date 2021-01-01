@@ -123,7 +123,7 @@ public class Orders extends BaseServlet {
         if (req.getPathInfo().substring(1).equals("create")) {
             int length = Integer.parseInt(req.getParameter("length"))*10;
             int width = Integer.parseInt(req.getParameter("width"))*10;
-            String roofType = req.getParameter("roofType"); //TODO
+            String roofType = req.getParameter("roofType");
             int shedOrNo = Integer.parseInt((req.getParameter("shedOrNo")));
             int cladding = Integer.parseInt(req.getParameter("cladding"));
 

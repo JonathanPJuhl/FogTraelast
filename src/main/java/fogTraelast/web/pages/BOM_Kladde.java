@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 @WebServlet({"/BOM", "/BOM/*"})
 public class BOM_Kladde extends BaseServlet {
@@ -28,7 +29,9 @@ public class BOM_Kladde extends BaseServlet {
                UsersChoice usersChoice = (UsersChoice) req.getSession().getAttribute("secondUserChoice");
                if (!(usersChoice.getRoofCladding() == null)) {
                    BOMService bs = new BOMService(new DBMaterialRepository(db));
-                   BOM bom = bs.calculateBom(construction, usersChoice, constructionFactory);
+                   TreeSet lengths = api.allLenghtsForMaterials();
+                   TreeSet widths = api.allWidthsForMaterials();
+                   BOM bom = bs.calculateBom(construction, widths, lengths);
                    ArrayList<BOMItem> bomI = (bom.getItems());
                    req.getSession().setAttribute("bom", bomI);
                    render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);

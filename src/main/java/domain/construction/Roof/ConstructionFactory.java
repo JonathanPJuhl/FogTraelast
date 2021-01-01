@@ -17,7 +17,7 @@ private RoofSizeCalculator roofSizeCalculator;
         int width = usersChoice.getWidth();
         int length = usersChoice.getLength();
         Roof roof;
-        if (usersChoice.roofChoiceConverter("Flat")){
+        if (usersChoice.roofChoiceConverter(usersChoice.getRoofChoice())){
             roof = new FlatRoof(usersChoice, roofSizeCalculator);
         }else{
             roof = new PitchedRoof(usersChoice, roofSizeCalculator);

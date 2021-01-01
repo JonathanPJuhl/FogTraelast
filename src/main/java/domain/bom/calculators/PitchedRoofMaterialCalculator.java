@@ -1,6 +1,9 @@
 package domain.bom.calculators;
 
+import domain.construction.Category;
 import domain.construction.Construction;
+import domain.construction.ConstructionPart;
+import domain.construction.Roof.PitchedRoof;
 import domain.construction.Roof.Roof;
 import domain.construction.Roof.RoofSizeCalculator;
 import domain.construction.UsersChoice;
@@ -36,16 +39,15 @@ public class PitchedRoofMaterialCalculator {
     private int amountOfRygsten;
 
     private final Carport carport;
-    private final Roof roof;
+    private final PitchedRoof roof;
+    private final HashMap<Category, ConstructionPart> constructionpart;
 
-    private final UsersChoice construction;
     private final RoofSizeCalculator roofSizeCalculator;
 
-    public PitchedRoofMaterialCalculator(UsersChoice construction, HashMap constructionList) {
-        this.construction = construction;
-        this.carport = (Carport) constructionList.get("carport");
-        this.roof = (Roof) constructionList.get("roof");
-
+    public PitchedRoofMaterialCalculator(HashMap<Category, ConstructionPart> constructionparts) {
+        this.constructionpart = constructionparts;
+        this.carport = (Carport) constructionparts.get(Category.Carport);
+        this.roof = (PitchedRoof) constructionparts.get(Category.Pitched);
         roofSizeCalculator = new RoofSizeCalculator();
     }
 
@@ -59,9 +61,8 @@ public class PitchedRoofMaterialCalculator {
         int tagstenHalfePitchedRoof = 0;
         //Vi trækker ikke en tagstenbredde fra i tagets længde i for-loopet fordi vi vil have det hele antal + en hvis
         // der er en rest
-        for (int i = 0; i < roofSizeCalculator.roofWidthSurface(construction.roofChoiceConverter(construction.getRoofChoice()), construction.getWidth(),
-                construction.getDegree())- LÆGTESTENDISTANCE; i= i + LÆGTESTENDISTANCE) {
-            for (int j = 0; j < roofSizeCalculator.roofLengthSurface(false,construction.getLength(),construction.getDegree()); j = j + roofTilesWidth) {
+        for (int i = 0; i < roofSizeCalculator.roofWidthSurface(roof.isFlat(),roof.getWidth(), roof.getDegree())- LÆGTESTENDISTANCE; i= i + LÆGTESTENDISTANCE) {
+            for (int j = 0; j < roofSizeCalculator.roofLengthSurface(roof.isFlat(),roof.getLength(),roof.getDegree()); j = j + roofTilesWidth) {
                 tagstenHalfePitchedRoof++;
             }
         }
@@ -85,7 +86,7 @@ public class PitchedRoofMaterialCalculator {
 
     public int screwsForVindskederCalculated(){
         //Vi antager der bruges en skrue for hvert 50cm
-        vindskedeLængde = (int)(Math.hypot((construction.getWidth()/2.0), roofSizeCalculator.roofHeight(construction.getWidth(),construction.getDegree())));
+        vindskedeLængde = (int)(Math.hypot((roof.getWidth()/2.0), roofSizeCalculator.roofHeight(roof.getWidth(),roof.getDegree())));
         for (int i = 50; i < vindskedeLængde-50 ; i = i + 50) {
             screwsForVindskeder++;
         }
@@ -94,7 +95,7 @@ public class PitchedRoofMaterialCalculator {
 
     public int screwsForVandbrætCalculated(){
         //Vi antager der skal bruges til hver 300 mm en skrue, med mindst 10 mm fra sidste kant
-        vandBrætsLength = construction.getLength();
+        vandBrætsLength = roof.getLength();
         for (int i = 300; i < vandBrætsLength -10 ; i = i + 300) {
             screwsForVandbræt++;
         }
@@ -125,10 +126,10 @@ public class PitchedRoofMaterialCalculator {
     public int spærQuantity(){
         int carportLength = carport.getLength();
         int distanceBestweenSpær = 89;
-        for (int i = 0; i < carportLength; i = 1 + distanceBestweenSpær) {
+        for (int i = 0; i < carportLength; i = 0 + distanceBestweenSpær) {
             spærAmount++;
         }
-        if (construction.getShedOrNo()==0) {
+        if (constructionpart.get(Category.Shed) == null) {
             spærAmount = spærAmount+ 2;
         }
         return spærAmount;
@@ -145,11 +146,10 @@ public class PitchedRoofMaterialCalculator {
         int lenghtOfTriangleGavlShorter = carport.getWidth();
         int restTotal;
         int restUseable = 1;
-        int roofHeight = (int) roofSizeCalculator.roofHeight(construction.getWidth(),construction.getDegree());
-        double newHeight = roofSizeCalculator.roofHeight(construction.getWidth(),construction.getDegree());
+        int roofHeight = (int) roofSizeCalculator.roofHeight(roof.getWidth(),roof.getDegree());
+        double newHeight = roofSizeCalculator.roofHeight(roof.getWidth(),roof.getDegree());
         int roofAngleInTop = (int)(roof.getDegree())*2;
-        int lengthOfHalfRoofWidthSurface = roofSizeCalculator.roofWidthSurface(construction.roofChoiceConverter
-                (construction.getRoofChoice()),construction.getWidth(),roof.getDegree());
+        int lengthOfHalfRoofWidthSurface = roofSizeCalculator.roofWidthSurface(roof.isFlat(), roof.getWidth(), roof.getDegree());
         int overlayPlankWidth;
         double kFactor;
         double tempHeigth;
@@ -180,7 +180,7 @@ public class PitchedRoofMaterialCalculator {
 
 
     public int quantityRygsten() {
-        amountOfRygsten = construction.getLength() / RYGSTENCOVERS;
+        amountOfRygsten = roof.getLength() / RYGSTENCOVERS;
         if (amountOfRygsten% RYGSTENCOVERS != 0 )
             amountOfRygsten++;
         return amountOfRygsten;
