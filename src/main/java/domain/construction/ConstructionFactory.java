@@ -1,8 +1,12 @@
-package domain.construction.Roof;
+package domain.construction;
 
 import domain.construction.Cladding;
 import domain.construction.Construction;
 import domain.construction.ConstructionRepository;
+import domain.construction.Roof.FlatRoof;
+import domain.construction.Roof.PitchedRoof;
+import domain.construction.Roof.Roof;
+import domain.construction.Roof.RoofSizeCalculator;
 import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;

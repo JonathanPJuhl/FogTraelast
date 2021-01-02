@@ -44,10 +44,10 @@
 
             <br>
             <c:if test="${requestScope.userChoice.shedOrNo==1}">
-                <label for="shedLength">Skurlængde </label>
+                <label for="shedLength">Skurlængde (cm) </label>
                 <input type="number" name="shedLength" id="shedLength" class="form-control">
 
-                <label for="shedWidth">Skurbredde </label>
+                <label for="shedWidth">Skurbredde (cm)</label>
                 <input type="number" name="shedWidth" id="shedWidth" class="form-control">
             </c:if>
 <br>
