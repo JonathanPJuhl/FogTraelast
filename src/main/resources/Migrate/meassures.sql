@@ -16,5 +16,5 @@ CREATE TABLE IF NOT EXISTS widths(
                                         price double NOT NULL
 );
 
-INSERT INTO widths(width, price) VALUES(2090, 100.00);
-INSERT INTO widths(width, price) VALUES(1090, 90.00);
+INSERT INTO widths(width, price) VALUES(2900, 100.00);
+INSERT INTO widths(width, price) VALUES(1900, 90.00);
