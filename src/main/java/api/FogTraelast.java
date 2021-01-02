@@ -1,7 +1,7 @@
 package api;
 
 import domain.construction.Category;
-import domain.construction.Roof.ConstructionFactory;
+import domain.construction.ConstructionFactory;
 import domain.material.Material;
 import domain.material.MaterialService;
 import domain.orders.NoSuchOrderExists;

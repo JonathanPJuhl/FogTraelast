@@ -1,7 +1,7 @@
 package fogTraelast.web.pages;
 
 import api.FogTraelast;
-import domain.construction.Roof.ConstructionFactory;
+import domain.construction.ConstructionFactory;
 import domain.construction.Roof.RoofSizeCalculator;
 import fogTraelast.web.widget.NavBar;
 import infrastructure.DBMaterialRepository;

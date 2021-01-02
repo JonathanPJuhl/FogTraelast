@@ -1,10 +1,7 @@
 package fogTraelast.web.pages;
 
-import domain.bom.BOM;
-import domain.bom.BOMItem;
-import domain.bom.BOMService;
 import domain.construction.Construction;
-import domain.construction.Roof.ConstructionFactory;
+import domain.construction.ConstructionFactory;
 import domain.construction.Roof.Roof;
 import domain.construction.Roof.RoofSizeCalculator;
 import domain.construction.SVG.SvgCarport;
@@ -13,7 +10,6 @@ import domain.construction.SVG.SvgCarportSide;
 import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
-import infrastructure.DBMaterialRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,9 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.TreeSet;
 
 @WebServlet({"/SVG"})
 public class SVG extends BaseServlet {

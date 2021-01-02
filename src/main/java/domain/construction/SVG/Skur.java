@@ -17,8 +17,8 @@ public class Skur implements Draw {
         return ("<rect x=\""+x+"\" y=\"80\" width=\""+skurLængde+"\" " +
                 "height=\""+skurBredde+"\" " +
                 "style=\"stroke:black;" +
-                " storke-width:2; " +
-                "stroke-dasharray:2,2;" +
+                "stroke-width:2; " +
+                "stroke-dasharray:0,0;" +
                 "fill-opacity:0.0;" +
                 "fill:white;\" >" +
                 " </rect>" +

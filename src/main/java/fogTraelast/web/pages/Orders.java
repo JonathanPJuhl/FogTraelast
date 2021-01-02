@@ -9,7 +9,6 @@ import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
 import domain.users.User;
-import infrastructure.DBUserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -166,8 +165,8 @@ public class Orders extends BaseServlet {
                 degreeOption = Integer.parseInt(req.getParameter("degreeOption"));
             }
             if (consFirst.getShedOrNo()==1) {
-                shedlenght = Integer.parseInt(req.getParameter("shedLength"));
-                shedwitdh = Integer.parseInt(req.getParameter("shedWidth"));
+                shedlenght = Integer.parseInt(req.getParameter("shedLength"))*10;
+                shedwitdh = Integer.parseInt(req.getParameter("shedWidth"))*10;
                 carportShedCladdingID = Integer.parseInt(req.getParameter("carportCladding"));
                 claddingMaterial = api.findMaterialByID(carportShedCladdingID);
             }

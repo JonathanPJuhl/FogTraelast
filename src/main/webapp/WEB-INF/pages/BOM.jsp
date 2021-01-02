@@ -20,12 +20,17 @@
             - Beklædning? ${(sessionScope.tempConstruction.claddingChoice)}--%></H5>
         <H5 align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <c:if test="${sessionScope.tempConstruction.shedOrNo==1}">
-                - Beklædnings materiale ${(sessionScope.tempConstruction.shedAndCarportCladding.nametype)} - ${(sessionScope.tempConstruction.shedAndCarportCladding.color)}
+                - Beklædnings materiale: ${requestScope.usersChoices.shedAndCarportCladding.nametype},
+                ${requestScope.usersChoices.shedAndCarportCladding.color}
             </c:if>
+        </H5>
+    <H5 align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
             <c:if test="${sessionScope.tempConstruction.isCladdingChoice()==1}">
-            - Tag materiale ${(sessionScope.tempConstruction.roofCladding.nametype)}
-            - ${sessionScope.tempConstruction.roofCladding.color} -</H5>
+            - Tag materiale: ${requestScope.usersChoices.roofCladding.nametype}, ${requestScope.usersChoices.roofCladding.color}
+
         </c:if>
+    </H5>
         <table border="1" cellpadding="5">
             <h2>Stykliste</h2>
             <tr>
