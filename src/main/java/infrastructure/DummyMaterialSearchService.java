@@ -10,6 +10,7 @@ import domain.material.MaterialService;
 import domain.material.MaterialType;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public class DummyMaterialSearchService implements MaterialService {
 
@@ -47,6 +48,16 @@ public class DummyMaterialSearchService implements MaterialService {
 
     @Override
     public List<Material> allMaterialsInDB() {
+        return null;
+    }
+
+    @Override
+    public TreeSet<Integer> allWidthsForMaterials() {
+        return null;
+    }
+
+    @Override
+    public TreeSet<Integer> allLenghtsForMaterials() {
         return null;
     }
 

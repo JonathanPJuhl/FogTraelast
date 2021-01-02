@@ -87,6 +87,44 @@ public class NoWaistHelperTest extends TestCase {
     }
 
     @Test
+    public void testQntysT600PlatesAreaForFlatRoof1900WidthFromPDF() throws Exception {
+        //Arrange
+        setUp();
+        int lengthT600 = 6000;
+        int widthT600 = 1900;
+        usersChoice = new UsersChoice(7300, 3500, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        roof = new FlatRoof(usersChoice, roofSizeCalculator);
+        carport = new Carport(usersChoice);
+        construction = new Construction(roof, carport);
+        int qnty = 0;
+        int roofLengthSurface = roofSizeCalculator.roofLengthSurface(construction.getRoof().isFlat(), construction.getRoof().getLength(), construction.getRoof().getDegree());
+        int roofwidthSurface = roofSizeCalculator.roofWidthSurface(construction.getRoof().isFlat(), construction.getRoof().getWidth(), construction.getRoof().getDegree());
+
+
+        //Act
+        HashMap<Integer, HashMap<Material, int[]>> testMethod = waistHelper.quantitiesPlatesAreaCalculated(roofLengthSurface, roofwidthSurface, roofTrapezPlates, widths, lengths);
+        for (int i = 1; i <= testMethod.size(); i++) {
+            for (Map.Entry materialAndMeassures : testMethod.get(i).entrySet()) {
+                int[] messauresQnty = (int[]) materialAndMeassures.getValue();
+                int lengthOption = messauresQnty[0];
+                int widthOption = messauresQnty[1];
+                if (widthOption == widthT600 && lengthOption == lengthT600) {
+                    qnty = messauresQnty[2];
+                    break;
+                }
+            }
+            if (qnty != 0) {
+                break;
+            }
+        }
+        int actual = qnty;
+        int excepted = 1;
+
+        //Assert
+        assertEquals(excepted, actual);
+    }
+
+    @Test
     public void testQuantitiesT600PlatesAreaForFlatRoof1900Width() throws Exception {
         //Arrange
         setUp();

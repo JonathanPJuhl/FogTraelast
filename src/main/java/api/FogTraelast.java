@@ -12,6 +12,7 @@ import domain.users.User;
 import domain.users.UserRepository;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public class FogTraelast {
     private String VERSION = "0.1"; //TODO Rediger db version
@@ -40,7 +41,7 @@ public class FogTraelast {
         return orderLists.findSpecificOrder(id);
     }
 
-    public Order createOrder(double length, double width, String customerPhone, String customerEmail, String  roofType, int shedOrNo, int cladding) {
+    public Order createOrder(double length, double width, String customerPhone, String customerEmail, String roofType, int shedOrNo, int cladding) {
         return orderLists.insertOrderIntoDB(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
     }
 
@@ -48,7 +49,7 @@ public class FogTraelast {
         return userLists.loginSalesman(salesmanEmail, password);
     }
 
-    public User findSalesman(int id) throws NoSuchUserExists{
+    public User findSalesman(int id) throws NoSuchUserExists {
         return userLists.findUser(id);
     }
 
@@ -60,7 +61,7 @@ public class FogTraelast {
         return materialService.findMaterial(typeName, color, type, category, height);
     }*/
 
-    public List<Material> roofMaterials(String roofType){
+    public List<Material> roofMaterials(String roofType) {
         return materialService.roofMaterials(roofType);
     }
 
@@ -68,28 +69,34 @@ public class FogTraelast {
         return constructionRepository.createRoof(usersChoice);
     }*/
 
-    public List<Material> findMaterialsByCategory(Category category){
+    public List<Material> findMaterialsByCategory(Category category) {
         return materialService.findMaterialsByCategory(category);
     }
-    public void insertMaterialIntoDB(Material material){
+
+    public void insertMaterialIntoDB(Material material) {
         materialService.insertMaterialIntoDB(material);
     }
 
     public void editPrice(double columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editPrice(columnValue, orderID);
     }
+
     public void editSalesman(int columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editSalesman(columnValue, orderID);
     }
+
     public void editStatus(String columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editStatus(columnValue, orderID);
     }
+
     public void editRoofType(String columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editRoofType(columnValue, orderID);
     }
+
     public void editShedOrNo(int columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editShedOrNo(columnValue, orderID);
     }
+
     public void editCladding(int columnValue, int orderID) throws NoSuchOrderExists {
         orderLists.editCladding(columnValue, orderID);
     }
@@ -97,17 +104,28 @@ public class FogTraelast {
     public List<User> findAllSalesmen() throws NoSuchUserExists {
         return userLists.findAllSalesmen();
     }
-    public List<Order> displayOrderByStatus(String wantedStatus){
+
+    public List<Order> displayOrderByStatus(String wantedStatus) {
         return orderLists.displayOrdersByStatus(wantedStatus);
     }
-    public List<Order> displayOrderBySalesman(int wantedSalesman){
+
+    public List<Order> displayOrderBySalesman(int wantedSalesman) {
         return orderLists.displayOrdersBySalesman(wantedSalesman);
     }
 
-    public Material findMaterial(String name){
+    public Material findMaterial(String name) {
         return materialService.findMaterial(name);
-}
-public Material findMaterialByID(int id){
+    }
+
+    public Material findMaterialByID(int id) {
         return materialService.findMaterialByID(id);
+    }
+
+    public TreeSet<Integer>allWidthsForMaterials(){
+        return materialService.allWidthsForMaterials();
+    }
+
+    public TreeSet<Integer>allLenghtsForMaterials(){
+        return materialService.allLenghtsForMaterials();
     }
 }

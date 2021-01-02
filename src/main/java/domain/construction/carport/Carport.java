@@ -13,19 +13,21 @@ public class Carport extends ConstructionPart {
 
     private final int height;
     private final int fromRoofToCarportMin;
+    private Material cladding;
 
     public Carport(UsersChoice usersChoice) {
         super(usersChoice.getLength()-180 ,usersChoice.getWidth(), Category.Carport);
         this.fromRoofToCarportMin = 180;
         this.height = 2500; //TODO
+        this.cladding = usersChoice.getShedAndCarportCladding();
     }
 
-    public Cladding[] threeWallswithCladding(Material claddingMaterial){
+    public Cladding[] threeWallswithCladding(){
 
-        Cladding[] threeWalls = new Cladding[3]; //TODO
+        Cladding[] threeWalls = new Cladding[3];
 
-        Cladding claddingBack = new Cladding(getWidth(), height, Category.Carport, claddingMaterial);
-        Cladding claddingSide = new Cladding(getLength(), height, Category.Carport, claddingMaterial);
+        Cladding claddingBack = new Cladding(getWidth(), height, Category.Carport, this.cladding);
+        Cladding claddingSide = new Cladding(getLength(), height, Category.Carport,this.cladding);
 
         threeWalls[0] = claddingBack;
         threeWalls[1] = claddingSide;
@@ -34,8 +36,8 @@ public class Carport extends ConstructionPart {
         return threeWalls;
     }
 
-    public List<Cladding> addCladding(Cladding[] claddingWalls){
-        List<Cladding> claddingCarport = new ArrayList();
+    public ArrayList<Cladding> addCladding(Cladding[] claddingWalls){
+        ArrayList<Cladding> claddingCarport = new ArrayList();
 
         for (Cladding claddingWall : claddingWalls ) {
             claddingCarport.add(claddingWall);
@@ -45,6 +47,10 @@ public class Carport extends ConstructionPart {
 
     public int getHeight() {
         return height;
+    }
+
+    public Material getCladding() {
+        return cladding;
     }
 
     @Override

@@ -2,6 +2,7 @@ package domain.bom.calculators;
 
 import domain.bom.BOMItemSpecifications;
 import domain.construction.Construction;
+import domain.construction.Roof.FlatRoof;
 import domain.construction.Roof.RoofSizeCalculator;
 import domain.material.Material;
 
@@ -11,41 +12,34 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class FlatRoofMaterialCalculator {
-    private final TrapezPlates trapezPlates;
-    private Construction construction;
     private RoofSizeCalculator roofSizeCalculator;
     private final Raft raft;
     private final Stern overSternFront;
     private final Stern overSternSide;
     private final Stern underSternLength;
     private final Stern underSternWidth;
-    public final int WOODDIFFERENCES = 3000;
+
     //private int quantityOfT300temp;
     private NoWaistHelper noWaistHelper;
 
-    public FlatRoofMaterialCalculator(Construction construction, RoofSizeCalculator roofSizeCalculator, NoWaistHelper noWaistHelper) {
+    public FlatRoofMaterialCalculator(FlatRoof roof, RoofSizeCalculator roofSizeCalculator, NoWaistHelper noWaistHelper) {
         this.noWaistHelper = noWaistHelper;
-        this.construction = construction;
         this.roofSizeCalculator = roofSizeCalculator;
-
-        this.trapezPlates = new TrapezPlates(construction, noWaistHelper);
-        this.raft = new Raft(construction, WOODDIFFERENCES);
-        this.overSternFront = new Stern(construction.getRoof().getWidth());
-        this.overSternSide = new Stern(construction.getRoof().getLength());
-        this.underSternLength = new Stern(construction.getRoof().getLength());
-        this.underSternWidth = new Stern(construction.getRoof().getWidth());
+        this.raft = new Raft(roof.getWidth(),roof.getLength());
+        this.overSternFront = new Stern(roof.getWidth());
+        this.overSternSide = new Stern(roof.getLength());
+        this.underSternLength = new Stern(roof.getLength());
+        this.underSternWidth = new Stern(roof.getWidth());
 
     }
 
 
-    //Denne implementerer ikke BOMItemsSpecifications, da der er tale om flere længder og undgå af spilmateriale, så pladerne har ikke kun en længde pr. slags materiale objekt
+   /* //Denne implementerer ikke BOMItemsSpecifications, da der er tale om flere længder og undgå af spilmateriale, så pladerne har ikke kun en længde pr. slags materiale objekt
     public class TrapezPlates implements BOMItemSpecifications {
 
-        private final Construction construction;
         private final NoWaistHelper noWaistHelper;
 
-        public TrapezPlates(Construction construction, NoWaistHelper noWaistHelper) {
-            this.construction = construction;
+        public TrapezPlates(NoWaistHelper noWaistHelper) {
             this.noWaistHelper = noWaistHelper;
         }
 
@@ -69,7 +63,6 @@ public class FlatRoofMaterialCalculator {
         public String description(String adminDescription) {
             return null;
         }
-        /*//TODO ændre bredde
         private final int T300ROOFPLADELENGTH = 3000; //TODO Dette skulle rigtig beregnes ud fra 360 cm istedet
         private final int T600ROOFPLADELENGTH = 6000;
         private final int OVERLAP = 200;
@@ -154,12 +147,11 @@ public class FlatRoofMaterialCalculator {
 
                 }
             }
-            *//*TODO FÅ DEN TIL AT REGNE PÅ OVERSKYDENDE LÆNGDE
             if (leftOverRoofLength != 0) {
                 restPart = tempTrapezPladeWidth / restWidth;
                 temp2 = Math.round((double) square2numberOfT600Trapezplates / restPart);
                 square2numberOfT600Trapezplates = (int) temp2;
-            }*//*
+            }
             /////////////////////////////////////////////////////
 
             //Mellemregning til samlet antal plader
@@ -211,20 +203,22 @@ public class FlatRoofMaterialCalculator {
             return numberOfT300Trapezplates + numberOfT600Trapezplates;
         }
 
-    */
-    }
+    }*/
 
     public class Raft implements BOMItemSpecifications {
-        private Construction construction;
+        private int roofWidth;
+        private int roofLength;
+        private final int WOODDIFFERENCES = 3000;
 
-        public Raft(Construction construction, int woodDifferences) {
-            this.construction = construction;
+        public Raft(int roofwidth, int roofLength) {
+            this.roofWidth = roofwidth;
+            this.roofLength = roofLength;
         }
 
         @Override
         public int length() {
             int realMeasures = 0;
-            int ideelMeasures = construction.getRoof().getWidth() - 50;
+            int ideelMeasures = roofWidth - 50;
 
             realMeasures = ideelMeasures / WOODDIFFERENCES;
 
@@ -242,7 +236,7 @@ public class FlatRoofMaterialCalculator {
         @Override
         public int quantity() {
             int quantityRafters = 0;
-            int constructionLength = construction.getRoof().getLength();
+            int constructionLength = roofLength;
             for (int i = 0; i < constructionLength; i = (i + 60)) {
                 quantityRafters++;
             }
@@ -266,10 +260,6 @@ public class FlatRoofMaterialCalculator {
 
         @Override
         public int length() {
-            if (size == construction.getRoof().getLength())
-                construction.getRoof().getLength();
-            else
-                construction.getRoof().getWidth();
             return size;
         }
 
@@ -308,10 +298,6 @@ public class FlatRoofMaterialCalculator {
 
     public Stern getOverSternSide() {
         return overSternSide;
-    }
-
-    public TrapezPlates getTrapezPlates() {
-        return trapezPlates;
     }
 
 }

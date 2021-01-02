@@ -1,39 +1,23 @@
 package domain.bom.calculators;
 
-import domain.construction.Construction;
+import domain.construction.Category;
+import domain.construction.ConstructionPart;
+import domain.construction.carport.Carport;
+
+import java.util.HashMap;
 
 public class CarportMaterialCalculator {
 
-    private final Construction construction;
+    public int remLength(Carport carport) {
 
-    public CarportMaterialCalculator(Construction construction) {
-        this.construction = construction;
+        int remResult = carport.getWidth() + carport.getLength() * 2;
+
+        return remResult;
     }
 
-    //Lars/////////////////////////////////
-    public int antalStolper() {
-        //Til denne metode kræves der længde fra databasen.
-        int length = 0;
+    public int remQnty() {
 
-        int userinput = (int) length;
-        int AfstandprBjaelke = 180;
-        //int N = 180; Udhæng skal det være der eller ej?
-        int minimumsøjler = 2;
-        int minimumLængdefor4søjler = userinput - 360;
-        //N er den aftand der er fra sidste bjælke til taget slutter.
-        int AntalBjaelker = (minimumLængdefor4søjler/*-N*/) / AfstandprBjaelke;
-        int ExtraBjaelke = (AntalBjaelker + 1);
-        int StolpeResultat = (minimumsøjler + ExtraBjaelke * 2);
-
-        return StolpeResultat;
-    }
-
-
-    public int remLength() {
-
-        int width = 0;
-        int length = 0;
-        int remResult = width + length * 2;
+        int remResult = 2;
 
         return remResult;
     }
@@ -52,31 +36,20 @@ public class CarportMaterialCalculator {
         } else {
             numberOfPost = (size / distanceMax) + 2;
         }
-        if (size == 1){
+        if (size < distanceMax){
             numberOfPost = 2;
         }
         return numberOfPost;
     }
 
-
-    //counts distance between posts on the side
-    public int postColumns(int length) {
-        return (length - POSTWIDTH) / (sidePostAmount(length, MAXDISTANCEPOST) - 1);
-    }
-
-    //counts how many rows of post should there be because max distance between posts
-    public int postRows(int width) {
-        int rows;
-        if (width % MAXROWSISTANCE == 0) {
-            rows = width / MAXROWSISTANCE + 1;
-        } else {
-            rows = (width - width % MAXROWSISTANCE) / MAXROWSISTANCE + 2;
+    public int qntyPost(int carportWidth, int carportLength){
+        int qntyPosts = 0;
+        for (int i = 0; i < carportLength ; i = i+MAXDISTANCEPOST) {
+            qntyPosts = sidePostAmount(carportWidth,MAXDISTANCEPOST);
         }
-        return rows;
+        qntyPosts = qntyPosts + sidePostAmount(carportWidth,MAXDISTANCEPOST);
+
+        return qntyPosts;
     }
 
-
-    public int getPOSTWIDTH() {
-        return POSTWIDTH;
-    }
 }

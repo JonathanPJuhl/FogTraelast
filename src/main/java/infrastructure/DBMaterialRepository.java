@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class DBMaterialRepository implements MaterialService {
 
@@ -142,6 +143,40 @@ public class DBMaterialRepository implements MaterialService {
             return roofItems;
         } catch (SQLException | NoSuchMaterialExists throwables) {
             throw new UnexpectedDBError(throwables);
+        }
+    }
+
+    @Override
+    public TreeSet<Integer> allWidthsForMaterials() {
+        TreeSet<Integer> widths = new TreeSet<>();
+        try (Connection conn = db.connect()) {
+            String sql = "SELECT widths.width FROM fogtraelast.widths;";
+            PreparedStatement smt = conn.prepareStatement(sql);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while (set.next()) {
+                widths.add(set.getInt("width"));
+            }
+            return widths;
+        } catch (SQLException e) {
+            throw new UnexpectedDBError();
+        }
+    }
+
+    @Override
+    public TreeSet<Integer> allLenghtsForMaterials() {
+        TreeSet<Integer> lenghts = new TreeSet<>();
+        try (Connection conn = db.connect()) {
+            String sql = "SELECT lengths.length FROM fogtraelast.lengths;";
+            PreparedStatement smt = conn.prepareStatement(sql);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while (set.next()) {
+                lenghts.add(set.getInt("length"));
+            }
+            return lenghts;
+        } catch (SQLException e) {
+            throw new UnexpectedDBError();
         }
     }
 
