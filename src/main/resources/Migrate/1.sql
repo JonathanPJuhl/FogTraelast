@@ -1,7 +1,7 @@
 USE fogtraelast;
 
 DROP TABLE IF EXISTS materialTypes;
-DROP TABLE IF EXISTS bom;
+/*DROP TABLE IF EXISTS bom;*/
 DROP TABLE IF EXISTS materials_By_Category;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS materials;

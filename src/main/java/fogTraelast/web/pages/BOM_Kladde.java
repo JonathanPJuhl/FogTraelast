@@ -33,6 +33,7 @@ public class BOM_Kladde extends BaseServlet {
                    TreeSet widths = api.allWidthsForMaterials();
                    BOM bom = bs.calculateBom(construction, widths, lengths);
                    ArrayList<BOMItem> bomI = (bom.getItems());
+                   req.setAttribute("usersChoices", usersChoice);
                    req.getSession().setAttribute("bom", bomI);
                    render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
                } else {
