@@ -56,44 +56,99 @@
                             </select>
                         </div>
                     </div>
-
-                    <td><c:out value="${orders.length}"/></td>
-                    <td><c:out value="${orders.width}"/></td>
-                    <td>
+                <div class="row">
+                    <div class="col-md-6 mb-3" align="right">
+                        <p>Længde:</p>
+                    </div>
+                    <div class="col-md-6 mb-3" align="left">
+                     <c:out value="${orders.length}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3" align="right">
+                        <p>Bredde:</p>
+                    </div>
+                    <div class="col-md-6 mb-3" align="left">
+                    <c:out value="${orders.width}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3" align="right">
+                        <p>Ønsket tagtype:</p>
+                    </div>
+                    <div class="col-md-6 mb-3" align="left">
                         <select name="roofType">
                             <option value="Flat">Fladt tag</option>
                             <option value="Pitched">Tag med rejsning</option>
                         </select>
-                    </td>
-                    <td>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3" align="right">
+                        <p>Ønskes skur:</p>
+                    </div>
+                    <div class="col-md-6 mb-3" align="left">
                         <select name="shedOrNo">
                             <option value=0>Ikke ønsket</option>
                             <option value="1">Ønsket</option>
                         </select>
-                    </td>
-                    <td>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3" align="right">
+                        <p>Ønskes beklædning:</p>
+                    </div>
+                    <div class="col-md-6 mb-3" align="left">
                         <select name="cladding">
                             <option value=0>Ikke ønsket</option>
                             <option value="1">Ønsket</option>
                         </select>
-                    </td>
-                    <td><c:out value="${orders.customerPhone}"/></td>
-                    <td><c:out value="${orders.customerEmail}"/></td>
-                    <td><input type="number" name="price" value="${orders.price}"></td>
-                    <td><select name="salesmanID">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3" align="right">
+                        <p>Kundens tlf:</p>
+                    </div>
+                    <div class="col-md-6 mb-3" align="left">
+                    <c:out value="${orders.customerPhone}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3" align="right">
+                        <p>Kundens email:</p>
+                    </div>
+                    <div class="col-md-6 mb-3" align="left">
+                    <c:out value="${orders.customerEmail}"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>Pris:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                    <input type="number" name="price" value="${orders.price}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>tilknyttet sælger:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                   <select name="salesmanID">
                         <c:forEach var="salesman" items="${requestScope.salesmen}">
                         <option value="${salesman.ID}">${salesman.name}</option>
                         </c:forEach>
                         </select>
-                    </td>
-                    <td><input type="submit" value="Ret til"></td>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Ret til">
 
                 </c:forEach>
 
             </div>
-        </div>
-    </form>
 
+    </form>
+</div>
 
 
 </div>

@@ -8,8 +8,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="scrollbar" id="styleFog"><div align="center">
+<div class="scrollbar2" id="styleFog">
+    <div align="center">
         <h1>Velkommen!</h1>
-        <h1>${requestScope.salesmen}</h1>
+        <h1>${sessionScope.user.name}</h1>
+        <p>Oversigt over alle ordrer</p>
     </div>
+            <div class="row">
+        <div class="col-md-12 scroll">
+    <jsp:include page="../pages/displayAllOrders.jsp" flush="true"/>
+          </div>
+        </div>
     </div>
+

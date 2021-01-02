@@ -30,7 +30,13 @@ body{
     opacity: 96%;
     overflow: auto;
 }
-
+.scrollbar2{
+    height: auto;
+    alignment: center;
+    background: #f3f3f3;
+    opacity: 96%;
+    overflow: hidden;
+}
 .force-overflow
 {
     min-height: 10px;

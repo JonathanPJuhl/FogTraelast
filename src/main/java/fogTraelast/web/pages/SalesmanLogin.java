@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet({"/SalesmanLogin","/SalesmanLogin/*"})
 public class SalesmanLogin  extends BaseServlet {
@@ -45,9 +46,13 @@ public class SalesmanLogin  extends BaseServlet {
                 User userList = api.findSalesman(userID);
                 session.setAttribute("userName", userList.getName());
                 log(req, "user: " + userList);
+                List<Order> orderList = api.findAllOrders();
+                req.setAttribute("list", orderList);
                 render("Fog Trælast", "/WEB-INF/pages/salesmanPage.jsp", req, resp);
             } catch (NoSuchUserExists noSuchUserExists) {
                 resp.sendError(404, "User does not exist");
+            } catch (NoSuchOrderExists noSuchOrderExists) {
+                noSuchOrderExists.printStackTrace();
             }
         }
 
