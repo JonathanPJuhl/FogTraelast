@@ -1,15 +1,15 @@
 package domain.construction.SVG;
 
-public class svgCarportFront {
+public class SvgCarportFront {
 
     StringBuilder SvgCarportText = new StringBuilder();
 
 
-    public String Build(int lenght, int width, int ShedWidth, int ShedLength, double gableHeight) {
+    public String Build(int length, int width, int ShedWidth, int ShedLength, double gableHeight) {
 
 
         //billede størrelse
-        SvgCarportText.append("<svg width=\"1000\" height=\"1000\">");
+        SvgCarportText.append("<svg width=\""+width+"\" height=\""+length+"\">");
         //skur
         SvgCarportText.append("<rect x=\"50\" y=\"390\" rx=\"0\" ry=\"0\" width=\""+ShedWidth+"\" height=\"225\" style=\"fill:grey;stroke:black;stroke-width:1;opacity:1\" />");
         //skur kryds

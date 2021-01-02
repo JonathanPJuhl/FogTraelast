@@ -12,14 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet({"/SalesmanLogin","/SalesmanLogin/*"})
 public class SalesmanLogin  extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() == null) {
+
             render("Fog Trælast", "/WEB-INF/pages/loginSalesman.jsp", req, resp);
-        } else if (req.getPathInfo().substring(1).equals("Logout")){
+        } else if (req.getPathInfo().substring(1).equals("Error")){
+            req.setAttribute("Error", "Forkert email eller password, prøv igen");
+            render("Fog Trælast", "/WEB-INF/pages/loginSalesman.jsp", req, resp);
+        }else if (req.getPathInfo().substring(1).equals("Logout")){
             HttpSession session = req.getSession(true);
             session.setAttribute("user", null);
             session.setAttribute("userID", null);
@@ -41,9 +46,13 @@ public class SalesmanLogin  extends BaseServlet {
                 User userList = api.findSalesman(userID);
                 session.setAttribute("userName", userList.getName());
                 log(req, "user: " + userList);
+                List<Order> orderList = api.findAllOrders();
+                req.setAttribute("list", orderList);
                 render("Fog Trælast", "/WEB-INF/pages/salesmanPage.jsp", req, resp);
             } catch (NoSuchUserExists noSuchUserExists) {
                 resp.sendError(404, "User does not exist");
+            } catch (NoSuchOrderExists noSuchOrderExists) {
+                noSuchOrderExists.printStackTrace();
             }
         }
 
@@ -67,10 +76,16 @@ public class SalesmanLogin  extends BaseServlet {
                     HttpSession session = req.getSession(true);
                     session.setAttribute("user", list);
                     session.setAttribute("userID", list.getID());
+                    resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/");
                 } catch (NoSuchUserExists noSuchUserExists) {
                     noSuchUserExists.printStackTrace();
                 }
-                resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/");
+                catch (NullPointerException nullpoint) {
+                    nullpoint.printStackTrace();
+                    req.setAttribute("Error", true);
+                    resp.sendRedirect(req.getContextPath() + "/SalesmanLogin/Error");
+                }
+
             }
 
     }

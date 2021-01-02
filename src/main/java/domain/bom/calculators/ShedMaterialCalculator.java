@@ -46,6 +46,11 @@ public class ShedMaterialCalculator {
         }
 
         @Override
+        public int width(int widthFromDB) {
+            return widthFromDB;
+        }
+
+        @Override
         public int quantity() {
             int quantity = postAdded.sidePostAmount(side)-1;
             return quantity;
@@ -66,6 +71,11 @@ public class ShedMaterialCalculator {
         }
 
         @Override
+        public int width(int widthFromDB) {
+            return widthFromDB;
+        }
+
+        @Override
         public int quantity() {
             return 1;
         }
@@ -83,6 +93,11 @@ public class ShedMaterialCalculator {
         @Override
         public int length() {
             return stern.length();
+        }
+
+        @Override
+        public int width(int widthFromDB) {
+            return 0;
         }
 
         @Override
@@ -115,6 +130,11 @@ public class ShedMaterialCalculator {
         @Override
         public int length() {
             return shed.getHeigth();
+        }
+
+        @Override
+        public int width(int widthFromDB) {
+            return widthFromDB;
         }
 
         @Override

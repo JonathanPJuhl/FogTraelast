@@ -6,8 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div class="container">
 <div class="scrollbar" id="styleFog">
-    <div class="text-white" align="center">
+    <div align="center">
         <h1>Vælg dine mål</h1>
         <form method="post" action="${pageContext.request.contextPath}/Orders/create">
 
@@ -46,4 +47,5 @@
             <button type="submit" class="btn btn-primary">Bestil videre på carport!</button>
         </form>
     </div>
+</div>
 </div>

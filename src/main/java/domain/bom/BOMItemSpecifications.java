@@ -1,10 +1,12 @@
 package domain.bom;
 
-public interface BOMItemSpecifications {
+public interface BOMItemSpecifications{
 
-    public int length();
+    public abstract int length();
 
-    public int quantity();
+    public abstract int width(int widthFromDB);
 
-    public String description(String adminDescription);
+    public abstract int quantity();
+
+    public abstract String description(String adminDescription);
 }

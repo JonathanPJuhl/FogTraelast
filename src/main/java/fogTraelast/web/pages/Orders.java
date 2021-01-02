@@ -9,6 +9,7 @@ import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
 import domain.users.User;
+import infrastructure.DBUserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -198,7 +199,8 @@ public class Orders extends BaseServlet {
             }
 
             session.setAttribute("construction", construction.getPartForConstruction());
-            resp.sendRedirect(req.getContextPath() + "/BOM"); // TODO skal vise SVG Senere
+            resp.sendRedirect(req.getContextPath()+"/SVG");
+           // resp.sendRedirect(req.getContextPath() + "/BOM"); // TODO skal vise SVG Senere
 
         } else if (req.getPathInfo().substring(1).equals("edit")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil

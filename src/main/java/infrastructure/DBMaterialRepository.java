@@ -1,15 +1,10 @@
 package infrastructure;
 
-import domain.bom.BOM;
-import domain.bom.BOMItem;
 import domain.construction.Category;
-import domain.construction.Construction;
-import domain.construction.Roof.Roof;
 import domain.material.Material;
 import domain.material.NoSuchMaterialExists;
 import domain.material.MaterialService;
 import domain.material.MaterialType;
-import domain.orders.Order;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,14 +29,14 @@ public class DBMaterialRepository implements MaterialService {
                 set.getDouble("materials.price"),
                 set.getString("materials.type"),
                 set.getString("category"),
-                set.getInt("materials.height")
-        );
+                set.getInt("materials.height"),
+                set.getInt("materials.overlap")); //TODO lav Materialer om så alle har et overlap i db gemt
 
     }
 
     @Override
     public void insertMaterialIntoDB(Material material) {
-
+//TODO
     }
     @Override
     public Material findMaterial(String nametype) {

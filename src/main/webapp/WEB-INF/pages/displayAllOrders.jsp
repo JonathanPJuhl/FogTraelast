@@ -8,21 +8,20 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="scrollbar" id="styleFog">
-<div align="center" >
-    <table class="text-white" border="1" cellpadding="5">
-        <h2 class="text-white">Alle ordrer</h2>
+<div align="center" id="pay" >
+    <table border="1" cellpadding="5">
         <tr>
-            <th>orderID</th>
-            <th>orderStatus</th>
-            <th>length</th>
-            <th>width</th>
-            <th>roofType</th>
-            <th>shedOrNO</th>
-            <th>cladding</th>
-            <th>customerPhone</th>
-            <th>customerEmail</th>
-            <th>price</th>
-            <th>salesmanID</th>
+            <th>OrdreID</th>
+            <th>Ordre status</th>
+            <th>Længde</th>
+            <th>Bredde</th>
+            <th>Tagtype</th>
+            <th>Ønsker skur</th>
+            <th>Beklædning</th>
+            <th>Kunde tlf</th>
+            <th>Kunde email</th>
+            <th>Pris</th>
+            <th>Tilknyttet sælger</th>
 
         </tr>
         <c:forEach var="orders" items="${requestScope.list}">
@@ -47,7 +46,16 @@
                 <td><c:out value="${orders.customerPhone}" /></td>
                 <td><c:out value="${orders.customerEmail}" /></td>
                 <td><c:out value="${orders.price}" /></td>
-                <td><c:out value="${orders.salesmanID}" /></td>
+                <td><c:if test="${orders.salesmanID==1}">
+                 Bo
+                </c:if>
+                <c:if test="${orders.salesmanID==2}">
+                   Ib
+                </c:if>
+                <c:if test="${orders.salesmanID==0}">
+                    Ingen tilknyttet
+                </c:if>
+            </td>
                 <form method="post" action="${pageContext.request.contextPath}/Orders/edit">
                     <td>
                         <button type="submit"  value="${orders.orderID}" name="orderID" >Rediger</button>

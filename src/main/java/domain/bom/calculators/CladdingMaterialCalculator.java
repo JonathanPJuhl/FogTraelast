@@ -19,6 +19,11 @@ public class CladdingMaterialCalculator implements BOMItemSpecifications {
     }
 
     @Override
+    public int width(int widthFromDB) {
+        return 0;
+    }
+    
+    @Override
     public int quantity() {
         return 0;
     }
