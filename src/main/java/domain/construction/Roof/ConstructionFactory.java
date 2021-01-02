@@ -6,6 +6,7 @@ import domain.construction.ConstructionRepository;
 import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
+import domain.material.Material;
 
 public class ConstructionFactory implements ConstructionRepository { /*TODO Ændres til ConstructionFactory og flyttes*/
 
@@ -31,8 +32,10 @@ private RoofSizeCalculator roofSizeCalculator;
     }
 
     @Override
-    public Shed createShed(UsersChoice usersChoice, Construction construction) {
-        return new Shed(usersChoice, construction);
+    public Shed createShed(UsersChoice usersChoice, Construction construction, Carport carport) {
+        Shed shed = new Shed(usersChoice, construction, usersChoice.getShedAndCarportCladding());
+        shed.addCladdingToShed(usersChoice.getShedAndCarportCladding(),carport);
+        return shed;
     }
 
     @Override

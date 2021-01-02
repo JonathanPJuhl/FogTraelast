@@ -30,13 +30,12 @@ public class SVG extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HashMap construction = (HashMap) req.getSession().getAttribute("construction");
         UsersChoice usersChoice = (UsersChoice) req.getSession().getAttribute("secondUserChoice");
         ConstructionFactory cf = new ConstructionFactory();
         Roof roof = cf.createRoof(usersChoice);
         Carport carport = cf.createCarport(usersChoice);
         Construction cons = cf.createConstruction(roof, carport);
-        Shed shed = cf.createShed(usersChoice, cons);
+        Shed shed = cf.createShed(usersChoice, cons, carport);
         SvgCarport svgCarport = new SvgCarport();
         RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
         SvgCarportFront svgCarportFront = new SvgCarportFront();
