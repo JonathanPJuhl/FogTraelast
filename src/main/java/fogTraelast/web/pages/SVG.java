@@ -36,6 +36,8 @@ public class SVG extends BaseServlet {
         HttpSession session = req.getSession();
 
         session.setAttribute("construction1", cons);
+        session.setAttribute("svgLength", roof.getLength());
+        session.setAttribute("svgWidth", roof.getWidth());
         session.setAttribute("svgCarport", svgCarport.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength()));
         session.setAttribute("svgCarportFront", svgCarportFront.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roofSizeCalculator.getRoofHeight(roof)));
         session.setAttribute("svgCarportSide", svgCarportSide.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roofSizeCalculator.getRoofHeight(roof)));
