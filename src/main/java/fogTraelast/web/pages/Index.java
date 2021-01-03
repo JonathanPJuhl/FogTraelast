@@ -33,10 +33,11 @@ public class Index extends BaseServlet{
         int orderID = Integer.parseInt(req.getParameter("orderNumber"));
         try {
             Order order = api.findOrder(orderID);
+            req.getSession().setAttribute("order", order);
             BOM bom = new BOM();
             ArrayList<BOMItem> Ibom = bom.getItems();
             req.getSession().setAttribute("bom", Ibom);
-            resp.sendRedirect(req.getContextPath() + "/BOM");
+            resp.sendRedirect(req.getContextPath() + "/BOM/Customer");
         } catch (NoSuchOrderExists noSuchOrderExists) {
             noSuchOrderExists.printStackTrace();
         }

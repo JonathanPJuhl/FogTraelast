@@ -33,8 +33,10 @@
         <button name="ordreNumber" class="submit form-control">Se din ordre!</button>
         </form>
 
-
         <h3 style="color: cornflowerblue" ><strong>Håber det går vi kan huske dig!</strong></h3>
-        <form method="post" action="/"><button class="submit form-control">Ellers klik her</button></form> <!--- TODO -->
-    </div>   </div>
+        <form method="post" action="${pageContext.request.contextPath}/">
+            <button class="submit form-control">Ellers klik her</button>
+        </form> <!--- TODO -->
+    </div>
+    </div>
 </c:if>

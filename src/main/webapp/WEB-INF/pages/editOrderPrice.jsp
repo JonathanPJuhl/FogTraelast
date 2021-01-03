@@ -10,7 +10,7 @@
     <div class="scrollbar" id="styleFog">
         <div align="center">
             <h1>Prisredigering - du ændre ordrenr.<div style="color: blue"> ${sessionScope.editID}</div></h1>
-            <form alig="center" method="post">
+            <form alig="center" method="post" action="${pageContext.request.contextPath}/Orders/edit">
                 <br>
                 <label>Pris for alle materialer:</label>
                 <h3>${requestScope.priceBOM} kr.</h3>

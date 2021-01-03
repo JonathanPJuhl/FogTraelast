@@ -4,7 +4,13 @@ import domain.bom.BOM;
 import domain.bom.BOMItem;
 import domain.bom.BOMService;
 import domain.construction.Category;
+import domain.construction.Construction;
+import domain.construction.ConstructionFactory;
+import domain.construction.Roof.Roof;
 import domain.construction.UsersChoice;
+import domain.construction.carport.Carport;
+import domain.construction.shed.Shed;
+import domain.construction.shed.TooLargeException;
 import domain.orders.Order;
 import domain.users.Client;
 import infrastructure.DBMaterialRepository;
@@ -32,6 +38,7 @@ public class BOM_Kladde extends BaseServlet {
             render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
         } else if (param) {
             req.setAttribute("alreadyCustomer", false);
+            req.setAttribute("svg", false);
             HashMap construction = (HashMap) req.getSession().getAttribute("construction");
             UsersChoice usersChoice = (UsersChoice) req.getSession().getAttribute("secondUserChoice");
             if (!(usersChoice.getRoofCladding() == null)) {
@@ -54,7 +61,21 @@ public class BOM_Kladde extends BaseServlet {
                 final Client client = createClient(inetAddress, 8080);
                 render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
             } else if(req.getPathInfo().substring(1).equals("/BOM/Customer")) {
-
+                req.setAttribute("svg", true);
+                Order order = (Order)req.getSession().getAttribute("order");
+                ConstructionFactory cf = new ConstructionFactory();
+                UsersChoice usersChoice1 = new UsersChoice((int)order.getWidth(),(int)order.getLength(),order.getRoofType(),order.getShedOrNo(),
+                        order.getCladding(),order.getCustomerPhone(), order.getCustomerPhone()); // TODO Ordre skal have flere værdier og sætte ind her f.eks. før det vil virke
+                Roof roof = cf.createRoof(usersChoice1);
+                Carport carport = cf.createCarport(usersChoice1);
+                Construction cons = cf.createConstruction(roof, carport);
+                Shed shed = null;
+                try {
+                    shed = cf.createShed(usersChoice1, cons, carport);
+                } catch (TooLargeException e) {
+                    e.printStackTrace();
+                }
+                render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
             }else{
                 resp.sendError(307, "You need to order a carport first!");
             }
