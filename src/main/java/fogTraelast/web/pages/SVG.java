@@ -10,6 +10,7 @@ import domain.construction.SVG.SvgCarportSide;
 import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
+import domain.construction.shed.TooLargeException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,12 @@ public class SVG extends BaseServlet {
         Roof roof = cf.createRoof(usersChoice);
         Carport carport = cf.createCarport(usersChoice);
         Construction cons = cf.createConstruction(roof, carport);
-        Shed shed = cf.createShed(usersChoice, cons, carport);
+        Shed shed = null;
+        try {
+            shed = cf.createShed(usersChoice, cons, carport);
+        } catch (TooLargeException e) {
+            e.printStackTrace();
+        }
         SvgCarport svgCarport = new SvgCarport();
         RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
         SvgCarportFront svgCarportFront = new SvgCarportFront();

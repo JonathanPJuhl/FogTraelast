@@ -4,6 +4,7 @@ import domain.construction.*;
 import domain.construction.Roof.*;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
+import domain.construction.shed.TooLargeException;
 import domain.material.Material;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
@@ -36,7 +37,6 @@ public class Orders extends BaseServlet {
             }
         } else {
             String cmd = req.getPathInfo().substring(1);
-
             if (cmd.equals("new")) {
                 render("Fog Trælast", "/WEB-INF/pages/createOrder.jsp", req, resp);
             } else if (cmd.equals("constructionOverview")) {
@@ -44,8 +44,8 @@ public class Orders extends BaseServlet {
                 UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
                 System.out.println(usersChoice.toString());
 
-                if (!(usersChoice == null)) {//TODO Fejl håndtering (Denne vil altid være true)
-                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice()); //TODO burde lave noget smartere
+                if (!(usersChoice == null)) {
+                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
                     List<Material> claddingOptsShedCarport = api.findMaterialsByCategory(Category.Cladding);
                     /*ArrayList<Integer> degreeOpts = new ArrayList<>();
                     for (int i=5; i<50; i+=5){
@@ -56,9 +56,22 @@ public class Orders extends BaseServlet {
                     req.setAttribute("userChoice", usersChoice);
                     req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
                     render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
+
+
                 } else {
                     resp.sendError(400, "Badly formated request");
                 }
+            }else if (cmd.equals("constructionOverview/error")) {
+                HttpSession session = req.getSession();
+                UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
+                List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
+                List<Material> claddingOptsShedCarport = api.findMaterialsByCategory(Category.Cladding);
+                System.out.println("Material: " + claddingOptsShedCarport.size());
+                req.setAttribute("claddingOptionsRoof", claddingOpts);
+                req.setAttribute("userChoice", usersChoice);
+                req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
+                req.setAttribute("tooBigShed", true);
+                render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
             } else if (cmd.equals("edit")) {
                 Order order;
 
@@ -121,8 +134,8 @@ public class Orders extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo().substring(1).equals("create")) {
-            int length = Integer.parseInt(req.getParameter("length"))*10;
-            int width = Integer.parseInt(req.getParameter("width"))*10;
+            int length = Integer.parseInt(req.getParameter("length")) * 10;
+            int width = Integer.parseInt(req.getParameter("width")) * 10;
             String roofType = req.getParameter("roofType");
             int shedOrNo = Integer.parseInt((req.getParameter("shedOrNo")));
             int cladding = Integer.parseInt(req.getParameter("cladding"));
@@ -146,12 +159,10 @@ public class Orders extends BaseServlet {
 
             }
 
-        }
-        else if (req.getPathInfo().substring(1).equals("constructionOverview")) {
+        } else if (req.getPathInfo().substring(1).equals("constructionOverview")||req.getPathInfo().substring(1).equals("constructionOverview/error")) {
             HttpSession session = req.getSession();
             UsersChoice consFirst = (UsersChoice) session.getAttribute("tempConstruction");
-            int roofMaterialID = Integer.parseInt(req.getParameter("roofMaterialOption")); //TODO virker det når det ikke er parameter?
-
+            int roofMaterialID = Integer.parseInt(req.getParameter("roofMaterialOption"));
 
             double degreeOption;
             int shedlenght = 0;
@@ -164,9 +175,9 @@ public class Orders extends BaseServlet {
             } else {
                 degreeOption = Integer.parseInt(req.getParameter("degreeOption"));
             }
-            if (consFirst.getShedOrNo()==1) {
-                shedlenght = Integer.parseInt(req.getParameter("shedLength"))*10;
-                shedwitdh = Integer.parseInt(req.getParameter("shedWidth"))*10;
+            if (consFirst.getShedOrNo() == 1) {
+                shedlenght = Integer.parseInt(req.getParameter("shedLength")) * 10;
+                shedwitdh = Integer.parseInt(req.getParameter("shedWidth")) * 10;
                 carportShedCladdingID = Integer.parseInt(req.getParameter("carportCladding"));
                 claddingMaterial = api.findMaterialByID(carportShedCladdingID);
             }
@@ -184,12 +195,14 @@ public class Orders extends BaseServlet {
             Roof roof = constructionFactory.createRoof(constructionSecondChoice);
             Carport carport = constructionFactory.createCarport(constructionSecondChoice);
             Construction construction = constructionFactory.createConstruction(roof, carport);
+            try {
+                if (constructionSecondChoice.getShedOrNo() == 1) {
 
-            if (constructionSecondChoice.getShedOrNo() == 1) {
-                Shed shed = constructionFactory.createShed(constructionSecondChoice, construction,carport);
-                 shed.addCladdingToShed(claddingMaterial, carport);
-                construction.addShed(shed);
-            }
+                    Shed shed = constructionFactory.createShed(constructionSecondChoice, construction, carport);
+                    shed.addCladdingToShed(claddingMaterial, carport);
+                    construction.addShed(shed);
+
+                }
             /*if (constructionSecondChoice.getCladdingChoice() == 1 && constructionSecondChoice.getShedOrNo() == 1) {
                 construction.addCladding(carport.threeWallswithCladding(claddingMaterial));
 
@@ -199,9 +212,14 @@ public class Orders extends BaseServlet {
                 construction.getPartForConstruction().put(Category.Carport, carportTmp);
             }*/
 
-            session.setAttribute("construction", construction.getPartForConstruction());
-            resp.sendRedirect(req.getContextPath()+"/SVG");
-           // resp.sendRedirect(req.getContextPath() + "/BOM"); // TODO skal vise SVG Senere
+                session.setAttribute("construction", construction.getPartForConstruction());
+                resp.sendRedirect(req.getContextPath() + "/SVG");
+            } catch (TooLargeException e) {
+                System.err.println(e);
+                resp.sendRedirect(req.getContextPath() + "/Orders/constructionOverview/error");
+            }// resp.sendRedirect(req.getContextPath() + "/BOM"); // TODO skal vise SVG Senere
+
+
 
         } else if (req.getPathInfo().substring(1).equals("edit")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil

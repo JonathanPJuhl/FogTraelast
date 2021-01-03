@@ -162,3 +162,7 @@ div {
     flex: 0 0 50%;
     max-width: 50%;
 }
+
+input:invalid {
+    background-color: #ffdddd;
+}

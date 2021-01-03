@@ -1,18 +1,14 @@
 package domain.construction;
 
-import domain.construction.Cladding;
-import domain.construction.Construction;
-import domain.construction.ConstructionRepository;
 import domain.construction.Roof.FlatRoof;
 import domain.construction.Roof.PitchedRoof;
 import domain.construction.Roof.Roof;
 import domain.construction.Roof.RoofSizeCalculator;
-import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
-import domain.material.Material;
+import domain.construction.shed.TooLargeException;
 
-public class ConstructionFactory implements ConstructionRepository { /*TODO Ændres til ConstructionFactory og flyttes*/
+public class ConstructionFactory implements ConstructionRepository {
 
 private RoofSizeCalculator roofSizeCalculator;
 
@@ -36,9 +32,15 @@ private RoofSizeCalculator roofSizeCalculator;
     }
 
     @Override
-    public Shed createShed(UsersChoice usersChoice, Construction construction, Carport carport) {
-        Shed shed = new Shed(usersChoice, construction, usersChoice.getShedAndCarportCladding());
-        shed.addCladdingToShed(usersChoice.getShedAndCarportCladding(),carport);
+    public Shed createShed(UsersChoice usersChoice, Construction construction, Carport carport)  throws TooLargeException {
+        Shed shed = null;
+        if(usersChoice.getShedLength() < construction.getCarport().getLength() || usersChoice.getShedwidth() < construction.getCarport().getLength()) {
+             shed = new Shed(usersChoice, construction, usersChoice.getShedAndCarportCladding());
+            shed.addCladdingToShed(usersChoice.getShedAndCarportCladding(), carport);
+        }else{
+            throw new TooLargeException("User chosed too big messures for shed - length: " + usersChoice.getShedwidth()
+                    + " and width: " + usersChoice.getShedLength() +", where carport - length:" + construction.getCarport().getLength() + " and width: " + construction.getCarport().getWidth() );
+        }
         return shed;
     }
 
@@ -47,13 +49,5 @@ private RoofSizeCalculator roofSizeCalculator;
         return new Construction(roof, carport);
     }
 
-
- /*public boolean roofChoiceConverter(String roofTypeChoice){
-        if(roofTypeChoice.equals("Flat")){
-            return true;
-        } else {
-            return false;
-        }
-    }*/
 
 }
