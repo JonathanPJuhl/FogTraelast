@@ -1,15 +1,19 @@
 package fogTraelast.web.pages;
 
+import domain.bom.BOM;
+import domain.bom.BOMService;
 import domain.construction.*;
 import domain.construction.Roof.*;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
 import domain.construction.shed.TooLargeException;
 import domain.material.Material;
+import domain.orders.Economy;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.NoSuchUserExists;
 import domain.users.User;
+import infrastructure.DBMaterialRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 import static domain.construction.Roof.FlatRoof.TILTTODEGREE;
 
@@ -27,11 +34,12 @@ public class Orders extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         if (req.getPathInfo() == null) {
             try {
                 List<Order> orderList = api.findAllOrders();
                 req.setAttribute("list", orderList);
-                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp); // TODO - Er dette en fejl?
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 noSuchOrderExists.printStackTrace();
             }
@@ -43,30 +51,32 @@ public class Orders extends BaseServlet {
                 HttpSession session = req.getSession();
                 UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
                 System.out.println(usersChoice.toString());
-
+                List<Material> claddingOpts = null;
                 if (!(usersChoice == null)) {
-                    List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
+                    if (usersChoice.getRoofChoice().equals("Flat")) {
+                        claddingOpts = api.roofMaterials(Category.Flat);
+                    } else {
+                        claddingOpts = api.roofMaterials(Category.Pitched);
+                    }
                     List<Material> claddingOptsShedCarport = api.findMaterialsByCategory(Category.Cladding);
-                    /*ArrayList<Integer> degreeOpts = new ArrayList<>();
-                    for (int i=5; i<50; i+=5){
-                        degreeOpts.add(i);
-                    }*/
                     System.out.println("Material: " + claddingOptsShedCarport.size());
                     req.setAttribute("claddingOptionsRoof", claddingOpts);
                     req.setAttribute("userChoice", usersChoice);
                     req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
                     render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
-
-
                 } else {
                     resp.sendError(400, "Badly formated request");
                 }
-            }else if (cmd.equals("constructionOverview/error")) {
+            } else if (cmd.equals("constructionOverview/error")) {
                 HttpSession session = req.getSession();
                 UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
-                List<Material> claddingOpts = api.roofMaterials(usersChoice.getRoofChoice());
+                ArrayList<Material> claddingOpts = null;
+                if (usersChoice.getRoofChoice().equals("Flat")) {
+                    claddingOpts = api.roofMaterials(Category.Flat);
+                } else {
+                    claddingOpts = api.roofMaterials(Category.Pitched);
+                }
                 List<Material> claddingOptsShedCarport = api.findMaterialsByCategory(Category.Cladding);
-                System.out.println("Material: " + claddingOptsShedCarport.size());
                 req.setAttribute("claddingOptionsRoof", claddingOpts);
                 req.setAttribute("userChoice", usersChoice);
                 req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
@@ -74,7 +84,6 @@ public class Orders extends BaseServlet {
                 render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
             } else if (cmd.equals("edit")) {
                 Order order;
-
                 try {
                     HttpSession session = req.getSession();
                     int orderID = (Integer) session.getAttribute("editID");
@@ -115,15 +124,25 @@ public class Orders extends BaseServlet {
                 req.setAttribute("list", sortedList);
                 render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
             } else {
-                try {
-                    int orderID = Integer.parseInt(req.getPathInfo().substring(1));
-                    Order order = api.findOrder(orderID);
-                    req.setAttribute("list", order);
-                    render("Fog Trælast", "/WEB-INF/pages/displayOrderPage.jsp", req, resp);
-                } catch (NumberFormatException e) {
-                    resp.sendError(400, "Badly formated request");
-                } catch (NoSuchOrderExists noSuchOrderExists) {
-                    resp.sendError(404, "No such order exist");
+                int orderID = (Integer) req.getSession().getAttribute("editID");
+                if (cmd.equals("Price/" + orderID)) {
+                    double priceBOM = api.findBOMPriceByOrderID(orderID);
+                    req.setAttribute("priceBOM", priceBOM);
+                    Economy economy = new Economy();
+                    double priceWithCoverage = economy.withCoverage(25,priceBOM);
+                    req.setAttribute("priceWithCoverage", priceWithCoverage);
+                    render("Fog Trælast", "/WEB-INF/pages/editOrderPrice.jsp", req, resp);
+                } else {
+                    try {
+                        orderID = Integer.parseInt(req.getPathInfo().substring(1));
+                        Order order = api.findOrder(orderID);
+                        req.setAttribute("list", order);
+                        render("Fog Trælast", "/WEB-INF/pages/displayOrderPage.jsp", req, resp);
+                    } catch (NumberFormatException e) {
+                        resp.sendError(400, "Badly formated request");
+                    } catch (NoSuchOrderExists noSuchOrderExists) {
+                        resp.sendError(404, "No such order exist");
+                    }
                 }
 
             }
@@ -151,7 +170,7 @@ public class Orders extends BaseServlet {
                 //CREATE LATER ON
                 //Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
                 // Create new method
-                UsersChoice tempConstruction = new UsersChoice(width, length, roofType, shedOrNo, cladding);
+                UsersChoice tempConstruction = new UsersChoice(width, length, roofType, shedOrNo, cladding, customerPhone, customerEmail);
                 //System.out.println("Shed: " + shedOrNo.toString());
                 HttpSession session = req.getSession();
                 session.setAttribute("tempConstruction", tempConstruction);
@@ -159,7 +178,7 @@ public class Orders extends BaseServlet {
 
             }
 
-        } else if (req.getPathInfo().substring(1).equals("constructionOverview")||req.getPathInfo().substring(1).equals("constructionOverview/error")) {
+        } else if (req.getPathInfo().substring(1).equals("constructionOverview") || req.getPathInfo().substring(1).equals("constructionOverview/error")) {
             HttpSession session = req.getSession();
             UsersChoice consFirst = (UsersChoice) session.getAttribute("tempConstruction");
             int roofMaterialID = Integer.parseInt(req.getParameter("roofMaterialOption"));
@@ -187,7 +206,8 @@ public class Orders extends BaseServlet {
             }
 
             UsersChoice constructionSecondChoice = new UsersChoice(consFirst.getWidth(), consFirst.getLength(),
-                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(), api.findMaterialByID(roofMaterialID),
+                    consFirst.getRoofChoice(), consFirst.getShedOrNo(), consFirst.getCladdingChoice(),
+                    consFirst.getCustomerPhone(), consFirst.getCustomerEmail(), api.findMaterialByID(roofMaterialID),
                     degreeOption, shedlenght, shedwitdh, claddingMaterial);
 
             req.getSession().setAttribute("secondUserChoice", constructionSecondChoice);
@@ -203,25 +223,18 @@ public class Orders extends BaseServlet {
                     construction.addShed(shed);
 
                 }
-            /*if (constructionSecondChoice.getCladdingChoice() == 1 && constructionSecondChoice.getShedOrNo() == 1) {
-                construction.addCladding(carport.threeWallswithCladding(claddingMaterial));
-
-            }*/ /*else if (constructionSecondChoice.getCladdingChoice() == 1) {
-                Carport carportTmp = (Carport) construction.getPartForConstruction().get(Category.Carport);
-                carportTmp.addCladding(carportTmp.threeWallswithCladding());
-                construction.getPartForConstruction().put(Category.Carport, carportTmp);
-            }*/
-
                 session.setAttribute("construction", construction.getPartForConstruction());
                 resp.sendRedirect(req.getContextPath() + "/SVG");
             } catch (TooLargeException e) {
                 System.err.println(e);
                 resp.sendRedirect(req.getContextPath() + "/Orders/constructionOverview/error");
-            }// resp.sendRedirect(req.getContextPath() + "/BOM"); // TODO skal vise SVG Senere
+            }
 
+        } else if (req.getPathInfo().
 
+                substring(1).
 
-        } else if (req.getPathInfo().substring(1).equals("edit")) {
+                equals("edit")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil
             //og variablerne gives dermed værdier, der ændres i db'en
 
@@ -230,7 +243,11 @@ public class Orders extends BaseServlet {
             session.setAttribute("editID", orderID);
             resp.sendRedirect(req.getContextPath() + "/Orders/edit");
 
-        } else if (req.getPathInfo().substring(1).equals("editOrder")) {
+        } else if (req.getPathInfo().
+
+                substring(1).
+
+                equals("editOrder")) {
             //Bruger indtaster orderId på den ønskede ordre og bliver dernæst sendt til "editOrder.jsp" som skal føre tilbage hertil
             //og variablerne gives dermed værdier, der ændres i db'en
             HttpSession session = req.getSession();
@@ -249,12 +266,14 @@ public class Orders extends BaseServlet {
             } catch (NoSuchOrderExists noSuchOrderExists) {
                 noSuchOrderExists.printStackTrace();
             }
-            double price = Double.parseDouble(req.getParameter("price"));
-            try {
-                //Edits price field
-                api.editPrice(price, orderID);
-            } catch (NoSuchOrderExists noSuchOrderExists) {
-                noSuchOrderExists.printStackTrace();
+            if(!(req.getParameter("price") == null)) {
+                double price = Double.parseDouble(req.getParameter("price"));
+                try {
+                    //Edits price field
+                    api.editPrice(price, orderID);
+                } catch (NoSuchOrderExists noSuchOrderExists) {
+                    noSuchOrderExists.printStackTrace();
+                }
             }
             String rooftype = req.getParameter("roofType");
             try {

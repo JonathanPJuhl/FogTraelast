@@ -1,5 +1,6 @@
 package domain.bom;
 
+import domain.construction.Category;
 import domain.material.Material;
 
 public class BOMItem {
@@ -8,14 +9,19 @@ public class BOMItem {
     private final int length;
     private final String description;
     private final int width;
+    private final Category category;
 
-
-    public BOMItem(Material material, int quantity, int length, String description, int width) {
+    public BOMItem(Material material, int quantity, int length, String description, int width, Category category) {
         this.material = material;
         this.length = length;
         this.quantity = quantity;
         this.description = description;
         this.width = width;
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public Material getMaterial() {

@@ -43,7 +43,7 @@ public class RoofSizeCalculatorTest extends TestCase {
         width = 4000;
         length = 9000;
         roofChoice = "Flat";
-        usersChoice = new UsersChoice(width,length,roofChoice,shedOrNo,claddingChoice);
+        usersChoice = new UsersChoice(width,length,roofChoice,shedOrNo,claddingChoice, null, null);
         carport = new Carport(usersChoice);
         roof = new FlatRoof(usersChoice,roofSizeCalculator);
         construction = new Construction(roof,carport);
@@ -64,7 +64,7 @@ public class RoofSizeCalculatorTest extends TestCase {
         roofChoice = "Pitched";
         degree = 40;
 
-        usersChoice = new UsersChoice(width,length,roofChoice,shedOrNo,claddingChoice,roofMaterial,degree,0,0,null);
+        usersChoice = new UsersChoice(width,length,roofChoice,shedOrNo,claddingChoice,null,null,roofMaterial,degree,0,0,null);
         carport = new Carport(usersChoice);
         roof = new PitchedRoof(usersChoice,roofSizeCalculator);
         construction = new Construction(roof,carport);
@@ -83,7 +83,7 @@ public class RoofSizeCalculatorTest extends TestCase {
         width = 4000;
         length = 9000;
         roofChoice = "Flat";
-        usersChoice = new UsersChoice(width,length,roofChoice,shedOrNo,claddingChoice);
+        usersChoice = new UsersChoice(width,length,roofChoice,shedOrNo,claddingChoice, null,null);
         carport = new Carport(usersChoice);
         Roof roof = new FlatRoof(usersChoice,roofSizeCalculator);
         construction = new Construction(roof,carport);

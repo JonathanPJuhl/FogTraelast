@@ -56,76 +56,77 @@
                             </select>
                         </div>
                     </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3" align="right">
-                        <p>Længde:</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>Længde:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                            <c:out value="${orders.length}"/>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3" align="left">
-                     <c:out value="${orders.length}"/>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>Bredde:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                            <c:out value="${orders.width}"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3" align="right">
-                        <p>Bredde:</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>Ønsket tagtype:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                            <select name="roofType">
+                                <option value="Flat">Fladt tag</option>
+                                <option value="Pitched">Tag med rejsning</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3" align="left">
-                    <c:out value="${orders.width}"/>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>Ønskes skur:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                            <select name="shedOrNo">
+                                <option value=0>Ikke ønsket</option>
+                                <option value="1">Ønsket</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3" align="right">
-                        <p>Ønsket tagtype:</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>Ønskes beklædning:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                            <select name="cladding">
+                                <option value=0>Ikke ønsket</option>
+                                <option value="1">Ønsket</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3" align="left">
-                        <select name="roofType">
-                            <option value="Flat">Fladt tag</option>
-                            <option value="Pitched">Tag med rejsning</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>Kundens tlf:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                            <c:out value="${orders.customerPhone}"/>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3" align="right">
-                        <p>Ønskes skur:</p>
-                    </div>
-                    <div class="col-md-6 mb-3" align="left">
-                        <select name="shedOrNo">
-                            <option value=0>Ikke ønsket</option>
-                            <option value="1">Ønsket</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3" align="right">
-                        <p>Ønskes beklædning:</p>
-                    </div>
-                    <div class="col-md-6 mb-3" align="left">
-                        <select name="cladding">
-                            <option value=0>Ikke ønsket</option>
-                            <option value="1">Ønsket</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3" align="right">
-                        <p>Kundens tlf:</p>
-                    </div>
-                    <div class="col-md-6 mb-3" align="left">
-                    <c:out value="${orders.customerPhone}"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3" align="right">
-                        <p>Kundens email:</p>
-                    </div>
-                    <div class="col-md-6 mb-3" align="left">
-                    <c:out value="${orders.customerEmail}"/>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" align="right">
+                            <p>Kundens email:</p>
+                        </div>
+                        <div class="col-md-6 mb-3" align="left">
+                            <c:out value="${orders.customerEmail}"/>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3" align="right">
                             <p>Pris:</p>
                         </div>
                         <div class="col-md-6 mb-3" align="left">
-                    <input type="number" name="price" value="${orders.price}">
+                            <a href="<c:url value="/Orders/Price/${orders.orderID}"/>"><c:out value="${orders.price}"/> kr.</a>
                         </div>
                     </div>
                     <div class="row">
@@ -133,11 +134,11 @@
                             <p>tilknyttet sælger:</p>
                         </div>
                         <div class="col-md-6 mb-3" align="left">
-                   <select name="salesmanID">
-                        <c:forEach var="salesman" items="${requestScope.salesmen}">
-                        <option value="${salesman.ID}">${salesman.name}</option>
-                        </c:forEach>
-                        </select>
+                            <select name="salesmanID">
+                                <c:forEach var="salesman" items="${requestScope.salesmen}">
+                                    <option value="${salesman.ID}">${salesman.name}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
 

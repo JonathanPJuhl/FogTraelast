@@ -1,5 +1,6 @@
 package api;
 
+import domain.bom.BOMItem;
 import domain.construction.Category;
 import domain.construction.ConstructionFactory;
 import domain.material.Material;
@@ -11,6 +12,7 @@ import domain.users.NoSuchUserExists;
 import domain.users.User;
 import domain.users.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -61,8 +63,8 @@ public class FogTraelast {
         return materialService.findMaterial(typeName, color, type, category, height);
     }*/
 
-    public List<Material> roofMaterials(String roofType) {
-        return materialService.roofMaterials(roofType);
+    public ArrayList<Material> roofMaterials(Category category) {
+        return materialService.roofMaterials(category);
     }
 
     /*public Roof createRoof(UsersChoice usersChoice){
@@ -127,5 +129,17 @@ public class FogTraelast {
 
     public TreeSet<Integer>allLenghtsForMaterials(){
         return materialService.allLenghtsForMaterials();
+    }
+
+    public void storeBOM(BOMItem bomItem, Order order, int materialByCategoryID){
+        materialService.storeBOM(bomItem,order,materialByCategoryID);
+    }
+
+    public int findMaterialByCategoryID(Material material, Category category){
+        return materialService.findMaterialByCategoryID(material,category);
+    }
+
+    public double findBOMPriceByOrderID(int orderID){
+        return materialService.findBOMPriceByOrderID(orderID);
     }
 }

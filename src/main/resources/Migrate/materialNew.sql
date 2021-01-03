@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS categories(
                                          category varchar(50) NOT NULL
 );
 
-INSERT INTO categories (category) VALUES('Flat');
-INSERT INTO categories (category) VALUES('Pitched');
-INSERT INTO categories (category) VALUES('Carport');
-INSERT INTO categories (category) VALUES('Shed');
-INSERT INTO categories (category) VALUES('Cladding');
+INSERT INTO categories (category) VALUES('fladt tag');
+INSERT INTO categories (category) VALUES('tag med rejsning');
+INSERT INTO categories (category) VALUES('carport');
+INSERT INTO categories (category) VALUES('skur');
+INSERT INTO categories (category) VALUES('beklædning');
 
 
 CREATE TABLE IF NOT EXISTS materials(
@@ -107,13 +107,14 @@ INSERT INTO materials_By_Category(materialID, categoryID) VALUES(19,1);
 
 CREATE TABLE IF NOT EXISTS bom(
                                   bomID int PRIMARY KEY AUTO_INCREMENT,
-                                  orderID int,
+                                  orderID int NOT NULL,
                                   FOREIGN KEY (orderID) REFERENCES orders(orderID),
-                                  materialID int,
-                                  FOREIGN KEY (materialID) REFERENCES materials(materialID),
+                                  materialID_By_Category int NOT NULL,
+                                  FOREIGN KEY (materialID_By_Category) REFERENCES materials_By_Category(materials_CategoryID),
                                   length int,
+                                  width int,
     /*TODO lagerBeholdning int,*/
                                   describtion varchar(100),
                                   quantity int not null,
-                                  price double default 0.0
+                                  qnty_price double
 );

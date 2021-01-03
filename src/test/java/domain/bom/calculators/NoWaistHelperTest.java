@@ -54,7 +54,7 @@ public class NoWaistHelperTest extends TestCase {
         setUp();
         int lengthT600 = 6000;
         int widthT600 = 2900;
-        usersChoice = new UsersChoice(4600, 8800, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(4600, 8800, "Flat",0, 0,null,null, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
@@ -92,7 +92,7 @@ public class NoWaistHelperTest extends TestCase {
         setUp();
         int lengthT600 = 6000;
         int widthT600 = 1900;
-        usersChoice = new UsersChoice(7300, 3500, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(7300, 3500, "Flat", 0, 0,null, null, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
@@ -130,7 +130,7 @@ public class NoWaistHelperTest extends TestCase {
         setUp();
         int lengthT600 = 6000;
         int widthT600 = 1900;
-        usersChoice = new UsersChoice(4600, 8800, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(4600, 8800, "Flat", 0, 0, null, null, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
@@ -168,7 +168,7 @@ public class NoWaistHelperTest extends TestCase {
         setUp();
         int lengthT300 = 3000;
         int widthT300 = 1900;
-        usersChoice = new UsersChoice(4600, 8800, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(4600, 8800, "Flat", 0, 0, null, null, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
@@ -206,7 +206,7 @@ public class NoWaistHelperTest extends TestCase {
         setUp();
         int lengthT300 = 3000;
         int widthT300 = 2900;
-        usersChoice = new UsersChoice(4600, 8800, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(4600, 8800, "Flat", 0, 0, null, null, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
@@ -245,7 +245,7 @@ public class NoWaistHelperTest extends TestCase {
         setUp();
         int lengthT600 = 6000;
         int widthT600 = 2900;
-        usersChoice = new UsersChoice(8600, 16800, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(8600, 16800, "Flat", 0, 0, null, null, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
@@ -282,7 +282,7 @@ public class NoWaistHelperTest extends TestCase {
         setUp();
         int lengthT600 = 6000;
         int widthT600 = 1900;
-        usersChoice = new UsersChoice(3500, 17800, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(3500, 17800, "Flat", 0, 0,null, null, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
@@ -319,7 +319,7 @@ public class NoWaistHelperTest extends TestCase {
         setUp();
         int lengthT600 = 3000;
         int widthT600 = 2900;
-        usersChoice = new UsersChoice(6700, 6000, "Flat", 0, 0, roofTrapezPlates, 0, 0, 0, null);
+        usersChoice = new UsersChoice(6700, 6000, "Flat", 0, 0, null, null, roofTrapezPlates, 0, 0, 0, null);
         roof = new FlatRoof(usersChoice, roofSizeCalculator);
         carport = new Carport(usersChoice);
         construction = new Construction(roof, carport);
