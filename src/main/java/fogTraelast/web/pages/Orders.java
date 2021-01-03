@@ -84,75 +84,68 @@ public class Orders extends BaseServlet {
                 req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
                 req.setAttribute("tooBigShed", true);
                 render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
-            } else if (cmd.equals("edit")) {
-                Order order;
-                try {
-                    HttpSession session = req.getSession();
-
-                    int orderID = (Integer) session.getAttribute("editID");
-                    order = api.findOrder(orderID);
-
-                    double priceBOM = api.findBOMPriceByOrderID(orderID);
-                    req.setAttribute("priceBOM", priceBOM);
-                    Economy economy = new Economy();
-                    double priceWithCoverage = economy.withCoverage(25, priceBOM);
-                    req.setAttribute("priceWithCoverage", priceWithCoverage);
-
-                    List<Order> orderList = new ArrayList<>();
-                    orderList.add(order);
-                    try {
-                        List<User> salesmen = api.findAllSalesmen();
-                        req.setAttribute("salesmen", salesmen);
-                    } catch (NoSuchUserExists noSuchUserExists) {
-                        noSuchUserExists.printStackTrace();
-                    }
-                    req.setAttribute("orderList", orderList);
-                    render("Fog Trælast", "/WEB-INF/pages/editOrder.jsp", req, resp);
-                } catch (NoSuchOrderExists noSuchOrderExists) {
-                    noSuchOrderExists.printStackTrace();
-                }
-
-            } else if(cmd.equals("findOrder")){
-                render("Fog Trælast", "/WEB-INF/pages/findSingleOrder.jsp", req, resp);
-            }
-            else if(cmd.equals("displaySingleOrder")){
+            } else if (cmd.equals("displaySingleOrder")) {
                 int orderID = Integer.parseInt(req.getParameter("orderNumber"));
                 req.setAttribute("OrderID", orderID);
                 render("Fog Trælast", "/WEB-INF/pages/displaySingleOrder.jsp", req, resp);
+            }else if (cmd.equals("findOrder")) {
+                render("Fog Trælast", "/WEB-INF/pages/findSingleOrder.jsp", req, resp);
             }
-            else if (cmd.equals("SortByNew")) {
-                String status = "New";
-                List<Order> sortedList = api.displayOrderByStatus(status);
-                req.setAttribute("list", sortedList);
-                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            } else if (cmd.equals("SortByProcessing")) {
-                String status = "Processing";
-                List<Order> sortedList = api.displayOrderByStatus(status);
-                req.setAttribute("list", sortedList);
-                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            } else if (cmd.equals("SortByDone")) {
-                String status = "Done";
-                List<Order> sortedList = api.displayOrderByStatus(status);
-                req.setAttribute("list", sortedList);
-                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            } else if (cmd.equals("SortBySalesman")) {
-                HttpSession session = req.getSession();
-                int salesman = (Integer) session.getAttribute("userID");
-                List<Order> sortedList = api.displayOrderBySalesman(salesman);
-                req.setAttribute("list", sortedList);
-                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-            } else {
-                int orderID = (Integer) req.getSession().getAttribute("editID");
-                if (cmd.equals("Price/" + orderID)) {
-                    double priceBOM = api.findBOMPriceByOrderID(orderID);
-                    req.setAttribute("priceBOM", priceBOM);
-                    Economy economy = new Economy();
-                    double priceWithCoverage = economy.withCoverage(25,priceBOM);
-                    req.setAttribute("priceWithCoverage", priceWithCoverage);
-                    render("Fog Trælast", "/WEB-INF/pages/editOrderPrice.jsp", req, resp);
+
+
+            if (!(req.getSession().getAttribute("userID") == null)) {
+             if (cmd.equals("edit")) {
+                    Order order;
+                    try {
+                        HttpSession session = req.getSession();
+
+                        int orderID = (Integer) session.getAttribute("editID");
+                        order = api.findOrder(orderID);
+
+                        double priceBOM = api.findBOMPriceByOrderID(orderID);
+                        req.setAttribute("priceBOM", priceBOM);
+                        Economy economy = new Economy();
+                        double priceWithCoverage = economy.withCoverage(25, priceBOM);
+                        req.setAttribute("priceWithCoverage", priceWithCoverage);
+
+                        List<Order> orderList = new ArrayList<>();
+                        orderList.add(order);
+                        try {
+                            List<User> salesmen = api.findAllSalesmen();
+                            req.setAttribute("salesmen", salesmen);
+                        } catch (NoSuchUserExists noSuchUserExists) {
+                            noSuchUserExists.printStackTrace();
+                        }
+                        req.setAttribute("orderList", orderList);
+                        render("Fog Trælast", "/WEB-INF/pages/editOrder.jsp", req, resp);
+                    } catch (NoSuchOrderExists noSuchOrderExists) {
+                        noSuchOrderExists.printStackTrace();
+                    }
+
+                }  else if (cmd.equals("SortByNew")) {
+                    String status = "New";
+                    List<Order> sortedList = api.displayOrderByStatus(status);
+                    req.setAttribute("list", sortedList);
+                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+                } else if (cmd.equals("SortByProcessing")) {
+                    String status = "Processing";
+                    List<Order> sortedList = api.displayOrderByStatus(status);
+                    req.setAttribute("list", sortedList);
+                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+                } else if (cmd.equals("SortByDone")) {
+                    String status = "Done";
+                    List<Order> sortedList = api.displayOrderByStatus(status);
+                    req.setAttribute("list", sortedList);
+                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
+                } else if (cmd.equals("SortBySalesman")) {
+                    HttpSession session = req.getSession();
+                    int salesman = (Integer) session.getAttribute("userID");
+                    List<Order> sortedList = api.displayOrderBySalesman(salesman);
+                    req.setAttribute("list", sortedList);
+                    render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
                 } else {
                     try {
-                        orderID = Integer.parseInt(req.getPathInfo().substring(1));
+                        int orderID = Integer.parseInt(req.getPathInfo().substring(1));
                         Order order = api.findOrder(orderID);
                         req.setAttribute("list", order);
                         render("Fog Trælast", "/WEB-INF/pages/displayOrderPage.jsp", req, resp);
@@ -164,8 +157,12 @@ public class Orders extends BaseServlet {
                 }
 
             }
+            else{
+                resp.sendError(401, "You're not logged in, and therefore cannot access this page");
+            }
         }
-    }
+        }
+
 
 
     @Override
