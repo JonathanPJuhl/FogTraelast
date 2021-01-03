@@ -1,23 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Bruger
-  Date: 15-12-2020
-  Time: 11:45
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="scrollbar" id="styleFog">
-        <H1>Tillykke med din nye carport!</H1>
+    <c:if test="${requestScope.alreadyCustomer == false}">
+        <H1>Her din bestilling!</H1>
         <br>
         <H3 align="left">&nbsp;&nbsp;&nbsp;&nbsp;Din carports egenskaber:</H3>
         <H5 align="left"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
             Bredde: ${(sessionScope.tempConstruction.width)/1000} m -
             Længde: ${(sessionScope.tempConstruction.length)/1000} m
             - Tagtype: ${(sessionScope.tempConstruction.roofChoice)}
-            <%--- Skur? ${(sessionScope.tempConstruction.shedOrNo)}
-            - Beklædning? ${(sessionScope.tempConstruction.claddingChoice)}--%></H5>
+        </H5>
         <H5 align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <c:if test="${sessionScope.tempConstruction.shedOrNo==1}">
                 - Beklædnings materiale: ${requestScope.usersChoices.shedAndCarportCladding.nametype},
@@ -51,3 +44,15 @@
             </c:forEach>
         </table>
 </div>
+        <svg class="banner" width="${sessionScope.construction1.roof.width}" height="${sessionScope.construction1.roof.length}">
+                ${sessionScope.svgCarport}
+
+        </svg>
+</c:if>
+<c:if test="${requestScope.alreadyCustomer}">
+    <H1> Du er allerede kunde! Er du sikker på du vil bestille igen?</H1>
+    <form method="post" action="/BOM">
+        <a href="/"><button class="form-control">Nej</button></a> <!-- TODO-->
+       <button type="submit" class="btn btn-primary">Ja!</button>
+   </form>
+</c:if>

@@ -126,7 +126,8 @@
                             <p>Pris:</p>
                         </div>
                         <div class="col-md-6 mb-3" align="left">
-                            <a href="<c:url value="/Orders/Price/${orders.orderID}"/>"><c:out value="${orders.price}"/> kr.</a>
+                            <a href="<c:url value="/Orders/Price/${orders.orderID}"/>"><c:out value="${orders.price}"/>
+                                kr.</a>
                         </div>
                     </div>
                     <div class="row">
@@ -148,7 +149,7 @@
 
             </div>
 
-    </form>
+        </div> </form>
 </div>
 
 

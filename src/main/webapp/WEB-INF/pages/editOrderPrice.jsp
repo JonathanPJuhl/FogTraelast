@@ -11,7 +11,7 @@
         <div align="center">
             <h1>Prisredigering - du ændre ordrenr.<div style="color: blue"> ${sessionScope.editID}</div></h1>
             <form alig="center" method="post">
-<br>
+                <br>
                 <label>Pris for alle materialer:</label>
                 <h3>${requestScope.priceBOM} kr.</h3>
 

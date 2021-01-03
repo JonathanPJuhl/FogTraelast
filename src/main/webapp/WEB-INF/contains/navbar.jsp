@@ -26,11 +26,9 @@
 <c:if test="${sessionScope.userID == null}">
 <a class="btn btn-sm btn-outline-secondary" href="${navBar.findUrl("SalesmanLogin")}">Login</a>
 </c:if>
-                <!--TODO SKAL RETTES TIL-->
                 <c:if test="${sessionScope.userID != null}">
                     <a class="btn btn-sm btn-outline-secondary" href="${navBar.findUrl("SalesmanLogin/Logout")}">Logout</a>
                 </c:if>
-                <!--TODO vi skal finde en bedre måde angående login og URL-->
             </div>
         </div>
     </header>
@@ -39,7 +37,7 @@
     <div class="py-1 mb-2">
         <ul class="nav d-flex justify-content-center nav-menu">
             <a class="p-2 px-4 nav-link text-white " href="${navBar.findUrl("Orders/new")}">Start Byg!</a>
-            <!--- TODO Få hentet rollen eller navn + rolle på bruge-->
+
             <c:if test="${sessionScope.user.roleID == \"2\"}">
                 <a class="p-2 px-4 nav-link text-white" href="${navBar.findUrl("Orders/SortByNew")}">Nyoprettede ordre</a>
                 <a class="p-2 px-4 nav-link text-white" href="${navBar.findUrl("Orders/SortByProcessing")}">Igangværende ordre</a>
