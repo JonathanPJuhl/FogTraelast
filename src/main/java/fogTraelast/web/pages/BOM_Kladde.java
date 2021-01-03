@@ -11,6 +11,8 @@ import domain.construction.UsersChoice;
 import domain.construction.carport.Carport;
 import domain.construction.shed.Shed;
 import domain.construction.shed.TooLargeException;
+import domain.orders.Economy;
+import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.users.Client;
 import infrastructure.DBMaterialRepository;
@@ -50,12 +52,20 @@ public class BOM_Kladde extends BaseServlet {
                 req.setAttribute("usersChoices", usersChoice);
                 req.getSession().setAttribute("bom", bomI);
                 Category category = Category.Shed;
-                Order order = api.createOrder(usersChoice.getLength(), usersChoice.getWidth(),
-                        usersChoice.getCustomerPhone(), usersChoice.getCustomerEmail(), usersChoice.getRoofChoice(),
-                        usersChoice.getShedOrNo(), usersChoice.getCladdingChoice());
+
+                Order order = api.createOrder(usersChoice);
+
                 for (BOMItem bomItem : bomI) {
                     int materialCategoryID = api.findMaterialByCategoryID(bomItem.getMaterial(), bomItem.getCategory());
                     api.storeBOM(bomItem, order, materialCategoryID);
+                }
+                double priceBOM = api.findBOMPriceByOrderID(order.getOrderID());
+                Economy economy = new Economy();
+                double priceWithCoverage = economy.withCoverage(25, priceBOM);
+                try {
+                    api.editPrice(priceWithCoverage, order.getOrderID());
+                } catch (NoSuchOrderExists noSuchOrderExists) {
+                    noSuchOrderExists.printStackTrace();
                 }
                 InetAddress inetAddress = InetAddress.getByName(req.getLocalAddr());
                 final Client client = createClient(inetAddress, 8080);

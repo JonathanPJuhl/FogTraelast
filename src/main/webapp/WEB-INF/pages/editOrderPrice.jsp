@@ -22,7 +22,7 @@
                 <input type="number" class="form-control" id="priceAdministrated"
                        aria-describedby="priceAdminstrated" name="price">
 
-                <button type="submit" class="btn btn-primary">Rediger pris!</button>
+                <input type="submit" class="btn btn-primary" value="Rediger pris!">
             </form>
         </div>
     </div>

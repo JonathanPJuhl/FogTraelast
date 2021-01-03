@@ -126,8 +126,20 @@
                             <p>Pris:</p>
                         </div>
                         <div class="col-md-6 mb-3" align="left">
-                            <a href="<c:url value="/Orders/Price/${orders.orderID}"/>"><c:out value="${orders.price}"/>
-                                kr.</a>
+
+                                <p>Pris for alle materialer:</p>
+                                <p>${requestScope.priceBOM} kr.</p>
+
+                                <p>Pris beregnet med 25% dækningsgrad: ${requestScope.priceWithCoverage} kr.</p>
+
+                                <p>Hvad skal prisen ændres til?</p>
+                                <input type="number" class="numbersField"
+                                       aria-describedby="priceAdminstrated" name="price">
+
+
+
+
+
                         </div>
                     </div>
                     <div class="row">

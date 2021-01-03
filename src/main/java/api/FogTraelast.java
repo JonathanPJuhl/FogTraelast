@@ -3,6 +3,7 @@ package api;
 import domain.bom.BOMItem;
 import domain.construction.Category;
 import domain.construction.ConstructionFactory;
+import domain.construction.UsersChoice;
 import domain.material.Material;
 import domain.material.MaterialService;
 import domain.orders.NoSuchOrderExists;
@@ -43,8 +44,8 @@ public class FogTraelast {
         return orderLists.findSpecificOrder(id);
     }
 
-    public Order createOrder(double length, double width, String customerPhone, String customerEmail, String roofType, int shedOrNo, int cladding) {
-        return orderLists.insertOrderIntoDB(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
+    public Order createOrder(UsersChoice usersChoice) {
+        return orderLists.insertOrderIntoDB(usersChoice);
     }
 
     public User loginSalesman(String salesmanEmail, String password) throws NoSuchUserExists {

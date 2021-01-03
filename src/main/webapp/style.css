@@ -121,6 +121,9 @@ opacity: 50%;
 p{
     margin-left: 2vh;
 }
+.numbersField{
+    padding-left: 2vh;
+}
 
 .pt-1, .py-1 {
     margin-bottom: .0vh !important;
