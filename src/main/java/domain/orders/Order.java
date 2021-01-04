@@ -34,6 +34,18 @@ public class Order {
         this.svg = svg;
     }
 
+    public int getShedLength() {
+        return shedLength;
+    }
+
+    public int getShedWidth() {
+        return shedWidth;
+    }
+
+    public String getSvg() {
+        return svg;
+    }
+
     public int getOrderID() {
         return orderID;
     }

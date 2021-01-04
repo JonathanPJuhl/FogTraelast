@@ -51,7 +51,6 @@ public class BOM_Kladde extends BaseServlet {
                 req.getSession().setAttribute("bom", bomI);
                 Category category = Category.Shed;
                 String svg = (String) session.getAttribute("svgCarport");
-                System.out.println(svg);
                 Order order = api.createOrder(usersChoice);
                 api.insertSVGintoOrder(svg, order.getOrderID());
 

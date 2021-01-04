@@ -93,6 +93,8 @@ public class Orders extends BaseServlet {
                         double roundedPrice = Math.round(priceWithCoverage * 100.0) / 100.0;
                         req.setAttribute("priceWithCoverage", roundedPrice);
                         List<Order> orderList = new ArrayList<>();
+                        req.setAttribute("svgScaleHeight", order.getLength()+200);
+                        req.setAttribute("svgScaleWidth", order.getWidth()+200);
                         orderList.add(order);
                         req.setAttribute("orderList", orderList);
                         List<BOMFromDB> bomList = api.findBom(orderID);

@@ -157,16 +157,20 @@
                     </div>
                 </div>
 <c:forEach var="orders" items="${requestScope.orderList}">
-                <svg class="banner" width="${orders.width}" height="${orders.length}">
-                    ${sessionScope.svgCarport}
+<div class="mb-3 ml-3 mr-3">
+                    <svg viewBox="0 0 ${requestScope.svgScaleWidth} ${requestScope.svgScaleHeight}" preserveAspectRatio="xMidYMid slice" >
+                <svg x=100 y=100 class="banner" width="${requestScope.svgScaleWidth}" height="${requestScope.svgScaleWidth}">
+                    ${orders.svg}
                     </c:forEach>
                 </svg>
+                    </svg>
+            </div>
                     </div>
 
             </div>
 
         </div>
-</div>
+
 
 
 
