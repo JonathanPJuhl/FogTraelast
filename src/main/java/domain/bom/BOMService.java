@@ -127,7 +127,7 @@ public class BOMService {
         int widthMaterialRem = 195;
 
         bom.addItem(new BOMItem((Material) caportMaterialMap.get( "trykimp. Stolpe 97"), carportMaterialCalculator.qntyPost(carport.getWidth(),carport.getLength()), carport.getHeight(),"Stolper nedgraves 90 cm. i jord + skråstiver", postWidth, Category.Carport));
-        bom.addItem(new BOMItem((Material) caportMaterialMap.get("spærtræ ubh. 45"), carportMaterialCalculator.remQnty(), carportMaterialCalculator.remLength(carport), "Remme i side, sadles ned i stolper Carport del", widthMaterialRem,Category.Carport));
+        bom.addItem(new BOMItem((Material) caportMaterialMap.get("spærtræ ubh. 45"), carportMaterialCalculator.remQnty(), carportMaterialCalculator.remLengthFullLength(carport), "Remme i side, sadles ned i stolper Carport del", widthMaterialRem,Category.Carport));
 
         //evt. skur materiale - del
         if (shed != null) {

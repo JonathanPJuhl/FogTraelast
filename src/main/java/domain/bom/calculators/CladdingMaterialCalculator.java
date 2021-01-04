@@ -28,6 +28,9 @@ public class CladdingMaterialCalculator implements BOMItemSpecifications {
     @Override
     public int quantity() {
         int qnty = heightCarport/materialWidth;
+        if (heightCarport%materialWidth > 0){
+            qnty++;
+        }
         return qnty;
     }
 

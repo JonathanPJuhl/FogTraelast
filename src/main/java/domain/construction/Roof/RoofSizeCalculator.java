@@ -2,10 +2,6 @@ package domain.construction.Roof;
 
 public class RoofSizeCalculator {
 
-    //TODO Refactorer!
-    private final int MINPITCHDEGREEOPTION = 15;
-    private final int MAXPITCHDEGREEOPTION = 45 - 1; //TODO Admin skal kunne indsætte andre tal
-
     public RoofSizeCalculator() {
     }
 
@@ -33,16 +29,17 @@ public class RoofSizeCalculator {
 
     //Beregning af tagets højde fra top rem og til øverst på tag eller tagryg
     public double roofHeight(int size, double degree) {
-        double roofHeigth = (Math.tan(Math.toRadians(degree)) * size);
+        double roofHeigth = Math.tan(Math.toRadians(degree)) * size;
         return roofHeigth;
     }
 
+    //Beregning af tagets højde fra top rem og til øverst på tag eller tagryg
     public double getRoofHeight(Roof roof) {
         double roofHeigth;
         if(roof.isFlat()) {
             roofHeigth = (Math.tan(Math.toRadians(roof.getDegree())) * roof.getLength());
         }else{
-            roofHeigth = (Math.tan(Math.toRadians(roof.getDegree())) * roof.getWidth());
+            roofHeigth = (Math.tan(Math.toRadians(roof.getDegree())) * (roof.getWidth()/2));
         }
         return roofHeigth;
     }

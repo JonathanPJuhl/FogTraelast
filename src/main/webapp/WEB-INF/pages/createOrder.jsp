@@ -12,11 +12,13 @@
         <h1>Vælg dine mål</h1>
         <form method="post" action="${pageContext.request.contextPath}/Orders/create">
 
-            <label for="lengthName">Længde (cm)</label>
+            <label for="lengthName">Længde (cm) </label>
             <input type="number" class="form-control" id="lengthName" aria-describedby="lengthNameHelp" name="length">
+            <small class="form-text text-muted">NB! Dette er med de 18 cm's udhæng af tag</small>
 
             <label for="widthName">Bredde (cm)</label>
             <input type="number" class="form-control" id="widthName" name="width">
+            <small class="form-text text-muted">NB! Dette er med de 18 cm's udhæng af tag</small>
 
             <label for="roofType">Tag type</label>
             <select class="form-control" name="roofType" id="roofType">

@@ -50,14 +50,15 @@ public class RoofSizeCalculatorTest extends TestCase {
 
         //Act
         int actual = roofSizeCalculator.flatRoofCalcutatedSurfaceLength(construction.getRoof().getLength(), construction.getRoof().getDegree());
-        int excpeted = 0;
+        int excpeted = 9004;
 
         //Assert
         assertEquals(excpeted, actual);
     }
 
+
     @Test
-    public void testPitchedRoofCalcutatedSurfaceWidth() {
+    public void testPitchedRoofCalcutatedHalfSurfaceWidth() {
         //Arrange
         width = 4000;
         length = 9000;
@@ -71,7 +72,7 @@ public class RoofSizeCalculatorTest extends TestCase {
 
         //Act
         int actual = roofSizeCalculator.pitchedRoofCalcutatedHalfSurfaceWidth(construction.getRoof().getWidth(), construction.getRoof().getDegree());
-        int excpeted = 0;
+        int excpeted = 2610;
 
         //Assert
         assertEquals(excpeted, actual);
@@ -90,9 +91,55 @@ public class RoofSizeCalculatorTest extends TestCase {
 
         //Act
         double actual = roofSizeCalculator.roofHeight(construction.getRoof().getLength(), construction.getRoof().getDegree());
-        double excpeted = 0.0;
+        double excpeted = 269.99999974;
 
         //Assert
-        assertEquals(excpeted, actual);
+        assertEquals(excpeted, actual, 0.03);
+    }
+
+    @Test
+    public void testSetRoofHeightPitchedRoof() {
+        //Arrange
+        width = 4000;
+        length = 9000;
+        degree = 30;
+        roofChoice = "Pitched";
+        usersChoice = new UsersChoice(width,length,roofChoice,shedOrNo,claddingChoice,null,null,roofMaterial,degree,0,0,null);
+        carport = new Carport(usersChoice);
+        Roof roof = new PitchedRoof(usersChoice,roofSizeCalculator);
+        construction = new Construction(roof,carport);
+        int roofHalfWidth = width/2;
+
+        //Act
+        double actual = roofSizeCalculator.roofHeight(roofHalfWidth, construction.getRoof().getDegree());
+        double excpeted = 1154.70;
+
+        //Assert
+        assertEquals(excpeted, actual, 0.02);
+    }
+
+    @Test
+    public void testSetRoofHeightPitchedRoofWith20Degrees() {
+        //Arrange
+        width = 4000;
+        length = 9000;
+        degree = 20;
+        roofChoice = "Pitched";
+        usersChoice = new UsersChoice(width,length,roofChoice,shedOrNo,claddingChoice,null,null,roofMaterial,degree,0,0,null);
+        carport = new Carport(usersChoice);
+        Roof roof = new PitchedRoof(usersChoice,roofSizeCalculator);
+        construction = new Construction(roof,carport);
+        int roofHalfWidth = width/2;
+
+        //Act
+        double actual = roofSizeCalculator.roofHeight(roofHalfWidth, construction.getRoof().getDegree());
+        double excpeted = 727.940;
+
+        //Assert
+        assertEquals(excpeted, actual, 0.05);
+    }
+
+    @Test
+    public void getRoofHeight() {
     }
 }
