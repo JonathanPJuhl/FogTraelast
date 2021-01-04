@@ -14,7 +14,6 @@ import domain.construction.shed.TooLargeException;
 import domain.orders.Economy;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
-import domain.users.Client;
 import infrastructure.DBMaterialRepository;
 
 import javax.servlet.ServletException;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -35,10 +33,10 @@ public class BOM_Kladde extends BaseServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         boolean param = Boolean.parseBoolean(req.getParameter("payCheck"));
         HttpSession session = req.getSession();
-        if (client != null) {
+       /* if (client != null) {
             req.setAttribute("alreadyCustomer", true);
             render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
-        } else if (param) {
+        } else*/ if (param) {
             req.setAttribute("alreadyCustomer", false);
             req.setAttribute("svg", false);
             HashMap construction = (HashMap) req.getSession().getAttribute("construction");
@@ -67,8 +65,8 @@ public class BOM_Kladde extends BaseServlet {
                 } catch (NoSuchOrderExists noSuchOrderExists) {
                     noSuchOrderExists.printStackTrace();
                 }
-                InetAddress inetAddress = InetAddress.getByName(req.getLocalAddr());
-                final Client client = createClient(inetAddress, 8080);
+//                InetAddress inetAddress = InetAddress.getByName(req.getLocalAddr());
+//                final Client client = createClient(inetAddress, 8080);
                 render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
             } else if(req.getPathInfo().substring(1).equals("/BOM/Customer")) {
                 req.setAttribute("svg", true);
@@ -94,10 +92,10 @@ public class BOM_Kladde extends BaseServlet {
         }
     }
 
-    @Override
+    /*@Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         client = null;
-    }
+    }*/
 }
 
 

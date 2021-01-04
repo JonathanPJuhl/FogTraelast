@@ -2,8 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="scrollbar" id="styleFog">
-<c:if test="${requestScope.alreadyCustomer == false}">
-    <H1>Her din bestilling!</H1>
+<%--<c:if test="${requestScope.alreadyCustomer == false}">--%>
+    <H1 align="center">Her din bestilling!</H1>
     <br>
     <H3 align="left">&nbsp;&nbsp;&nbsp;&nbsp;Din carports egenskaber:</H3>
     <H5 align="left"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
@@ -25,7 +25,8 @@
         </c:if>
     </H5>
     <table border="1" cellpadding="5">
-        <h2>Stykliste</h2>
+        <h2 align="center">Stykliste</h2>
+        <h6>Alle mål herunder er i mm.</h6>
         <tr>
             <th>Materialets beskrivelse</th>
             <th>Længde</th>
@@ -52,6 +53,7 @@
 
         </svg>
     </c:if>
+<%--
 </c:if>
 <c:if test="${requestScope.alreadyCustomer}">
     <H1> Du er allerede kunde! Er du sikker på du vil bestille igen?</H1>
@@ -61,4 +63,4 @@
         </a> <!-- TODO-->
         <button type="submit" class="btn btn-primary">Ja!</button>
     </form>
-</c:if>
+</c:if>--%>
