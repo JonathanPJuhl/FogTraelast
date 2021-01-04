@@ -345,11 +345,22 @@ public class NoWasteHelperTest extends TestCase {
             }
         }
         int actual = qnty;
-        int excepted = 1;
+        int excepted = 2;
 
         //Assert
         assertEquals(excepted, actual);
     }
+
+    //TODO Lav strategy Pattern
+   /* @Test
+    public void testQuantitiesAtSideCalculatedCarport2000Post() throws Exception {
+        //Arrange
+
+        //Act
+
+        //Assert
+        assertEquals(excepted, actual);
+    }*/
     @Test
     public void testTest() throws Exception {
         //Arrange
@@ -388,7 +399,7 @@ public class NoWasteHelperTest extends TestCase {
     }
 
     //TODO Lav strategy Pattern
-    @Test
+  /*  @Test
     public void testQuantitiesAtSideCalculatedCarport2000Post() throws Exception {
         //Arrange
 
@@ -396,7 +407,7 @@ public class NoWasteHelperTest extends TestCase {
 
         //Assert
 
-    }
+    }*/
 
     @Test
     public void testRestConstructionPartSide() {

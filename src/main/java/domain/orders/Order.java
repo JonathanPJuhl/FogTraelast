@@ -72,7 +72,7 @@ public class Order {
         return shedOrNo;
     }
 
-    public int getCladding() {
+    public int getWallsOrNo() {
         return wallsOrNo;
     }
 

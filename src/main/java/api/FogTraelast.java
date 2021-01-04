@@ -1,5 +1,6 @@
 package api;
 
+import domain.bom.BOMFromDB;
 import domain.bom.BOMItem;
 import domain.construction.Category;
 import domain.construction.ConstructionFactory;
@@ -24,11 +25,13 @@ public class FogTraelast {
     private final MaterialService materialService;
     private final ConstructionFactory constructionFactory;
 
+
     public FogTraelast(UserRepository userLists, OrderRepository orderLists, MaterialService materialService, ConstructionFactory constructionFactory) {
         this.userLists = userLists;
         this.orderLists = orderLists;
         this.materialService = materialService;
         this.constructionFactory = constructionFactory;
+
     }
 
     public Object getVERSION() {
@@ -138,5 +141,9 @@ public class FogTraelast {
 
     public double findBOMPriceByOrderID(int orderID){
         return materialService.findBOMPriceByOrderID(orderID);
+    }
+
+    public ArrayList<BOMFromDB> findBom(int orderID){
+        return materialService.findBOMByOrderID(orderID);
     }
 }

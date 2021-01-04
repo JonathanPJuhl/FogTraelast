@@ -76,6 +76,7 @@ public class DBOrderRepository implements OrderRepository {
 
     }
 
+
     @Override
     public List<Order> findAllOrders() throws NoSuchOrderExists {
         ArrayList<Order> list = new ArrayList<>();
