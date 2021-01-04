@@ -11,7 +11,7 @@
     <h6>vælg enten at acceptere eller prøve igen nedenfor </h6>
 </svg>
     <div class="mb-3 ml-3 mr-3">
-        <svg viewBox="0 0 ${requestScope.svgScaleWidth} ${requestScope.svgScaleHeight}" preserveAspectRatio="xMidYMid slice" >
+        <svg viewBox="0 0 ${requestScope.svgScaleHeight} ${requestScope.svgScaleWidth}" preserveAspectRatio="xMidYMid slice" >
             <svg x=100 y=100 class="banner" width="$${requestScope.construction1.roof.width}" height="${requestScope.construction1.roof.length}">
                 ${requestScope.svgCarport}
             </svg>
