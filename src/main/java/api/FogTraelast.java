@@ -146,4 +146,8 @@ public class FogTraelast {
     public ArrayList<BOMFromDB> findBom(int orderID){
         return materialService.findBOMByOrderID(orderID);
     }
+
+    public void insertSVGintoOrder(String SVG, int orderID){
+        orderLists.insertSVGIntoOrder(SVG, orderID);
+    }
 }

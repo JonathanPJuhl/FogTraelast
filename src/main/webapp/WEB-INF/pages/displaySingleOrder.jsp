@@ -156,10 +156,11 @@
                         <h2 align="center">Plantegning:</h2>
                     </div>
                 </div>
-                <%--<svg class="banner" width="${sessionScope.construction1.roof.width}" height="${sessionScope.construction1.roof.length}">
+<c:forEach var="orders" items="${requestScope.orderList}">
+                <svg class="banner" width="${orders.width}" height="${orders.length}">
                     ${sessionScope.svgCarport}
-
-                </svg>--%>
+                    </c:forEach>
+                </svg>
                     </div>
 
             </div>

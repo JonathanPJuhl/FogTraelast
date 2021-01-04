@@ -15,8 +15,9 @@ public class Order {
     private final int wallsOrNo;
     private final int shedLength;
     private final int shedWidth;
+    private final String svg;
 
-    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID, String roofType, int shedOrNo, int wallsOrNo, int shedLength, int shedWidth) {
+    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID, String roofType, int shedOrNo, int wallsOrNo, int shedLength, int shedWidth, String svg) {
         this.orderID = orderID;
         this.orderStatus = orderStatus;
         this.length = length;
@@ -30,6 +31,7 @@ public class Order {
         this.wallsOrNo = wallsOrNo;
         this.shedLength = shedLength;
         this.shedWidth = shedWidth;
+        this.svg = svg;
     }
 
     public int getOrderID() {

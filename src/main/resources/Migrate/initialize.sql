@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS orders(
                                      wallsOrNo tinyint(1) NOT NULL,
                                      shedLength int,
                                      shedWidth int,
+                                     svg BLOB(1000000),
                                      salesmanID int, /*TODO kunne dette være en role istedet? Lige nu overholder vi ikke første normalform f.eks. Det ville vi da ikke komme til regardless?*/
                                      FOREIGN KEY (salesmanID) REFERENCES salesmen(salesmanID)
 );
