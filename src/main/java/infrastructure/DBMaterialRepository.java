@@ -1,6 +1,6 @@
 package infrastructure;
 
-import domain.bom.BOM;
+import domain.bom.BOMFromDB;
 import domain.bom.BOMItem;
 import domain.construction.Category;
 import domain.material.Material;
@@ -245,4 +245,36 @@ public class DBMaterialRepository implements MaterialService {
 
     }
 
-}
+    @Override
+    public ArrayList<BOMFromDB> findBOMByOrderID(int orderID) {
+        ArrayList<BOMFromDB> bom = new ArrayList<>();
+        try (Connection conn = db.connect()){
+            String sql = "SELECT * FROM bom WHERE orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setInt(1, orderID);
+            smt.executeQuery();
+            ResultSet set = smt.getResultSet();
+            while (set.next()) {
+                bom.add(parseBOMList(set));
+            }
+        } catch (SQLException throwables) {
+            throw new UnexpectedDBError(throwables);
+        }
+        return bom;
+    }
+    @Override
+    public BOMFromDB parseBOMList(ResultSet set) throws SQLException {
+        return new BOMFromDB(
+                set.getInt("bom.bomID"),
+                set.getInt("bom.orderID"),
+                set.getInt("bom.materialID_By_Category"),
+                set.getInt("bom.length"),
+                set.getInt("bom.width"),
+                set.getString("bom.describtion"),
+                set.getInt("bom.quantity"));
+
+    }
+
+    }
+
+

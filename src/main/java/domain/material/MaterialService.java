@@ -1,10 +1,8 @@
 package domain.material;
 
-import com.sun.source.tree.Tree;
-import domain.bom.BOM;
+import domain.bom.BOMFromDB;
 import domain.bom.BOMItem;
 import domain.construction.Category;
-import domain.construction.Construction;
 import domain.orders.Order;
 
 import java.sql.ResultSet;
@@ -37,4 +35,8 @@ public abstract interface MaterialService {
     public int findMaterialByCategoryID(Material material, Category category);
 
     public double findBOMPriceByOrderID(int orderID);
+
+    ArrayList<BOMFromDB> findBOMByOrderID(int orderID);
+
+    BOMFromDB parseBOMList(ResultSet set) throws SQLException;
 }

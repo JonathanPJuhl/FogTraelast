@@ -50,8 +50,9 @@ public class BOM_Kladde extends BaseServlet {
                 req.setAttribute("usersChoices", usersChoice);
                 req.getSession().setAttribute("bom", bomI);
                 Category category = Category.Shed;
-
+                String svg = (String) session.getAttribute("svgCarport");
                 Order order = api.createOrder(usersChoice);
+                api.insertSVGintoOrder(svg, order.getOrderID());
 
                 for (BOMItem bomItem : bomI) {
                     int materialCategoryID = api.findMaterialByCategoryID(bomItem.getMaterial(), bomItem.getCategory());
@@ -73,7 +74,7 @@ public class BOM_Kladde extends BaseServlet {
                 Order order = (Order)req.getSession().getAttribute("order");
                 ConstructionFactory cf = new ConstructionFactory();
                 UsersChoice usersChoice1 = new UsersChoice((int)order.getWidth(),(int)order.getLength(),order.getRoofType(),order.getShedOrNo(),
-                        order.getCladding(),order.getCustomerPhone(), order.getCustomerPhone()); // TODO Ordre skal have flere værdier og sætte ind her f.eks. før det vil virke
+                        order.getWallsOrNo(),order.getCustomerPhone(), order.getCustomerPhone()); // TODO Ordre skal have flere værdier og sætte ind her f.eks. før det vil virke
                 Roof roof = cf.createRoof(usersChoice1);
                 Carport carport = cf.createCarport(usersChoice1);
                 Construction cons = cf.createConstruction(roof, carport);

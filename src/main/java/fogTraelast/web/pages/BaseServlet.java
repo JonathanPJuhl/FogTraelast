@@ -1,6 +1,7 @@
 package fogTraelast.web.pages;
 
 import api.FogTraelast;
+import domain.bom.BOMFromDB;
 import domain.construction.ConstructionFactory;
 import domain.construction.Roof.RoofSizeCalculator;
 import fogTraelast.web.widget.NavBar;
@@ -22,7 +23,7 @@ public class BaseServlet extends HttpServlet {
     protected static final RoofSizeCalculator roofSizing;
     protected static final Database db;
     protected static final ConstructionFactory constructionFactory;
-//    protected static Client client;
+    //    protected static Client client;
 //    protected static Socket socket;
 
     //Dette er gjort på dette format, da vi ikke har lyst til at instantiere et nyt API hver gang render køres, i det
@@ -33,6 +34,8 @@ public class BaseServlet extends HttpServlet {
         api = createOrder(); //TODO bedre navngivning
         roofSizing = new RoofSizeCalculator();
         constructionFactory = new ConstructionFactory();
+
+
     }
 
     /*protected static Client createClient(InetAddress ipAdressProtcol, int port){

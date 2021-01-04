@@ -1,6 +1,7 @@
 package fogTraelast.web.pages;
 
 import domain.bom.BOM;
+import domain.bom.BOMFromDB;
 import domain.bom.BOMService;
 import domain.construction.*;
 import domain.construction.Roof.*;
@@ -41,6 +42,8 @@ public class Orders extends BaseServlet {
             }
         } else {
             String cmd = req.getPathInfo().substring(1);
+
+
             if (cmd.equals("new")) {
                 render("Fog Trælast", "/WEB-INF/pages/createOrder.jsp", req, resp);
             } else if (cmd.equals("constructionOverview")) {
@@ -78,17 +81,41 @@ public class Orders extends BaseServlet {
                 req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
                 req.setAttribute("tooBigShed", true);
                 render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
-            } else if (cmd.equals("displaySingleOrder")) {
+            } else if (cmd.equals("displayOrder")) {
                 int orderID = Integer.parseInt(req.getParameter("orderNumber"));
-                req.setAttribute("OrderID", orderID);
-                render("Fog Trælast", "/WEB-INF/pages/displaySingleOrder.jsp", req, resp);
+                String phone = req.getParameter("tlf");
+                try {
+                    Order order = api.findOrder(orderID);
+                    if(phone.equals(order.getCustomerPhone())){
+                        double priceBOM = api.findBOMPriceByOrderID(orderID);
+                        Economy economy = new Economy();
+                        double priceWithCoverage = economy.withCoverage(25, priceBOM);
+                        double roundedPrice = Math.round(priceWithCoverage * 100.0) / 100.0;
+                        req.setAttribute("priceWithCoverage", roundedPrice);
+                        List<Order> orderList = new ArrayList<>();
+                        req.setAttribute("svgScaleHeight", order.getLength()+200);
+                        req.setAttribute("svgScaleWidth", order.getWidth()+200);
+                        orderList.add(order);
+                        req.setAttribute("orderList", orderList);
+                        List<BOMFromDB> bomList = api.findBom(orderID);
+                        req.setAttribute("bomList", bomList);
+                        render("Fog Trælast", "/WEB-INF/pages/displaySingleOrder.jsp", req, resp);
+                    }
+                    else if(!(phone.equals(order.getCustomerPhone()))){
+                        req.setAttribute("OrderID", orderID);
+                        render("Fog Trælast", "/WEB-INF/pages/findSingleOrder.jsp", req, resp);
+                    }
+                } catch (NoSuchOrderExists noSuchOrderExists) {
+                    noSuchOrderExists.printStackTrace();
+                }
+
+
             }else if (cmd.equals("findOrder")) {
                 render("Fog Trælast", "/WEB-INF/pages/findSingleOrder.jsp", req, resp);
             }
 
-
             if (!(req.getSession().getAttribute("userID") == null)) {
-             if (cmd.equals("edit")) {
+                if (cmd.equals("edit")) {
                     Order order;
                     try {
                         HttpSession session = req.getSession();
@@ -139,9 +166,11 @@ public class Orders extends BaseServlet {
                     render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
                 }
             }
-            else{
+            else if((req.getSession().getAttribute("userID") == null)){
+                //throw new IllegalAccessError();
                 resp.sendError(401, "You're not logged in, and therefore cannot access this page");
             }
+
         }
         }
 

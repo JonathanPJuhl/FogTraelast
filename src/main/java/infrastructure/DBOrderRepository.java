@@ -76,6 +76,7 @@ public class DBOrderRepository implements OrderRepository {
 
     }
 
+
     @Override
     public List<Order> findAllOrders() throws NoSuchOrderExists {
         ArrayList<Order> list = new ArrayList<>();
@@ -206,7 +207,18 @@ public class DBOrderRepository implements OrderRepository {
         }
         return ordersBySalesman;
     }
-
+    @Override
+    public void insertSVGIntoOrder(String SVG, int orderID) {
+        try(Connection conn = db.connect()){
+            String sql = "UPDATE orders SET svg=? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setString(1, SVG);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 
 
 
@@ -224,7 +236,8 @@ public class DBOrderRepository implements OrderRepository {
                 set.getInt("orders.shedOrNo"),
                 set.getInt("orders.wallsOrNo"),
                 set.getInt("orders.shedLength"),
-                set.getInt("orders.shedWidth"));
+                set.getInt("orders.shedWidth"),
+                set.getString("orders.svg"));
     }
 }
 

@@ -29,4 +29,6 @@ public interface OrderRepository {
     List<Order> displayOrdersByStatus(String wantedStatus);
 
     List<Order> displayOrdersBySalesman(int wantedSalesman);
+
+    void insertSVGIntoOrder(String SVG, int orderID);
 }
