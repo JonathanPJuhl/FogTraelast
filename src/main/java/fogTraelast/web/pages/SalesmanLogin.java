@@ -3,7 +3,6 @@ package fogTraelast.web.pages;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 
-import domain.users.Client;
 import domain.users.NoSuchUserExists;
 import domain.users.User;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.List;
 
 @WebServlet({"/SalesmanLogin","/SalesmanLogin/*"})
