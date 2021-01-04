@@ -13,18 +13,17 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.nio.file.ReadOnlyFileSystemException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class NoWaistHelperTest extends TestCase {
+public class NoWasteHelperTest extends TestCase {
 
     Material roofTrapezPlates;
     RoofSizeCalculator roofSizeCalculator;
     UsersChoice usersChoice;
     Roof roof;
-    NoWaistHelper waistHelper;
+    NoWasteHelper waistHelper;
     TreeSet<Integer> lengths;
     TreeSet<Integer> widths;
     Carport carport;
@@ -36,7 +35,7 @@ public class NoWaistHelperTest extends TestCase {
         //Arrange
         super.setUp();
         this.roofSizeCalculator = new RoofSizeCalculator();
-        this.waistHelper = new NoWaistHelper();
+        this.waistHelper = new NoWasteHelper();
         this.lengths = new TreeSet<>();
         this.widths = new TreeSet<>();
         lengths.add(6000);

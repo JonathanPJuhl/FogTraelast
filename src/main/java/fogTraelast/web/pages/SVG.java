@@ -47,18 +47,6 @@ public class SVG extends BaseServlet {
         session.setAttribute("svgCarportSide", svgCarportSide.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roofSizeCalculator.getRoofHeight(roof)));
         render("Fog Trælast", "/WEB-INF/pages/svg.jsp", req, resp);
 
-        /*if (!(usersChoice.getRoofCladding()==null)) {
-            BOMService bs = new BOMService(new DBMaterialRepository(db));
-            TreeSet lengths = api.allLenghtsForMaterials();
-            TreeSet widths = api.allWidthsForMaterials();
-            BOM bom = bs.calculateBom(construction, widths, lengths);
-            ArrayList<BOMItem> bomI= (bom.getItems());
-            req.getSession().setAttribute("bom", bomI);
-            render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
-        } else {
-            //TODO redirect til createOrders.jsp ???
-            resp.sendError(307, "Du skal først bestille en carport");//TODO
-        }*/
     }
 
 }

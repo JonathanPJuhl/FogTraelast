@@ -7,7 +7,7 @@ import java.security.Key;
 import java.util.*;
 
 
-public class NoWaistHelper { //TODO Færdiggør refactoringen hvis der er tid
+public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
 
     private int materialLength;
     private int materialWidth;

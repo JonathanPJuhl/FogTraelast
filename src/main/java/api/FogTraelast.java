@@ -60,17 +60,13 @@ public class FogTraelast {
         return orderLists.findAllOrders();
     }
 
-    /*public Material findMaterial (String typeName, String type, int width, String color, String category, int height) throws NoSuchMaterialExists{
-        return materialService.findMaterial(typeName, color, type, category, height);
-    }*/
+
 
     public ArrayList<Material> roofMaterials(Category category) {
         return materialService.roofMaterials(category);
     }
 
-    /*public Roof createRoof(UsersChoice usersChoice){
-        return constructionRepository.createRoof(usersChoice);
-    }*/
+
 
     public List<Material> findMaterialsByCategory(Category category) {
         return materialService.findMaterialsByCategory(category);

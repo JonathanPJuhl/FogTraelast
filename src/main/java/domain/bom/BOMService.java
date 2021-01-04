@@ -20,7 +20,7 @@ public class BOMService {
     private FlatRoofMaterialCalculator flatRoofMaterialCalculator;
     private PitchedRoofMaterialCalculator pitchedRoofMaterialCalculator;
     private ShedMaterialCalculator shedMaterialCalculator;
-    private NoWaistHelper noWaistHelper = new NoWaistHelper(); //TODO lav static?
+    private NoWasteHelper noWasteHelper = new NoWasteHelper(); //TODO lav static?
     RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
 
     private Material claddingMaterial;
@@ -57,7 +57,7 @@ public class BOMService {
 
         } else {
             materialListRoof = materials.findMaterialsByCategory(flatRoof.getCategory());
-            flatRoofMaterialCalculator = new FlatRoofMaterialCalculator(flatRoof, roofSizeCalculator, noWaistHelper);
+            flatRoofMaterialCalculator = new FlatRoofMaterialCalculator(flatRoof, roofSizeCalculator, noWasteHelper);
             roof = flatRoof;
         }
 
@@ -79,7 +79,7 @@ public class BOMService {
         int[] meassuresAndQnty;
         //Hvis taget er fladt
         if (roof.isFlat()) {
-            HashMap<Integer, HashMap<Material, int[]>> trapezPlates = noWaistHelper.quantitiesPlatesAreaCalculated(roofLengthSurface, roofWidthSurface, roof.getCladding(), widths, lengths);
+            HashMap<Integer, HashMap<Material, int[]>> trapezPlates = noWasteHelper.quantitiesPlatesAreaCalculated(roofLengthSurface, roofWidthSurface, roof.getCladding(), widths, lengths);
             for (int i = 1; i <= trapezPlates.size(); i++) {
                 for (Map.Entry meassuresMaterialAndQnty : trapezPlates.get(i).entrySet()) {
                     meassuresAndQnty = (int[]) meassuresMaterialAndQnty.getValue();

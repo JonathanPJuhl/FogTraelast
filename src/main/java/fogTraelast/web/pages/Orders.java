@@ -143,19 +143,7 @@ public class Orders extends BaseServlet {
                     List<Order> sortedList = api.displayOrderBySalesman(salesman);
                     req.setAttribute("list", sortedList);
                     render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
-                } else {
-                    try {
-                        int orderID = Integer.parseInt(req.getPathInfo().substring(1));
-                        Order order = api.findOrder(orderID);
-                        req.setAttribute("list", order);
-                        render("Fog Trælast", "/WEB-INF/pages/displayOrderPage.jsp", req, resp);
-                    } catch (NumberFormatException e) {
-                        resp.sendError(400, "Badly formated request");
-                    } catch (NoSuchOrderExists noSuchOrderExists) {
-                        resp.sendError(404, "No such order exist");
-                    }
                 }
-
             }
             else{
                 resp.sendError(401, "You're not logged in, and therefore cannot access this page");
@@ -182,11 +170,7 @@ public class Orders extends BaseServlet {
             } else if (customerPhone == null || customerPhone.equals("")) {
                 resp.sendError(400, "Mangler tlf");
             } else {
-                //CREATE LATER ON
-                //Order list = api.createOrder(length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding);
-                // Create new method
                 UsersChoice tempConstruction = new UsersChoice(width, length, roofType, shedOrNo, cladding, customerPhone, customerEmail);
-                //System.out.println("Shed: " + shedOrNo.toString());
                 HttpSession session = req.getSession();
                 session.setAttribute("tempConstruction", tempConstruction);
                 resp.sendRedirect(req.getContextPath() + "/Orders/constructionOverview");

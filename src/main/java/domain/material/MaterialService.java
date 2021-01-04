@@ -19,7 +19,6 @@ public abstract interface MaterialService {
 
     public Material findMaterial(String nametype);
 
-    /*public Material findMaterial(String nametype, String color, String type, String category, int height);*/
 
     public Material findMaterialByID(int id);
 

@@ -52,23 +52,7 @@ public class Construction {
         this.roof = roof;
     }
 
-    /*public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
-        this.width = width;
-        this.length = length;
-        this.roofChoice = roofChoice;
-        this.shedOrNo = convert(shedOrNo);
-        this.claddingChoice = convert(claddingChoice);
-    }*/
 
-    /*public Boolean convert(Integer digilBoolean){
-        if( digilBoolean.equals(1))
-           return true;
-        else if (digilBoolean.equals(0))
-            return false;
-        else{
-            throw new IllegalArgumentException("Dette kan ikke konverteres til noget der er der eller ikke er (boolean"); //TODO
-        }
-    }*/
 
 
 

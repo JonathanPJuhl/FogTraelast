@@ -16,15 +16,4 @@
 
 </svg>
 
-<%--
-VIRKER IKKE YET
-<svg>
-    ${sessionScope.svgCarportFront}
-</svg>
-
-<svg>
-    ${sessionScope.svgCarportSide}
-</svg>--%>
-
-
 </div>

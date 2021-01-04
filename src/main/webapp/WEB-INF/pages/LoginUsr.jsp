@@ -17,30 +17,3 @@
     <button type="submit" class="btn btn-primary">Login</button>
 
 </form>
-<!--
-<div class="container">
-    <div class="row card hoverable">
-        <div class="card-content ">
-            <h4 class="center blue-text">Login Form</h4>
-                <input type="hidden" name="target" value="login" >
-
-                <div class="col s12">
-                    <div class="input-field">
-                        <input type="text" name="email" placeholder="Username*">
-                    </div>
-                </div>
-                <div class="col s12">
-                    <div class="input-field">
-                        <input type="password" name="password" placeholder="Password*">
-                    </div>
-                </div>
-                <div class="col s12">
-                    <p><label><input type="checkbox"></label></p>
-                </div>
-                <div class="col s12 center">
-                    <button type="submit" value="Submit" class="btn btn-large waves-effect waves-light blue">Login<i class="material-icons right">send</i></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>-->

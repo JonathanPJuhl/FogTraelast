@@ -245,24 +245,4 @@ public class DBMaterialRepository implements MaterialService {
 
     }
 
-  /* private Category category (String catName) throws SQLException, NoSuchMaterialExists {
-      Category cat = null;
-        ArrayList<Order> ordersByStatus = new ArrayList<>();
-        try (Connection conn = db.connect()){
-            String sql = "SELECT * FROM categories where ;
-            var smt = conn.prepareStatement(sql);
-
-            smt.executeQuery();
-            ResultSet set = smt.getResultSet();
-            while(set.next()) {
-                ordersByStatus.add(parseOrderList(set));
-            }
-        } catch (SQLException throwables) {
-            throw new UnexpectedDBError(throwables);
-        }
-        return ordersByStatus;
-    }
-
-
-    }*/
 }

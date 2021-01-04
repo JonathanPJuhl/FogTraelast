@@ -1,15 +1,8 @@
 package domain.bom.calculators;
 
 import domain.bom.BOMItemSpecifications;
-import domain.construction.Construction;
 import domain.construction.Roof.FlatRoof;
 import domain.construction.Roof.RoofSizeCalculator;
-import domain.material.Material;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
 
 public class FlatRoofMaterialCalculator {
     private RoofSizeCalculator roofSizeCalculator;
@@ -20,10 +13,10 @@ public class FlatRoofMaterialCalculator {
     private final Stern underSternWidth;
 
     //private int quantityOfT300temp;
-    private NoWaistHelper noWaistHelper;
+    private NoWasteHelper noWasteHelper;
 
-    public FlatRoofMaterialCalculator(FlatRoof roof, RoofSizeCalculator roofSizeCalculator, NoWaistHelper noWaistHelper) {
-        this.noWaistHelper = noWaistHelper;
+    public FlatRoofMaterialCalculator(FlatRoof roof, RoofSizeCalculator roofSizeCalculator, NoWasteHelper noWasteHelper) {
+        this.noWasteHelper = noWasteHelper;
         this.roofSizeCalculator = roofSizeCalculator;
         this.raft = new Raft(roof.getWidth(),roof.getLength());
         this.overSternFront = new Stern(roof.getWidth());
