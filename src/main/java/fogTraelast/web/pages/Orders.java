@@ -86,8 +86,22 @@ public class Orders extends BaseServlet {
                 render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
             } else if (cmd.equals("displaySingleOrder")) {
                 int orderID = Integer.parseInt(req.getParameter("orderNumber"));
-                req.setAttribute("OrderID", orderID);
-                render("Fog Trælast", "/WEB-INF/pages/displaySingleOrder.jsp", req, resp);
+                System.out.println(orderID);
+                String phone = req.getParameter("tlf");
+                try {
+                    Order order = api.findOrder(orderID);
+                    if(phone.equals(order.getCustomerPhone())){
+                        List<Order> orderList = new ArrayList<>();
+                        orderList.add(order);
+                        req.setAttribute("orderList", orderList);
+                        render("Fog Trælast", "/WEB-INF/pages/displaySingleOrder.jsp", req, resp);
+                    }
+                } catch (NoSuchOrderExists noSuchOrderExists) {
+                    noSuchOrderExists.printStackTrace();
+                }
+
+               /* req.setAttribute("OrderID", orderID);
+                render("Fog Trælast", "/WEB-INF/pages/displaySingleOrder.jsp", req, resp);*/
             }else if (cmd.equals("findOrder")) {
                 render("Fog Trælast", "/WEB-INF/pages/findSingleOrder.jsp", req, resp);
             }
