@@ -37,7 +37,7 @@ public class BOM_Kladde extends BaseServlet {
             req.setAttribute("alreadyCustomer", true);
             render("Fog Trælast", "/WEB-INF/pages/BOM.jsp", req, resp);
         } else*/ if (param) {
-            req.setAttribute("alreadyCustomer", false);
+            //req.setAttribute("alreadyCustomer", false);
             req.setAttribute("svg", false);
             HashMap construction = (HashMap) req.getSession().getAttribute("construction");
             UsersChoice usersChoice = (UsersChoice) req.getSession().getAttribute("secondUserChoice");

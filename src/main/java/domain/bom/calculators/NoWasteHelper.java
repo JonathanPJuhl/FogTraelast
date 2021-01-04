@@ -106,11 +106,11 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
                             }*/
                             int widthOptionToCount = widthOptionToAdd;
                             int widthRestWithOverlap = widthRest + material.getOverlap();
-                            while (widthOptionToCount > widthRestWithOverlap) {
+                            while (widthOptionToCount >= widthRestWithOverlap) {
                                 qntyWholeMaterialsForLastRow++;
                                 widthOptionToCount = widthOptionToCount - widthRestWithOverlap;
                             }
-                            if (qntyWholeMaterialsForLastRow != 0 ) {
+                            if (qntyWholeMaterialsForLastRow != 0) {
                                 quantityWidthToAdd = quantityWidthToAdd / qntyWholeMaterialsForLastRow;
                                 int quantityWidthToAddOneExtra = quantityWidthToAdd % qntyWholeMaterialsForLastRow;
                                 if (quantityWidthToAddOneExtra > 0 || quantityWidthToAdd == 0) {
@@ -166,7 +166,7 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
                             }*/
                             lengthOptionToCount = lengthOptionToAdd;
                             lengthRestWithOverlap = lengthRest + material.getOverlap();
-                            while (lengthOptionToCount > lengthRestWithOverlap) {
+                            while (lengthOptionToCount >= lengthRestWithOverlap) {
                                 qntyWholeMaterialsForLastRow++;
                                 lengthOptionToCount = lengthOptionToCount - lengthRestWithOverlap;
                             }
@@ -221,6 +221,7 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
                 int lengthOptionLooping = 0;
                 int widthOptionLooping = 0;
                 materialLengthWidthQuanity = new HashMap<>();
+                int quantityLengthFinalLast = 0;
 
                 if (lengthRest > 0 && widthRest > 0) {
                     for (Map.Entry toCompareFromCountedMap : mapOfQts.entrySet()) {
@@ -229,10 +230,12 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
                         optionsAndQnty = materialOptionsAndQnty.get(material);
                         lengthOptionLooping = optionsAndQnty[0];
                         widthOptionLooping = optionsAndQnty[1];
+                        quantityLengthFinal = optionsAndQnty[2];
                         if (materialLengthOptionBigFirst == lengthOptionLooping && widthOptionLooping == materialWidthOptionBigFirst) {
                             optionsAndQnty[0] = lengthOptionToAdd;
                             optionsAndQnty[1] = widthOptionToAdd;
-                            optionsAndQnty[2] = quantityLengthFinal++;
+                            quantityLengthFinal = quantityLengthFinalLast++;
+                            optionsAndQnty[2] = quantityLengthFinalLast;
                             materialLengthWidthQuanity.put(material, optionsAndQnty);
                             mapOfQts.put(ID, materialLengthWidthQuanity);
                         }
