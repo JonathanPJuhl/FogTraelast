@@ -6,7 +6,8 @@ import domain.bom.BOMItem;
 import java.util.ArrayList;
 
 public class Economy {
-
+    public Economy() {
+    }
 
     public double withCoverage(int coverageInProcent, double priceForMaterials){
         double price;

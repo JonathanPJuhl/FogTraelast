@@ -41,6 +41,7 @@ public class Orders extends BaseServlet {
             } else if (cmd.equals("constructionOverview")) {
                 HttpSession session = req.getSession();
                 UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
+
                 List<Material> claddingOpts = null;
                 if (!(usersChoice == null)) {
                     if (usersChoice.getRoofChoice().equals("Flat")) {
@@ -156,11 +157,7 @@ public class Orders extends BaseServlet {
                     render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
                 }
             }
-            else if((req.getSession().getAttribute("userID") == null)){
-                //throw new IllegalAccessError();
-                resp.sendError(401, "You're not logged in, and therefore cannot access this page");
-            }
-
+          
         }
         
 
@@ -302,7 +299,7 @@ public class Orders extends BaseServlet {
 
             }
 
-            resp.sendRedirect(req.getContextPath() + "/Orders");
+            resp.sendRedirect(req.getContextPath() + "/Orders/SortByNew");
         }
     }
 }
