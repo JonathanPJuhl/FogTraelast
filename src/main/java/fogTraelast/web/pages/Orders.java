@@ -32,15 +32,7 @@ public class Orders extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getPathInfo() == null) {
-            try {
-                List<Order> orderList = api.findAllOrders();
-                req.setAttribute("list", orderList);
-                render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp); // TODO - Er dette en fejl?
-            } catch (NoSuchOrderExists noSuchOrderExists) {
-                noSuchOrderExists.printStackTrace();
-            }
-        } else {
+
             String cmd = req.getPathInfo().substring(1);
 
 
@@ -170,7 +162,7 @@ public class Orders extends BaseServlet {
             }
 
         }
-        }
+        
 
 
 
