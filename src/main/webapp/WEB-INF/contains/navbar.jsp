@@ -22,9 +22,11 @@
                     Trælast
                 </a>
             </div>
-            <div class="col-4 d-flex justify-content-end align-items-center">
+            <div class="col-4 d-flex justify-content-end align-items-right mr-3" align="right">
 <c:if test="${sessionScope.userID == null}">
+
 <a class="btn btn-sm btn-outline-secondary" href="${navBar.findUrl("SalesmanLogin")}">Login</a>
+
 </c:if>
                 <c:if test="${sessionScope.userID != null}">
                     <a class="btn btn-sm btn-outline-secondary" href="${navBar.findUrl("SalesmanLogin/Logout")}">Logout</a>

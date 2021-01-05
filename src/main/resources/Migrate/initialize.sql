@@ -6,6 +6,8 @@ GRANT ALL PRIVILEGES on fogtraelast.* to 'fogtraelast'@'localhost';
 
 DROP TABLE IF EXISTS salesmen;
 
+
+
 CREATE TABLE IF NOT EXISTS salesmen(
                                        salesmanID int PRIMARY KEY AUTO_INCREMENT,
                                        name varchar (70) NOT NULL,

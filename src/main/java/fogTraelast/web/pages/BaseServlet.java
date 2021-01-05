@@ -59,6 +59,13 @@ public class BaseServlet extends HttpServlet {
         req.setAttribute("navBar", new NavBar(req));
         req.getRequestDispatcher("/WEB-INF/pages/base.jsp").forward(req,resp);
     }
+    protected void render2(String title, String content, HttpServletRequest req, HttpServletResponse resp) throws
+            ServletException, IOException {
+        req.setAttribute("title",title);
+        req.setAttribute("content",content);
+        req.setAttribute("navBar", new NavBar(req));
+
+    }
 
 
     protected void log(HttpServletRequest req, String message) {

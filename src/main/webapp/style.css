@@ -166,11 +166,20 @@ div {
 .mr-3{
     margin-right: 1rem!important;
 }
+.mt-3{
+    margin-top: 3rem!important;
+}
+.mt-5{
+    margin-top: 5rem!important;
+}
 
 .col-md-6 {
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
+}
+.red{
+    background-color: red!important;
 }
 
 /*

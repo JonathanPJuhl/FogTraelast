@@ -49,7 +49,6 @@ public class Orders extends BaseServlet {
             } else if (cmd.equals("constructionOverview")) {
                 HttpSession session = req.getSession();
                 UsersChoice usersChoice = (UsersChoice) session.getAttribute("tempConstruction");
-                System.out.println(usersChoice.toString());
                 List<Material> claddingOpts = null;
                 if (!(usersChoice == null)) {
                     if (usersChoice.getRoofChoice().equals("Flat")) {
@@ -58,7 +57,6 @@ public class Orders extends BaseServlet {
                         claddingOpts = api.roofMaterials(Category.Pitched);
                     }
                     List<Material> claddingOptsShedCarport = api.findMaterialsByCategory(Category.Cladding);
-                    System.out.println("Material: " + claddingOptsShedCarport.size());
                     req.setAttribute("claddingOptionsRoof", claddingOpts);
                     req.setAttribute("userChoice", usersChoice);
                     req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
