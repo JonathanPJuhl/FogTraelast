@@ -113,13 +113,17 @@
                     <c:out value="${orders.customerEmail}"/>
                 </div>
             </div>
+
             <div class="row">
+                <c:if test="${!(orders.orderStatus=='New')}">
                 <div class="col-md-6 mb-3" align="right">
                     <b><p>Pris:</p></b>
                 </div>
+
                 <div class="col-md-6 mb-3" align="left">
-                        ${requestScope.priceWithCoverage} kr.
+                        ${orders.price} kr.
                 </div>
+                </c:if>
             </div>
 
 

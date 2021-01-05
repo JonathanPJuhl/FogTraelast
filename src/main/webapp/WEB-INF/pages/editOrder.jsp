@@ -134,7 +134,7 @@
 
                                 <p>Hvad skal prisen ændres til?</p>
                                 <input type="number" class="numbersField"
-                                       aria-describedby="priceAdminstrated" name="price">
+                                       aria-describedby="priceAdminstrated" name="price" value="${orders.price}">
 
 
 
@@ -165,4 +165,4 @@
 </div>
 
 
-</div>
+
