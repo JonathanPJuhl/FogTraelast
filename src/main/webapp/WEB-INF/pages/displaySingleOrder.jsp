@@ -68,7 +68,12 @@
                     <b><p>Ønsket tagtype:</p></b>
                 </div>
                 <div class="col-md-6 mb-3" align="left">
-                    <c:out value="${orders.roofType}"/>
+                    <c:if test="${orders.roofType=='Pitched'}">
+                        <p1>Tag med rejsning</p1>
+                    </c:if>
+                    <c:if test="${orders.roofType=='Flat'}">
+                        <p1>Fladt tag</p1>
+                    </c:if>
                 </div>
             </div>
             <div class="row">

@@ -2,7 +2,7 @@ package domain.construction.SVG;
 
 public class Stolper implements Draw {
 
-    int stolpeBredde = 12;
+    int stolpeBredde = 50;
     int y1 = 29 + 40;
 
     @Override
@@ -12,7 +12,7 @@ public class Stolper implements Draw {
         int y2 = width - 60 + stolpeBredde - 3 + 40;
 
 
-        int userinput = (int) length;
+        int userinput = length;
         int AfstandprBjælke = 180;
         //int N = 180; Udhæng skal det være der eller ej?
         int minimumsøjler = 2;
@@ -23,15 +23,33 @@ public class Stolper implements Draw {
 
         int overskud = (length - (AfstandprBjælke * (Resultat - 1)));
         int x = 35 + (overskud / 2);
+
+        stolpeText.append("<rect x=\""+40+"\" y=\""+40+"\" width=\""+stolpeBredde+"\" height=\""+stolpeBredde+"\" " +
+                "style=\"stroke:black; stroke-width:10; fill-opacity:0.0;\" > </rect>" + "\n"
+        );
+        stolpeText.append("<rect x=\""+40+"\" y=\""+(y2-40)+"\" width=\""+stolpeBredde+"\" height=\""+stolpeBredde+"\" " +
+                "style=\"stroke:black; stroke-width:10; fill-opacity:0.0;\" > </rect>" + "\n"
+        );
+        stolpeText.append("<rect x=\""+(length)+"\" y=\""+40+"\" width=\""+stolpeBredde+"\" height=\""+stolpeBredde+"\" " +
+                "style=\"stroke:black; stroke-width:10; fill-opacity:0.0;\" > </rect>" + "\n"
+        );
+        stolpeText.append("<rect x=\""+(length)+"\" y=\""+(y2-40)+"\" width=\""+stolpeBredde+"\" height=\""+stolpeBredde+"\" " +
+                "style=\"stroke:black; stroke-width:10; fill-opacity:0.0;\" > </rect>" + "\n"
+        );
+
+
+
         for (int i = 0; i < Resultat; i++){
 
-            stolpeText.append("<rect x=\""+x+"\" y=\""+y1+"\" width=\"12\" height=\"12\" " +
-                    "style=\"stroke:black; storke-width:1; fill-opacity:0.0;\" > </rect>" + "\n"
+
+            x += 1500;
+            stolpeText.append("<rect x=\""+x+"\" y=\""+40+"\" width=\""+stolpeBredde+"\" height=\""+stolpeBredde+"\" " +
+                    "style=\"stroke:black; stroke-width:10; fill-opacity:0.0;\" > </rect>" + "\n"
             );
-            stolpeText.append("<rect x=\""+x+"\" y=\""+ y2 +"\" width=\"12\" height=\"12\" " +
-                    "style=\"stroke:black; storke-width:1; fill-opacity:0.0;\" > </rect>" + "\n"
+            stolpeText.append("<rect x=\""+x+"\" y=\""+ (y2-40) +"\" width=\""+stolpeBredde+"\" height=\""+stolpeBredde+"\" " +
+                    "style=\"stroke:black; stroke-width:10; fill-opacity:0.0;\" > </rect>" + "\n"
             );
-            x += 180;
+
         }
 
 
