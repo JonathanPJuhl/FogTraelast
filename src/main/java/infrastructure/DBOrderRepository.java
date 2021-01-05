@@ -1,10 +1,9 @@
 package infrastructure;
 
+import domain.construction.UsersChoice;
 import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import domain.orders.OrderRepository;
-import domain.users.NoSuchUserExists;
-import domain.users.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,18 +20,23 @@ public class DBOrderRepository implements OrderRepository {
     }
 
     @Override
-    public Order insertOrderIntoDB(double length, double width, String customerPhone, String customerEmail, String roofType, int shedOrNo, int cladding) {
+    public Order insertOrderIntoDB(UsersChoice usersChoice) {
         int newID;
         try(Connection conn = db.connect()){
-            String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail, roofType, shedOrNo, cladding) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO orders (length, width, customerPhone, customerEmail, roofType, shedOrNo, wallsOrNo, shedLength, shedWidth) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
             var smt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            smt.setDouble(1, length);
-            smt.setDouble(2, width);
-            smt.setString(3, customerPhone);
-            smt.setString(4, customerEmail);
-            smt.setString(5, roofType);
-            smt.setInt(6, shedOrNo);
-            smt.setInt(7, cladding);
+            smt.setDouble(1, usersChoice.getLength());
+            smt.setDouble(2, usersChoice.getWidth());
+            smt.setString(3, usersChoice.getCustomerPhone());
+            smt.setString(4, usersChoice.getCustomerEmail());
+            smt.setString(5, usersChoice.getRoofChoice());
+            smt.setInt(6, usersChoice.getShedOrNo());
+            smt.setInt(7, usersChoice.getCladdingChoice());
+            smt.setInt(8,usersChoice.getShedLength());
+            smt.setInt(9,usersChoice.getShedwidth());
+
             smt.executeUpdate();
             ResultSet set = smt.getGeneratedKeys();
             if(set.next()) {
@@ -71,6 +75,7 @@ public class DBOrderRepository implements OrderRepository {
         }
 
     }
+
 
     @Override
     public List<Order> findAllOrders() throws NoSuchOrderExists {
@@ -159,7 +164,7 @@ public class DBOrderRepository implements OrderRepository {
     @Override
     public void editCladding(int columnValue, int orderID) throws NoSuchOrderExists{
         try (Connection conn = db.connect()){
-            String sql = "UPDATE orders set cladding = ? where orderID=?;";
+            String sql = "UPDATE orders set wallsOrNo = ? where orderID=?;";
             var smt = conn.prepareStatement(sql);
             smt.setInt(1, columnValue);
             smt.setInt(2, orderID);
@@ -202,7 +207,18 @@ public class DBOrderRepository implements OrderRepository {
         }
         return ordersBySalesman;
     }
-
+    @Override
+    public void insertSVGIntoOrder(String SVG, int orderID) {
+        try(Connection conn = db.connect()){
+            String sql = "UPDATE orders SET svg=? where orderID=?;";
+            var smt = conn.prepareStatement(sql);
+            smt.setString(1, SVG);
+            smt.setInt(2, orderID);
+            smt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 
 
 
@@ -218,7 +234,10 @@ public class DBOrderRepository implements OrderRepository {
                 set.getInt("orders.salesmanID"),
                 set.getString("orders.roofType"),
                 set.getInt("orders.shedOrNo"),
-                set.getInt("orders.cladding"));
+                set.getInt("orders.wallsOrNo"),
+                set.getInt("orders.shedLength"),
+                set.getInt("orders.shedWidth"),
+                set.getString("orders.svg"));
     }
 }
 

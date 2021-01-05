@@ -18,9 +18,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <!-- TODO In case det ikke virker på andres computere
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- Style css -->
 
@@ -38,18 +35,18 @@
 <div id="page-container">
     <div id="content-wrap">
 <!--navbar-->
-<jsp:include page="../contains/navbar.jsp" flush="true"/><!-- TODO hvad gør flush ? -->
+<jsp:include page="../contains/navbar.jsp" flush="true"/>
 
 <main class="container">
 
     <jsp:include page="${requestScope.content}" flush="true"/>
 
 </main>
-    </div>
+
 <!--footer-->
 <jsp:include page="../contains/footer.jsp" flush="true"/>
 </div>
-
+</div>
 </body>
 
 </html>

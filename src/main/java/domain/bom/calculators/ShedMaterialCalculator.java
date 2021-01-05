@@ -1,8 +1,13 @@
 package domain.bom.calculators;
 
 import domain.bom.BOMItemSpecifications;
+import domain.construction.Category;
 import domain.construction.Construction;
+import domain.construction.ConstructionPart;
+import domain.construction.Roof.Roof;
 import domain.construction.shed.Shed;
+
+import java.util.HashMap;
 
 public class ShedMaterialCalculator {
 
@@ -17,25 +22,26 @@ public class ShedMaterialCalculator {
     private final int lengthLoesHolterFront;
     private final int quanityLoesHolterFront;
 
-    public ShedMaterialCalculator(Construction construction){
-        this.construction = construction;
-        this.carportMaterialCalculator = new CarportMaterialCalculator(construction);
-        this.shed = (Shed) construction.getPartForConstruction().get("shed");
-        this.stern = new Stern();
-        this.postAdded = new PostsWithShed();
-        this.rim = new Rim(); //TODO RET NAVN VIGTIGT
-        this.loesHolterSide = new LoesHolter(shed.getLength()); // TODO d. 18 december Kig på Her omkring shed = null;
-        this.loesHolterBack = new LoesHolter(shed.getWidth());
-        this.lengthLoesHolterFront = (int) Math.hypot(postAdded.sidePostFront(shed.getWidth()), shed.getHeigth());
-        this.quanityLoesHolterFront = postAdded.sidePostFront(shed.getWidth())-1;
+    public ShedMaterialCalculator(HashMap<Category, ConstructionPart> construction){
+        this.carportMaterialCalculator = new CarportMaterialCalculator();
+        this.shed = (Shed) construction.get(Category.Shed);
+        this.stern = new Stern(this.shed);
+        this.postAdded = new PostsWithShed(carportMaterialCalculator, this.shed);
+        this.rim = new Rim(this.stern);
+        this.loesHolterSide = new LoesHolter(this.shed.getLength(), this.postAdded);
+        this.loesHolterBack = new LoesHolter(this.shed.getWidth(), this.getPostAdded());
+        this.lengthLoesHolterFront = (int) Math.hypot(postAdded.sidePostFront(this.shed.getWidth()), this.shed.getHeigth());
+        this.quanityLoesHolterFront = postAdded.sidePostFront(this.shed.getWidth())-1;
     }
 
     public class LoesHolter implements BOMItemSpecifications{
 
         private final int side;
+        private final PostsWithShed postAdded;
 
-        public LoesHolter(int side) {
+        public LoesHolter(int side, PostsWithShed postAdded) {
             this.side = side;
+            this.postAdded = postAdded;
         }
 
         @Override
@@ -57,17 +63,22 @@ public class ShedMaterialCalculator {
         }
 
         @Override
-        public String description(String adminDescription) {
-            return null;
+        public String description(String adminDescription){
+            return adminDescription;
         }
     }
 
     public class Stern implements BOMItemSpecifications{
 
+        private final Shed shed;
+
+        public Stern(Shed shed) {
+            this.shed = shed;
+        }
+
         @Override
         public int length() {
-            Shed shed = (Shed) construction.getPartForConstruction().get("shed");
-            return shed.getLength()*2; //TODO Ændre beregning
+            return shed.getLength()*2;
         }
 
         @Override
@@ -88,7 +99,11 @@ public class ShedMaterialCalculator {
 
     public class Rim implements BOMItemSpecifications{
 
-        Stern stern = getStern();
+        private final Stern stern;
+
+        public Rim(Stern stern) {
+            this.stern = stern;
+        }
 
         @Override
         public int length() {
@@ -112,6 +127,14 @@ public class ShedMaterialCalculator {
     }
 
     public class PostsWithShed implements BOMItemSpecifications {
+
+        private final Shed shed;
+        private final CarportMaterialCalculator carportMaterialCalculator;
+
+        public PostsWithShed(CarportMaterialCalculator carportMaterialCalculator, Shed shed) {
+            this.carportMaterialCalculator = carportMaterialCalculator;
+            this.shed = shed;
+        }
 
         private final int maxDistancePost = 3000;
         private final int DOORWIDTH = 1000;

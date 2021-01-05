@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Construction {
 
-    private Map partForConstruction;
+    private HashMap<Category, ConstructionPart> partForConstruction;
     private Carport carport;
     private Roof roof;
 
@@ -18,19 +18,21 @@ public class Construction {
         this.carport = carport;
         this.roof = roof;
         partForConstruction = new HashMap();
-        partForConstruction.put("roof", roof);
-        partForConstruction.put("carport", carport);
+        partForConstruction.put(roof.getCategory(), roof);
+        partForConstruction.put(carport.getCategory(), carport);
     }
 
     public void addShed(Shed shed){
-        partForConstruction.put("shed", shed);
+        partForConstruction.put(shed.getCategory(), shed);
     }
 
     public void addCladding(Cladding[] claddings){
-        partForConstruction.put(claddings[0].getCategory(), claddings);
+        partForConstruction.put(claddings[0].getCategory(), claddings[0]);
+        partForConstruction.put(claddings[1].getCategory(), claddings[1]);
+        partForConstruction.put(claddings[2].getCategory(), claddings[2]);
     }
 
-    public Map getPartForConstruction() {
+    public HashMap<Category, ConstructionPart> getPartForConstruction() {
         return partForConstruction;
     }
 
@@ -50,23 +52,7 @@ public class Construction {
         this.roof = roof;
     }
 
-    /*public Construction(int width, int length, String roofChoice, Integer shedOrNo, Integer claddingChoice) { //TODO skriv attributer til tilsvarende brugerinput
-        this.width = width;
-        this.length = length;
-        this.roofChoice = roofChoice;
-        this.shedOrNo = convert(shedOrNo);
-        this.claddingChoice = convert(claddingChoice);
-    }*/
 
-    /*public Boolean convert(Integer digilBoolean){
-        if( digilBoolean.equals(1))
-           return true;
-        else if (digilBoolean.equals(0))
-            return false;
-        else{
-            throw new IllegalArgumentException("Dette kan ikke konverteres til noget der er der eller ikke er (boolean"); //TODO
-        }
-    }*/
 
 
 

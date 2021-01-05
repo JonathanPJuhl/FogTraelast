@@ -14,7 +14,7 @@ public class Roof extends ConstructionPart {
     private final UsersChoice usersChoice;
 
 
-    //TODO Skal den have et parameter med højde?
+
     public Roof(UsersChoice usersChoice, double degree, int length, int width, boolean flat, Material cladding, Category category ) {
         super(length, width, category);
         this.degree = degree;

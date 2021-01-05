@@ -13,25 +13,29 @@ public class UsersChoice {
     private int shedLength;
     private int shedwidth;
     private Material shedAndCarportCladding;
+    private final String customerPhone;
+    private final String customerEmail;
 
-    //TODO LAV METODER ISTEDET FOR CONSTRUCTER HVIS TID
-    public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice) {
+
+    public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice, String customerPhone, String customerEmail) {
         this.width = width;
         this.length = length;
         this.roofChoice = roofChoice;
         this.shedOrNo = shedOrNo;
         this.claddingChoice = claddingChoice;
-      /*  this.shedOrNo = convert(shedOrNo);
-        this.claddingChoice = convert(claddingChoice);*/
+        this.customerPhone = customerPhone;
+        this.customerEmail = customerEmail;
     }
 
-    public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice, Material roofCladding,
-                       double degree, int shedLength, int shedWidth, Material shedAndCarportCladding) {
+    public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice, String customerPhone, String customerEmail, Material roofCladding,
+                       double degree, int shedLength, int shedWidth, Material shedAndCarportCladding ) {
         this.width = width;
         this.length = length;
         this.roofChoice = roofChoice;
         this.shedOrNo = shedOrNo;
         this.claddingChoice = claddingChoice;
+        this.customerPhone = customerPhone;
+        this.customerEmail = customerEmail;
         this.roofCladding = roofCladding;
         this.degree = degree;
         this.shedLength = shedLength;
@@ -94,6 +98,14 @@ public class UsersChoice {
 
     public int getShedwidth() {
         return shedwidth;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
     @Override

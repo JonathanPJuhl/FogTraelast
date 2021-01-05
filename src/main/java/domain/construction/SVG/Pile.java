@@ -37,7 +37,7 @@ public class Pile implements Draw {
         int x = 15;
         int y = (width / 2) + 40;
 
-        return ("<text x=\""+x+"\" y=\""+y+"\" transform=\"rotate(-90, "+x+","+y+")\">" +width+  "</text>");
+        return ("<text font-size=\"2em\" x=\""+x+"\" y=\""+y+"\" transform=\"rotate(-90, "+x+","+y+")\">" +width+  "</text>");
 
     }
 
@@ -56,9 +56,9 @@ public class Pile implements Draw {
     }
     private String vandretpilText(int length, int width){
         int x = (length + 15) / 2;
-        int y = width + 65;
+        int y = width + 80;
 
-        return ("<text x=\""+x+"\" y=\""+y+"\">" +length+  "</text>");
+        return ("<text font-size=\"2em\" x=\""+x+"\" y=\""+y+"\">" +length+  "</text>");
 
     }
 

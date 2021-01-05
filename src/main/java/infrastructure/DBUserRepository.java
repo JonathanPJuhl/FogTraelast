@@ -21,29 +21,6 @@ public class DBUserRepository implements UserRepository {
 
     @Override
     public User createUsr(String email, String password) {
-     /*   int newID;
-        SHA256 encrypt = new SHA256();
-        String encryptedPass = encrypt.sha256(password);
-        try (Connection conn = db.connect()) {
-            String sql = "INSERT INTO user (email, password, isAdmin) VALUES (?, ?, 0)";
-            var smt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            smt.setString(1, email);
-            smt.setString(2, encryptedPass);
-            smt.executeUpdate();
-            ResultSet set = smt.getGeneratedKeys();
-            if (set.next()) {
-                newID = set.getInt(1);
-            } else {
-                throw new RuntimeException("Unexpected error");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        }
-        try {
-            return findUser(newID);
-        } catch (NoSuchUserExists e) {
-            throw new RuntimeException();
-        }*/
         return null;
     }
 
