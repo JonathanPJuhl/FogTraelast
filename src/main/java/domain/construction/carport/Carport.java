@@ -18,7 +18,7 @@ public class Carport extends ConstructionPart {
     public Carport(UsersChoice usersChoice) {
         super(usersChoice.getLength()-180 ,usersChoice.getWidth()-180, Category.Carport);
         this.fromRoofToCarportMin = 180;
-        this.height = 2500; //TODO
+        this.height = 2500;
         this.cladding = usersChoice.getShedAndCarportCladding();
     }
 

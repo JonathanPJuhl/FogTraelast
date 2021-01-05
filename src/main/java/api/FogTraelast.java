@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class FogTraelast {
-    private String VERSION = "0.1"; //TODO Rediger db version
+    private String VERSION = "0.1";
     private final UserRepository userLists;
     private final OrderRepository orderLists;
     private final MaterialService materialService;

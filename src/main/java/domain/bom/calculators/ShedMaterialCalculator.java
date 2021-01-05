@@ -27,7 +27,7 @@ public class ShedMaterialCalculator {
         this.shed = (Shed) construction.get(Category.Shed);
         this.stern = new Stern(this.shed);
         this.postAdded = new PostsWithShed(carportMaterialCalculator, this.shed);
-        this.rim = new Rim(this.stern); //TODO RET NAVN VIGTIGT
+        this.rim = new Rim(this.stern);
         this.loesHolterSide = new LoesHolter(this.shed.getLength(), this.postAdded);
         this.loesHolterBack = new LoesHolter(this.shed.getWidth(), this.getPostAdded());
         this.lengthLoesHolterFront = (int) Math.hypot(postAdded.sidePostFront(this.shed.getWidth()), this.shed.getHeigth());
@@ -78,7 +78,7 @@ public class ShedMaterialCalculator {
 
         @Override
         public int length() {
-            return shed.getLength()*2; //TODO Ændre beregning
+            return shed.getLength()*2;
         }
 
         @Override

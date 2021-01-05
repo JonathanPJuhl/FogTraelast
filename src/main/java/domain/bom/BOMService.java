@@ -20,7 +20,7 @@ public class BOMService {
     private FlatRoofMaterialCalculator flatRoofMaterialCalculator;
     private PitchedRoofMaterialCalculator pitchedRoofMaterialCalculator;
     private ShedMaterialCalculator shedMaterialCalculator;
-    private NoWasteHelper noWasteHelper = new NoWasteHelper(); //TODO lav static?
+    private NoWasteHelper noWasteHelper = new NoWasteHelper();
     RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
 
     private Material claddingMaterial;

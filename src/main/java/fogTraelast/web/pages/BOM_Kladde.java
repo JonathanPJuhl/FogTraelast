@@ -77,7 +77,7 @@ public class BOM_Kladde extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getPathInfo().substring(1).equals("create")) { //TODO Why?
+        if (req.getPathInfo().substring(1).equals("create")) {
             boolean param = Boolean.parseBoolean(req.getParameter("payCheck"));
             if (param) {
                 resp.sendRedirect(req.getContextPath() + "/BOM/show");

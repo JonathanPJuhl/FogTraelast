@@ -32,7 +32,7 @@ public class NoWasteHelperTest extends TestCase {
     Construction construction;
 
     @Before
-    public void setUp() throws Exception { //TODO Specificér exception
+    public void setUp() throws Exception {
         //Arrange
         super.setUp();
         this.roofSizeCalculator = new RoofSizeCalculator();
@@ -47,7 +47,7 @@ public class NoWasteHelperTest extends TestCase {
 
     }
 
-    //TODO IntegrationTest?
+
     @Test
     public void testQuantitiesT600PlatesAreaForFlatRoof2900Width() throws Exception {
         //Arrange
@@ -351,16 +351,8 @@ public class NoWasteHelperTest extends TestCase {
         assertEquals(excepted, actual);
     }
 
-    //TODO Lav strategy Pattern
-   /* @Test
-    public void testQuantitiesAtSideCalculatedCarport2000Post() throws Exception {
-        //Arrange
 
-        //Act
 
-        //Assert
-        assertEquals(excepted, actual);
-    }*/
     @Test
     public void testTest() throws Exception {
         //Arrange
@@ -398,16 +390,7 @@ public class NoWasteHelperTest extends TestCase {
         assertEquals(excepted, actual);
     }
 
-    //TODO Lav strategy Pattern
-  /*  @Test
-    public void testQuantitiesAtSideCalculatedCarport2000Post() throws Exception {
-        //Arrange
 
-        //Act
-
-        //Assert
-
-    }*/
 
     @Test
     public void testRestConstructionPartSide() {
