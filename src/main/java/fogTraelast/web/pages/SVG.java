@@ -40,9 +40,11 @@ public class SVG extends BaseServlet {
         SvgCarportFront svgCarportFront = new SvgCarportFront();
         SvgCarportSide svgCarportSide = new SvgCarportSide();
         HttpSession session = req.getSession();
+
         req.setAttribute("svgScaleHeight", roof.getLength()+200);
         req.setAttribute("svgScaleWidth", roof.getWidth()+200);
         req.setAttribute("construction1", cons);
+
         session.setAttribute("svgCarport", svgCarport.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength()));
         //session.setAttribute("svgCarportFront", svgCarportFront.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roofSizeCalculator.getRoofHeight(roof)));
         //session.setAttribute("svgCarportSide", svgCarportSide.Build(roof.getLength(), roof.getWidth(), shed.getWidth(), shed.getLength(), (carport.getHeight())+roofSizeCalculator.getRoofHeight(roof)));
