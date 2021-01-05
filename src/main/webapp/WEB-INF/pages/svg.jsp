@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <div class="scrollbar" id="styleFog" align="center">
     <h2>Således kommer din carport til at se ud!</h2>
     <h6>vælg enten at acceptere eller prøve igen nedenfor </h6>
@@ -33,3 +34,4 @@
         </div>
     </div>
 </div>
+
