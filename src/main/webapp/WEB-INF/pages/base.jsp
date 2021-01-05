@@ -42,11 +42,11 @@
     <jsp:include page="${requestScope.content}" flush="true"/>
 
 </main>
-    </div>
+
 <!--footer-->
 <jsp:include page="../contains/footer.jsp" flush="true"/>
 </div>
-
+</div>
 </body>
 
 </html>

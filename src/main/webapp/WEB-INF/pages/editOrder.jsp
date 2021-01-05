@@ -78,8 +78,14 @@
                         </div>
                         <div class="col-md-6 mb-3" align="left">
                             <select name="roofType">
-                                <option value="Flat">Fladt tag</option>
+                                <c:if test="${orders.roofType=='Flat'}">
+                                <option value="Flat" selected>Fladt tag</option>
                                 <option value="Pitched">Tag med rejsning</option>
+                                </c:if>
+                                <c:if test="${orders.roofType=='Pitched'}">
+                                    <option value="Pitched" selected>Tag med rejsning</option>
+                                    <option value="Flat">Fladt tag</option>
+                                </c:if>
                             </select>
                         </div>
                     </div>
@@ -89,8 +95,14 @@
                         </div>
                         <div class="col-md-6 mb-3" align="left">
                             <select name="shedOrNo">
-                                <option value=0>Ikke ønsket</option>
-                                <option value="1">Ønsket</option>
+                                <c:if test="${orders.shedOrNo==0}">
+                                <option value=0 selected>Ikke ønsket</option>
+                                <option value=1>Ønsket</option>
+                                </c:if>
+                                <c:if test="${orders.shedOrNo==1}">
+                                    <option value=1 selected>Ønsket</option>
+                                    <option value=0>Ikke ønsket</option>
+                                </c:if>
                             </select>
                         </div>
                     </div>
@@ -100,8 +112,14 @@
                         </div>
                         <div class="col-md-6 mb-3" align="left">
                             <select name="cladding">
-                                <option value=0>Ikke ønsket</option>
-                                <option value="1">Ønsket</option>
+                                <c:if test="${orders.wallsOrNo==0}">
+                                <option value=0 selected>Ikke ønsket</option>
+                                <option value=1>Ønsket</option>
+                                </c:if>
+                                <c:if test="${orders.wallsOrNo==1}">
+                                    <option value=1 selected>Ønsket</option>
+                                    <option value=0 >Ikke ønsket</option>
+                                </c:if>
                             </select>
                         </div>
                     </div>
@@ -126,16 +144,23 @@
                             <p>Pris:</p>
                         </div>
                         <div class="col-md-6 mb-3" align="left">
-
-                                <p>Pris for alle materialer:</p>
-                                <p>${requestScope.priceBOM} kr.</p>
-
-                                <p>Pris beregnet med 25% dækningsgrad: ${requestScope.priceWithCoverage} kr.</p>
-
-                                <p>Hvad skal prisen ændres til?</p>
+                            <div class="row">
+                                <div class="col-md-6 mb-3" align="left">
+                            <p1>Indkøbspris for alle materialer: ${requestScope.priceBOM} kr.</p1>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3" align="left">
+                            <p1>Pris beregnet med 25% dækningsgrad: ${requestScope.priceWithCoverage} kr.</p1>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3" align="left">
+                                <p1>Hvad skal prisen ændres til?</p1>
                                 <input type="number" class="numbersField"
                                        aria-describedby="priceAdminstrated" name="price" value="${orders.price}">
-
+                                </div>
+                            </div>
 
 
 
