@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS materials(
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Plastmo', 'blåtonet', 60.0, 10, 'Tagplade', 100);
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Plastmo', 'klar', 60.0, 10, 'Tagplade',100);
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Plastmo', 'jumboLite', 60.0, 10, 'Tagplade', 100 );
-/*TODO det er 14,6 stk pr kvm. og 3 lbm (løbende metre)  af priserne har vi selv sat)*/
+/*det er 14,6 stk pr kvm. og 3 lbm (løbende metre)  af priserne har vi selv sat)*/
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Betontagsten B&C', 'sort', 17.97, 30, 'Tagsten', 20);
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Betonrygsten B&C', 'sort', 170.97, 50, 'Tagsten', 20);
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Erternitagsten B6', 'teglrøde', 16.97, 30, 'Tagsten', 20);
@@ -49,7 +49,7 @@ INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Tagsten
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Rygsen Volstrup', 'røde', 150.97, 50, 'Tagsten', 20);
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Tagsten Vinge', 'røde', 17.97, 30, 'Tagsten', 20);
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('Rygsten Vinge', 'røde', 170.97, 50, 'Tagsten',20);
-/*TODO pris er pr. m*/
+/*pris er pr. m*/
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('trykimp. Stolpe', 'lys birk', 41.89, 97, 'Træ',0);
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('trykimp. Bræt', 'lys birk', 22.45, 19, 'Træ',0);
 INSERT INTO materials(name, color, price, height, type, overlap) VALUES('trykimp. Bræt', 'lys birk', 33.99, 25, 'Træ', 0);
@@ -113,7 +113,6 @@ CREATE TABLE IF NOT EXISTS bom(
                                   FOREIGN KEY (materialID_By_Category) REFERENCES materials_By_Category(materials_CategoryID),
                                   length int,
                                   width int,
-    /*TODO lagerBeholdning int,*/
                                   describtion varchar(100),
                                   quantity int not null,
                                   qnty_price double

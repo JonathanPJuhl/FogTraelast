@@ -16,7 +16,7 @@ public class UsersChoice {
     private final String customerPhone;
     private final String customerEmail;
 
-    //TODO LAV METODER ISTEDET FOR CONSTRUCTER HVIS TID
+
     public UsersChoice(int width, int length, String roofChoice, int shedOrNo, int claddingChoice, String customerPhone, String customerEmail) {
         this.width = width;
         this.length = length;

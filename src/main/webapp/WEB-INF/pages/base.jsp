@@ -35,7 +35,7 @@
 <div id="page-container">
     <div id="content-wrap">
 <!--navbar-->
-<jsp:include page="../contains/navbar.jsp" flush="true"/><!-- TODO hvad gør flush ? -->
+<jsp:include page="../contains/navbar.jsp" flush="true"/>
 
 <main class="container">
 

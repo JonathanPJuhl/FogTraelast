@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS orders(
                                      shedLength int,
                                      shedWidth int,
                                      svg BLOB(1000000),
-                                     salesmanID int, /*TODO kunne dette være en role istedet? Lige nu overholder vi ikke første normalform f.eks. Det ville vi da ikke komme til regardless?*/
+                                     salesmanID int,
                                      FOREIGN KEY (salesmanID) REFERENCES salesmen(salesmanID)
 );
 INSERT INTO orders (length, width, customerPhone, customerEmail, roofType, shedOrNo, wallsOrNo, shedLength, shedWidth) VALUES(500, 500, '+4512345678', 'test@test.dk', 'Pitched', 1,1, 1000, 1000);

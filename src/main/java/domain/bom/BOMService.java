@@ -20,7 +20,7 @@ public class BOMService {
     private FlatRoofMaterialCalculator flatRoofMaterialCalculator;
     private PitchedRoofMaterialCalculator pitchedRoofMaterialCalculator;
     private ShedMaterialCalculator shedMaterialCalculator;
-    private NoWasteHelper noWasteHelper = new NoWasteHelper(); //TODO lav static?
+    private NoWasteHelper noWasteHelper = new NoWasteHelper();
     RoofSizeCalculator roofSizeCalculator = new RoofSizeCalculator();
 
     private Material claddingMaterial;
@@ -76,6 +76,9 @@ public class BOMService {
         int roofLengthSurface = roofSizeCalculator.roofLengthSurface(roof.isFlat(), roof.getLength(), roof.getDegree());
         int roofWidthSurface = roofSizeCalculator.roofWidthSurface(roof.isFlat(), roof.getWidth(), roof.getDegree());
 
+        int sternOverWidth = 200;
+        int sternUnderWidth = 125;
+
         int[] meassuresAndQnty;
         //Hvis taget er fladt
         if (roof.isFlat()) {
@@ -90,18 +93,19 @@ public class BOMService {
                         bom.addItem(new BOMItem(roof.getCladding(), quantity, length, "tagplader monteres på spær", width, Category.Flat));
                 }
             }
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getUnderSternWidth().quantity() * 2, flatRoofMaterialCalculator.getUnderSternWidth().length(), flatRoofMaterialCalculator.getUnderSternWidth().description("understernbrædder til for & bag ende"), width, Category.Flat));
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getUnderSternLength().quantity() * 2, flatRoofMaterialCalculator.getUnderSternLength().length(), flatRoofMaterialCalculator.getUnderSternLength().description("understernbrædder til siderne"), width, Category.Flat));
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getOverSternFront().quantity(), flatRoofMaterialCalculator.getOverSternFront().length(), flatRoofMaterialCalculator.getOverSternFront().description("oversternsbrædder til forenden"), width, Category.Flat));
-            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getOverSternSide().quantity() * 2, flatRoofMaterialCalculator.getOverSternSide().length(), flatRoofMaterialCalculator.getOverSternSide().description("oversternbrædder til siderne"), width,Category.Flat));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getUnderSternWidth().quantity() * 2, flatRoofMaterialCalculator.getUnderSternWidth().length(), flatRoofMaterialCalculator.getUnderSternWidth().description("understernbrædder til for & bag ende"), sternOverWidth, Category.Flat));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getUnderSternLength().quantity() * 2, flatRoofMaterialCalculator.getUnderSternLength().length(), flatRoofMaterialCalculator.getUnderSternLength().description("understernbrædder til siderne"), sternOverWidth, Category.Flat));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getOverSternFront().quantity(), flatRoofMaterialCalculator.getOverSternFront().length(), flatRoofMaterialCalculator.getOverSternFront().description("oversternsbrædder til forenden"), sternUnderWidth, Category.Flat));
+            bom.addItem(new BOMItem((Material) materialMapRoofWood.get("trykimp. Bræt 25"), flatRoofMaterialCalculator.getOverSternSide().quantity() * 2, flatRoofMaterialCalculator.getOverSternSide().length(), flatRoofMaterialCalculator.getOverSternSide().description("oversternbrædder til siderne"), sternUnderWidth,Category.Flat));
         } else {
             //Hvis taget har rejsning
             int tilesMaterialWidth = 200;
-            int tilesMateriallength = 200;
+            int tilesMateriallength = 400;
             int roofGableMatertialWidth = 100;
             int roofSternMatertialWidth = 100;
             int roofLathMaterialWidth = 73;
             int roofVindskedeMaterialWidth = 150;
+
 
             bom.addItem(new BOMItem(roof.getCladding(), pitchedRoofMaterialCalculator.amountOfRoofTiles(), tilesMateriallength, "monteres på taglægter", tilesMaterialWidth, Category.Pitched));
             bom.addItem(new BOMItem(roof.getCladding(), pitchedRoofMaterialCalculator.quantityRygsten(), tilesMateriallength, "monteres på toplægte med medfølgende beslag se tagstens vejledning", tilesMaterialWidth , Category.Pitched));
@@ -127,8 +131,8 @@ public class BOMService {
         int widthMaterialRem = 195;
 
         bom.addItem(new BOMItem((Material) caportMaterialMap.get( "trykimp. Stolpe 97"), carportMaterialCalculator.qntyPost(carport.getWidth(),carport.getLength()), carport.getHeight(),"Stolper nedgraves 90 cm. i jord + skråstiver", postWidth, Category.Carport));
-        bom.addItem(new BOMItem((Material) caportMaterialMap.get("spærtræ ubh. 45"), carportMaterialCalculator.remQnty(), carportMaterialCalculator.remLengthFullLength(carport), "Remme i side, sadles ned i stolper Carport del", widthMaterialRem,Category.Carport));
-
+        bom.addItem(new BOMItem((Material) caportMaterialMap.get("spærtræ ubh. 45"), carportMaterialCalculator.carportFrameBoardQnty(), carportMaterialCalculator.carportFrameLengthFullLength(carport), "Remme i side, sadles ned i stolper Carport del", widthMaterialRem,Category.Carport));
+        int claddingBoardWidth;
         //evt. skur materiale - del
         if (shed != null) {
             CladdingMaterialCalculator claddingShedCalculatedWidths = new CladdingMaterialCalculator(widthMaterialRem, shed.getWidth(),carport.getHeight()); // Der skal være to af disse sider
@@ -139,12 +143,16 @@ public class BOMService {
             for (Material shedMaterial : materialListShed) {
                 shedMaterialMap.put(shedMaterial.getNametype() + " " + shedMaterial.getHeight(), shedMaterial);
             }
-            bom.addItem(new BOMItem((Material) shedMaterialMap.get("trykimp. Bræt 25"), shedMaterialCalculator.getStern().quantity(), shedMaterialCalculator.getStern().length(), shedMaterialCalculator.getStern().description("Sternbrædder til siderne - Skur del (deles)"), width, Category.Shed));
-            bom.addItem(new BOMItem((Material) shedMaterialMap.get("trykimp. Stolpe 97"), shedMaterialCalculator.getPostAdded().quantity(), shedMaterialCalculator.getPostAdded().length(), shedMaterialCalculator.getPostAdded().description("Stolper nedgraves 90 cm. i jord + skråstiver"), width, Category.Shed));
-            bom.addItem(new BOMItem((Material) shedMaterialMap.get("spærtræ ubh. 45"), shedMaterialCalculator.getRim().quantity(), shedMaterialCalculator.getRim().length(), shedMaterialCalculator.getRim().description("Remme i sider, sadles ned i stolper - Skur del"), width, Category.Shed));
-            bom.addItem(new BOMItem((Material) shedMaterialMap.get("reglar ubh. 45"), shedMaterialCalculator.getQuanityLoesHolterFront(), shedMaterialCalculator.getLengthLoesHolterFront(), shedMaterialCalculator.getLoesHolterBack().description("Remme i sider, sadles ned i stolper - Skur del"), width, Category.Shed));
-            bom.addItem(new BOMItem(claddingMaterial, claddingShedCalculatedLengths.quantity()*2, claddingShedCalculatedLengths.length(), claddingShedCalculatedLengths.description("Beklædning skur sider"), width, Category.Cladding));
-            bom.addItem(new BOMItem(claddingMaterial, claddingShedCalculatedWidths.quantity()*2, claddingShedCalculatedLengths.length(), claddingShedCalculatedLengths.description("Beklædning skur foran og bagved - dør skæres til efter ønske om placering"), width, Category.Cladding));
+            int sternboardsWith = 150;
+            int remWidth = 195;
+            int loesHolterWidth = 95;
+            claddingBoardWidth = 100;
+            bom.addItem(new BOMItem((Material) shedMaterialMap.get("trykimp. Bræt 25"), shedMaterialCalculator.getStern().quantity(), shedMaterialCalculator.getStern().length(), shedMaterialCalculator.getStern().description("Sternbrædder til siderne - Skur del (deles)"), sternboardsWith, Category.Shed));
+            bom.addItem(new BOMItem((Material) shedMaterialMap.get("trykimp. Stolpe 97"), shedMaterialCalculator.getPostAdded().quantity(), shedMaterialCalculator.getPostAdded().length(), shedMaterialCalculator.getPostAdded().description("Stolper nedgraves 90 cm. i jord + skråstiver"), postWidth, Category.Shed));
+            bom.addItem(new BOMItem((Material) shedMaterialMap.get("spærtræ ubh. 45"), shedMaterialCalculator.getRim().quantity(), shedMaterialCalculator.getRim().length(), shedMaterialCalculator.getRim().description("Remme i sider, sadles ned i stolper - Skur del"), remWidth, Category.Shed));
+            bom.addItem(new BOMItem((Material) shedMaterialMap.get("reglar ubh. 45"), shedMaterialCalculator.getQuanityLoesHolterFront(), shedMaterialCalculator.getLengthLoesHolterFront(), shedMaterialCalculator.getLoesHolterBack().description("Løsholter i gavle af skur"),loesHolterWidth, Category.Shed));
+            bom.addItem(new BOMItem(claddingMaterial, claddingShedCalculatedLengths.quantity()*2, claddingShedCalculatedLengths.length(), claddingShedCalculatedLengths.description("Beklædning skur sider"), claddingBoardWidth, Category.Cladding));
+            bom.addItem(new BOMItem(claddingMaterial, claddingShedCalculatedWidths.quantity()*2, claddingShedCalculatedLengths.length(), claddingShedCalculatedLengths.description("Beklædning skur foran og bagved - dør skæres til efter ønske om placering"), claddingBoardWidth, Category.Cladding));
         }
         Cladding cladding = (Cladding) constructionList.get(Category.Cladding);
         claddingMaterial = carport.getCladding();
@@ -152,10 +160,10 @@ public class BOMService {
         CladdingMaterialCalculator claddingMaterialCalculatorSide = new CladdingMaterialCalculator(widthMaterialRem, carport.getLength(), carport.getHeight()); // To af disse sider er beklædt hvis man vælge vægge med beklædning
 
         if (carport.getCladding() != null) {
-            bom.addItem(new BOMItem(claddingMaterial, claddingMaterialCalculatorFront.quantity(), claddingMaterialCalculatorFront.length(), claddingMaterialCalculatorFront.description("Beklædning af carport bag til"), widthMaterialRem, Category.Cladding));
-            bom.addItem(new BOMItem(claddingMaterial, claddingMaterialCalculatorSide.quantity()*2, claddingMaterialCalculatorSide.length(), claddingMaterialCalculatorSide.description("Beklædning af carportvægge på siderne"), widthMaterialRem, Category.Cladding));
+            claddingBoardWidth = 100;
+            bom.addItem(new BOMItem(claddingMaterial, claddingMaterialCalculatorFront.quantity(), claddingMaterialCalculatorFront.length(), claddingMaterialCalculatorFront.description("Beklædning af carport bag til"), claddingBoardWidth, Category.Cladding));
+            bom.addItem(new BOMItem(claddingMaterial, claddingMaterialCalculatorSide.quantity()*2, claddingMaterialCalculatorSide.length(), claddingMaterialCalculatorSide.description("Beklædning af carportvægge på siderne"), claddingBoardWidth, Category.Cladding));
         }
-//TODO
         return bom;
 
     }

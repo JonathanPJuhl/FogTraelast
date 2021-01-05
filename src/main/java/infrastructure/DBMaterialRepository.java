@@ -34,7 +34,7 @@ public class DBMaterialRepository implements MaterialService {
                 set.getString("materials.type"),
                 set.getString("category"),
                 set.getInt("materials.height"),
-                set.getInt("materials.overlap")); //TODO lav Materialer om så alle har et overlap i db gemt
+                set.getInt("materials.overlap"));
 
     }
 
@@ -43,13 +43,13 @@ public class DBMaterialRepository implements MaterialService {
 //TODO
     }
     @Override
-    public Material findMaterial(String nametype) {
+    public Material findMaterial(String nametype) { //TODO make it work
         Material material = null;
         try (Connection conn = db.connect()) {
             String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID where materials.name=?;";
             PreparedStatement smt = conn.prepareStatement(sql);
             smt.setString( 1, nametype);
-            //TODO
+
             smt.executeQuery();
             ResultSet set = smt.getResultSet();
             if (set.next()) {

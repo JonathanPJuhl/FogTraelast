@@ -1,7 +1,6 @@
 package fogTraelast.web.pages;
 
 import api.FogTraelast;
-import domain.bom.BOMFromDB;
 import domain.construction.ConstructionFactory;
 import domain.construction.Roof.RoofSizeCalculator;
 import fogTraelast.web.widget.NavBar;
@@ -31,7 +30,7 @@ public class BaseServlet extends HttpServlet {
     //er static.
     static {
         db = new Database();
-        api = createOrder(); //TODO bedre navngivning
+        api = initialize();
         roofSizing = new RoofSizeCalculator();
         constructionFactory = new ConstructionFactory();
 
@@ -48,7 +47,7 @@ public class BaseServlet extends HttpServlet {
         return client;
     }*/
 
-    private static FogTraelast createOrder() {
+    private static FogTraelast initialize() {
         return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db), constructionFactory);
     }
 

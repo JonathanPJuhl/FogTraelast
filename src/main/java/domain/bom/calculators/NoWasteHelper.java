@@ -7,7 +7,7 @@ import java.security.Key;
 import java.util.*;
 
 
-public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
+public class NoWasteHelper {
 
     private int materialLength;
     private int materialWidth;
@@ -16,9 +16,6 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
     private int widthRest;
 
     public HashMap quantitiesPlatesAreaCalculated(int constructionPartLength, int constructionPartWidth, Material material, TreeSet<Integer> materialOptionsWidth, TreeSet<Integer> materialOptionsLength) {
-        //TODO - Note til rapport: Vi mapper målene med Materiale(navn) som key, for senere at kunne hente dette specifikke Materiales længder og bredder, som der vil være på evt. lager;
-        // Vi har fået at vide af vores product owvner, FOG, på andet springmøde (i virkeligheden første møde med læreren, Christian) at der er f.eks. alle mål med 30 cm mellem
-        // størrelserne på diverse længder (Gælder dog kun træ materialer). Dog er bredderne forskellige afhængigt af materiale. Et type materiale kan dog godt fås i forskellige bredder;
 
         HashMap<Integer, HashMap<Material, int[]>> mapOfQts = new HashMap();
         lengthRest = constructionPartLength;
@@ -80,9 +77,9 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
 
             if (isLastWidthLenghtComboOptions) {
                 if (this.widthRest != 0) {
-                    Iterator<Integer> widthOptionsBiggestFirstNew = materialOptionsWidth.iterator(); //TODO Ændrer big til small
-                    while (widthOptionsBiggestFirstNew.hasNext()) {
-                        materialWidthOptionBigFirst = widthOptionsBiggestFirstNew.next();
+                    Iterator<Integer> widthOptionsSmallestFirstNew = materialOptionsWidth.iterator();
+                    while (widthOptionsSmallestFirstNew.hasNext()) {
+                        materialWidthOptionBigFirst = widthOptionsSmallestFirstNew.next();
                         for (Map.Entry toCompareFromCountedMap : mapOfQts.entrySet()) {
                             ID = (int) toCompareFromCountedMap.getKey();
                             materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
@@ -140,9 +137,9 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
                 }
 
                 if (this.lengthRest != 0) {
-                    Iterator<Integer> lengthOptionsBiggestFirstNew = materialOptionsLength.iterator();//TODO Ændrer big til small
-                    while (lengthOptionsBiggestFirstNew.hasNext()) {
-                        materialLengthOptionBigFirst = lengthOptionsBiggestFirstNew.next();
+                    Iterator<Integer> lengthOptionsSmallestFirstNew = materialOptionsLength.iterator();
+                    while (lengthOptionsSmallestFirstNew.hasNext()) {
+                        materialLengthOptionBigFirst = lengthOptionsSmallestFirstNew.next();
                         for (Map.Entry toCompareFromCountedMap : mapOfQts.entrySet()) {
                             ID = (int) toCompareFromCountedMap.getKey();
                             materialOptionsAndQnty = (HashMap<Material, int[]>) toCompareFromCountedMap.getValue();
@@ -198,26 +195,7 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
                     mapOfQts.put(IDToAdd, materialLengthWidthQuanity);
                 }
 
-//                HashMap<Material, int[]> changeSmallestMaterialOption = new HashMap<>();
-//                int[] smallestMaterialOptionsCalc;
-//                if (addedEkstraLengthQnt && addedEkstraWidthQnt) {
-//                    for (int j = 1; j <= mapOfQts.size(); j++) {
-//                        ID = j;
-//                        for (Map.Entry smallestInMap : mapOfQts.get(j).entrySet()) {
-//                            smallestMaterialOptionsCalc = (int[]) smallestInMap.getValue();
-//                            if (smallestMaterialOptionsCalc[0] == materialOptionsLength.iterator().next()) {
-//                                if (smallestMaterialOptionsCalc[1] == materialOptionsWidth.iterator().next()) {
-//                                    int qnty = smallestMaterialOptionsCalc[2];
-//                                    smallestMaterialOptionsCalc[2] = qnty + 1;
-//                                    changeSmallestMaterialOption.put(material, smallestMaterialOptionsCalc);
-//                                    break;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
 
-                //mapOfQts.put(ID, changeSmallestMaterialOption);
                 int lengthOptionLooping = 0;
                 int widthOptionLooping = 0;
                 materialLengthWidthQuanity = new HashMap<>();
@@ -252,31 +230,14 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
             /////Regnestykkerne er baseret på at hver stykke materiale har et overlap, hvis overlap ikke er 0, undtagen det første stykke materiale
 
             //Beregner antal for bredde og længde af konstrucitonsdelen
-            //int startMaterialWidth = startValueForQntySideArea(this.materialWidth, material.getOverlap(), mapOfQts); //TODO If qtny er 0 på forrtige materiale
+
             int valQntyWidth = quantitySideCounter(this.materialWidth, widthRest, material.getOverlap());
             int valQntyLength = quantitySideCounter(this.materialLength, lengthRest, material.getOverlap());
             quantityWidth = validationOfSideRest(valQntyWidth, valQntyLength);
             quantityLength = validationOfSideRest(valQntyLength, valQntyWidth);
 
-//            /*//Materialet bliver ikke tilføjet hvis antallet er 0
-//            if (!(quantityLength == 0) && !(quantityWidth == 0)) {
-//                //For at sikres os at materialet her i denne beregning ikke skal laves som areal beregning hvis ikke
-//                //det er der første antal materiale (med mål)
-//                if (!mapOfQts.isEmpty()) {
-//                    *//*//*/Indsætter materialelængde og -bredde samt antal der passer til disse
-//                    //TODO NOTE TIL RAPPORTEN HVIS MANGEL PÅ TID - Vi går ikke ud fra at der er mere end en række eller kollonne når dette her er tilfældet
-//                    int finalQuantity = quantityLength + quantityWidth;
-//
-//                    int[] finalMaterialMeauseresAndQt = new int[3];
-//                    finalMaterialMeauseresAndQt[0] = this.materialLength;
-//                    finalMaterialMeauseresAndQt[1] = this.materialWidth;
-//                    finalMaterialMeauseresAndQt[2] = finalQuantity;
-//
-//                    materialLengthWidthQuanity = new HashMap<>();
-//                    materialLengthWidthQuanity.put(material, finalMaterialMeauseresAndQt);
-//                    mapOfQts.put(i, materialLengthWidthQuanity);*//*
-//                }
-//            }*/
+
+
 
             //ArealBeregning i tilfældet at det er det første materiale der bliver beregnet på
             if (isLastWidthLenghtComboOptions == false && mapOfQts.isEmpty()) {
@@ -309,7 +270,7 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
         return mapOfQts;
     }
 
-    //TODO Ret denne til
+
     public HashMap quantitiesAtSideCalculated(int sideConstuctionPart, TreeSet<Integer> lengthOptions, Material
             material) {
         //hhv. material og sidelængde
@@ -460,7 +421,7 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
         int[] finalMaterialMeauseresAndQt = new int[3];
         int finalQuantity = 0;
 
-        if (listToValidate.size() > 0) { // TODO Virker det ? eller skal der stå større end 1?
+        if (listToValidate.size() > 0) {
             //ArealBeregning
             finalQuantity = quantityLength * quantityWidth;
         } else if (!(materialWidth == 0 || materialLength == 0)) {
@@ -516,10 +477,6 @@ public class NoWasteHelper { //TODO Færdiggør refactoringen hvis der er tid
             quanitiy++;
         }
 
-//        while(materialSide <= sideRestConstructionPart){
-//            quanitiy++;
-//            materialSide =+ tmpMaterialSideStartValue;
-//        }
 
         return quanitiy;
     }

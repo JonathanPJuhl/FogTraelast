@@ -30,7 +30,7 @@ public abstract interface MaterialService {
 
     public TreeSet<Integer>allLenghtsForMaterials();
 
-    void storeBOM(BOMItem bomItem, Order order, int materialByCategoryID);// TODO burder nok ligger i orders
+    void storeBOM(BOMItem bomItem, Order order, int materialByCategoryID);
 
     public int findMaterialByCategoryID(Material material, Category category);
 
