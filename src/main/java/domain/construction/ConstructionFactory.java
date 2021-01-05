@@ -34,7 +34,7 @@ private RoofSizeCalculator roofSizeCalculator;
     @Override
     public Shed createShed(UsersChoice usersChoice, Construction construction, Carport carport)  throws TooLargeException {
         Shed shed = null;
-        if(usersChoice.getShedLength() < construction.getCarport().getLength() || usersChoice.getShedwidth() < construction.getCarport().getLength()) {
+        if(usersChoice.getShedLength() < construction.getCarport().getLength() || usersChoice.getShedwidth() < construction.getCarport().getWidth()) {
              shed = new Shed(usersChoice, construction, usersChoice.getShedAndCarportCladding());
             shed.addCladdingToShed(usersChoice.getShedAndCarportCladding(), carport);
         }else{

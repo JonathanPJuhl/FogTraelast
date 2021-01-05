@@ -14,8 +14,6 @@ import static org.junit.Assert.assertEquals;
 
 public class CarportMaterialCalculatorTest {
 
-    Material rem;
-    Material post;
     UsersChoice usersChoice;
     Roof roof;
     Carport carport;
@@ -41,7 +39,7 @@ public class CarportMaterialCalculatorTest {
         int remLength;
 
         //Act
-        remLength = carportMaterialCalculator.remLengthFullLength(construction.getCarport());
+        remLength = carportMaterialCalculator.carportFrameLengthFullLength(construction.getCarport());
         int actual = remLength;
         int excepted = 26880;
 
@@ -53,7 +51,7 @@ public class CarportMaterialCalculatorTest {
     public void remQnty() {
         //Arrange
         int remQnty;
-        remQnty = carportMaterialCalculator.remQnty();
+        remQnty = carportMaterialCalculator.carportFrameBoardQnty();
 
         //Act
         int actual = remQnty;

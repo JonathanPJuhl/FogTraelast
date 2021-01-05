@@ -71,6 +71,7 @@ public class Orders extends BaseServlet {
                 req.setAttribute("claddingOptionsShedCarport", claddingOptsShedCarport);
                 req.setAttribute("tooBigShed", true);
                 render("Fog Trælast", "/WEB-INF/pages/customizedOptionsPage.jsp", req, resp);
+                req.setAttribute("tooBigShed", false);
             } else if (cmd.equals("displayOrder")) {
                 int orderID = Integer.parseInt(req.getParameter("orderNumber"));
                 String phone = req.getParameter("tlf");

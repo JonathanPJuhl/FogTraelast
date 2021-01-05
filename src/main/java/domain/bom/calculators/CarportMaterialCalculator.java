@@ -8,14 +8,14 @@ import java.util.HashMap;
 
 public class CarportMaterialCalculator {
 
-    public int remLengthFullLength(Carport carport) {
+    public int carportFrameLengthFullLength(Carport carport) {
 
         int remResult = (carport.getWidth() + carport.getLength()) * 2;
 
         return remResult;
     }
 
-    public int remQnty() {
+    public int carportFrameBoardQnty() {
 
         int remResult = 4;
 
