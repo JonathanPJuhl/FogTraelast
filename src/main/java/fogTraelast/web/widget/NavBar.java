@@ -22,7 +22,8 @@ public class NavBar {
             Map.entry("Orders/SortByNew", "/Orders/SortByNew"),
             Map.entry( "Orders/SortByProcessing", "/Orders/SortByProcessing"),
             Map.entry("Orders/SortByDone", "/Orders/SortByDone"),
-            Map.entry("Orders/SortBySalesman", "/Orders/SortBySalesman")
+            Map.entry("Orders/SortBySalesman", "/Orders/SortBySalesman"),
+            Map.entry("Orders/findOrder", "/Orders/findOrder")
       
     );
 

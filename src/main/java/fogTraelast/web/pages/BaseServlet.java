@@ -1,6 +1,7 @@
 package fogTraelast.web.pages;
 
 import api.FogTraelast;
+import domain.bom.BOMFromDB;
 import domain.construction.ConstructionFactory;
 import domain.construction.Roof.RoofSizeCalculator;
 import fogTraelast.web.widget.NavBar;
@@ -22,6 +23,8 @@ public class BaseServlet extends HttpServlet {
     protected static final RoofSizeCalculator roofSizing;
     protected static final Database db;
     protected static final ConstructionFactory constructionFactory;
+    //    protected static Client client;
+//    protected static Socket socket;
 
     //Dette er gjort på dette format, da vi ikke har lyst til at instantiere et nyt API hver gang render køres, i det
     //kan give problemer med at dele det imellem vores servlets. Til dette bruges en class-constructor, fordi emnet
@@ -31,7 +34,19 @@ public class BaseServlet extends HttpServlet {
         api = createOrder(); //TODO bedre navngivning
         roofSizing = new RoofSizeCalculator();
         constructionFactory = new ConstructionFactory();
+
+
     }
+
+    /*protected static Client createClient(InetAddress ipAdressProtcol, int port){
+        try {
+            socket = new Socket(ipAdressProtcol, port);
+            client = new Client(socket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return client;
+    }*/
 
     private static FogTraelast createOrder() {
         return new FogTraelast(new DBUserRepository(db), new DBOrderRepository(db), new DBMaterialRepository(db), constructionFactory);
@@ -43,6 +58,13 @@ public class BaseServlet extends HttpServlet {
         req.setAttribute("content",content);
         req.setAttribute("navBar", new NavBar(req));
         req.getRequestDispatcher("/WEB-INF/pages/base.jsp").forward(req,resp);
+    }
+    protected void render2(String title, String content, HttpServletRequest req, HttpServletResponse resp) throws
+            ServletException, IOException {
+        req.setAttribute("title",title);
+        req.setAttribute("content",content);
+        req.setAttribute("navBar", new NavBar(req));
+
     }
 
 

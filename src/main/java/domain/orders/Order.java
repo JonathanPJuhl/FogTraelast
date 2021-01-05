@@ -12,10 +12,12 @@ public class Order {
     private final int salesmanID;
     private final String roofType;
     private final int shedOrNo;
-    private final int cladding;
+    private final int wallsOrNo;
+    private final int shedLength;
+    private final int shedWidth;
+    private final String svg;
 
-
-    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID, String roofType, int shedOrNo, int cladding) {
+    public Order(int orderID, String orderStatus, int length, int width, String customerPhone, String customerEmail, double price, int salesmanID, String roofType, int shedOrNo, int wallsOrNo, int shedLength, int shedWidth, String svg) {
         this.orderID = orderID;
         this.orderStatus = orderStatus;
         this.length = length;
@@ -26,7 +28,22 @@ public class Order {
         this.salesmanID = salesmanID;
         this.roofType = roofType;
         this.shedOrNo = shedOrNo;
-        this.cladding = cladding;
+        this.wallsOrNo = wallsOrNo;
+        this.shedLength = shedLength;
+        this.shedWidth = shedWidth;
+        this.svg = svg;
+    }
+
+    public int getShedLength() {
+        return shedLength;
+    }
+
+    public int getShedWidth() {
+        return shedWidth;
+    }
+
+    public String getSvg() {
+        return svg;
     }
 
     public int getOrderID() {
@@ -69,8 +86,8 @@ public class Order {
         return shedOrNo;
     }
 
-    public int getCladding() {
-        return cladding;
+    public int getWallsOrNo() {
+        return wallsOrNo;
     }
 
     @Override

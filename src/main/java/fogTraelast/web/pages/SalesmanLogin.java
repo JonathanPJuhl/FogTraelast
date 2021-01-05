@@ -16,6 +16,7 @@ import java.util.List;
 
 @WebServlet({"/SalesmanLogin","/SalesmanLogin/*"})
 public class SalesmanLogin  extends BaseServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() == null) {

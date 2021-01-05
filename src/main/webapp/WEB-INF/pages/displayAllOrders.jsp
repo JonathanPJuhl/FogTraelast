@@ -37,10 +37,10 @@
                 <c:if test="${orders.shedOrNo == 1}">
                     <td>Ønsket</td>
                 </c:if>
-                <c:if test="${orders.cladding == 0}">
+                <c:if test="${orders.wallsOrNo == 0}">
                     <td>Ikke ønsket</td>
                 </c:if>
-                <c:if test="${orders.cladding == 1}">
+                <c:if test="${orders.wallsOrNo == 1}">
                     <td>Ønsket</td>
                 </c:if>
                 <td><c:out value="${orders.customerPhone}" /></td>

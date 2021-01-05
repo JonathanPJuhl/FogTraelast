@@ -1,12 +1,13 @@
 package domain.orders;
 
+import domain.construction.UsersChoice;
 import domain.users.NoSuchUserExists;
 
 import java.util.List;
 
 public interface OrderRepository {
 
-    Order insertOrderIntoDB(double length, double width, String customerPhone, String customerEmail, String roofType, int shedOrNo, int cladding);
+    Order insertOrderIntoDB(UsersChoice usersChoice);
     Order findSpecificOrder(int id) throws NoSuchOrderExists;
 
     List<Order>  findAllOrders() throws NoSuchOrderExists;
@@ -28,4 +29,6 @@ public interface OrderRepository {
     List<Order> displayOrdersByStatus(String wantedStatus);
 
     List<Order> displayOrdersBySalesman(int wantedSalesman);
+
+    void insertSVGIntoOrder(String SVG, int orderID);
 }

@@ -10,7 +10,7 @@
 <div class="scrollbar" id="styleFog">
     <div align="center">
 
-        <h1>Vælg dit tags og beklædnings egenskaber</h1>
+        <h1>Vælg dine egenskaber</h1>
 
         <form method="post">
 
@@ -44,14 +44,20 @@
 
             <br>
             <c:if test="${requestScope.userChoice.shedOrNo==1}">
+                <c:if test="${requestScope.tooBigShed}">
+                    <label for="shedLength" style="color: crimson">Vælg en kortere længde og/eller
+                        bredde</label>
+                </c:if>
+                <br>
                 <label for="shedLength">Skurlængde (cm) </label>
                 <input type="number" name="shedLength" id="shedLength" class="form-control">
 
                 <label for="shedWidth">Skurbredde (cm)</label>
                 <input type="number" name="shedWidth" id="shedWidth" class="form-control">
+
             </c:if>
-<br>
-<button class="btn btn-primary" type="submit">Se tegning!</button>
+            <br>
+            <button class="btn btn-primary" type="submit">Se tegning!</button>
         </form>
     </div>
 </div>

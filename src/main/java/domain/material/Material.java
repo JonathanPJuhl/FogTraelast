@@ -69,19 +69,3 @@ public class Material{
                 '}';
     }
 }
-
-/*
-    private String nameConstructor(String nameType, int width, String color, String enhed) throws IllegalFormatException {
-        if (enhed.equals("mm") && color.equals(null)) {
-            return nameType + " " + thickness + "X" + width + " mm.";
-        } else if (enhed.equals("mm") && !(color.equals(null))) {
-            return nameType + " " + color + " " + width + " mm.";
-        } else if (enhed.equals("stk") && !(color.equals(null))) {
-            return nameType + " " + color + " " + thickness + "X" + width + " mm.";
-        } else {
-            throw new IllegalArgumentException("There is no such material name with that format"); //TODO IllegalFormatException?
-        }
-    }
-
-
- */
