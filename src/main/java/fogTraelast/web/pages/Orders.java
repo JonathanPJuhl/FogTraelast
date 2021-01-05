@@ -157,7 +157,7 @@ public class Orders extends BaseServlet {
                     render("Fog Trælast", "/WEB-INF/pages/displayAllOrders.jsp", req, resp);
                 }
             }
-          
+
         }
         
 

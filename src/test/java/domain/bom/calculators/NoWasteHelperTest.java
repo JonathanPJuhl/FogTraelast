@@ -345,7 +345,7 @@ public class NoWasteHelperTest extends TestCase {
             }
         }
         int actual = qnty;
-        int excepted = 2;
+        int excepted = 1;
 
         //Assert
         assertEquals(excepted, actual);
