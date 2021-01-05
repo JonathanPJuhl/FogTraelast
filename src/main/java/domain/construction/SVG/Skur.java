@@ -14,7 +14,7 @@ public class Skur implements Draw {
     public String draw(int length, int width) {
 
         int x = length - skurLængde + 40;
-        return ("<rect x=\""+x+"\" y=\"80\" width=\""+skurLængde+"\" " +
+        return ("<rect x=\""+(x-10)+"\" y=\"90\" width=\""+skurLængde+"\" " +
                 "height=\""+skurBredde+"\" " +
                 "style=\"stroke:black;" +
                 "stroke-width:2; " +
