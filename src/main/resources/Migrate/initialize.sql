@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS orders(
                                      wallsOrNo tinyint(1) NOT NULL,
                                      shedLength int,
                                      shedWidth int,
-                                     svg BLOB(1000000),
+                                     svg BLOB,
                                      salesmanID int,
                                      FOREIGN KEY (salesmanID) REFERENCES salesmen(salesmanID)
 );

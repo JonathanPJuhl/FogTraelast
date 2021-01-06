@@ -51,9 +51,11 @@
                 <br>
                 <label for="shedLength">Skurlængde (cm) </label>
                 <input type="number" name="shedLength" id="shedLength" class="form-control">
+                <small class="form-text text-muted">NB! Huske at denne skal være mindre, end længde af selve carporten - ikke taget!</small>
 
                 <label for="shedWidth">Skurbredde (cm)</label>
                 <input type="number" name="shedWidth" id="shedWidth" class="form-control">
+                <small class="form-text text-muted">NB! Huske at denne skal være mindre, end længde af selve carporten - ikke taget!</small>
 
             </c:if>
             <br>
