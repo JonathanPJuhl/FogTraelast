@@ -46,7 +46,7 @@ public class DBMaterialRepository implements MaterialService {
     public Material findMaterial(String nametype) { //TODO make it work
         Material material = null;
         try (Connection conn = db.connect()) {
-            String sql = "SELECT * FROM fogtraelast.materials LEFT JOIN fogtraelast.materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN fogtraelast.categories C on C.categoryID = MC.categoryID where materials.name=?;";
+            String sql = "SELECT * FROM materials LEFT JOIN materials_By_Category MC ON materials.materialID = MC.materialID RIGHT JOIN categories C on C.categoryID = MC.categoryID where materials.name=?;";
             PreparedStatement smt = conn.prepareStatement(sql);
             smt.setString( 1, nametype);
 
