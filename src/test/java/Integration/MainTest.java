@@ -62,7 +62,7 @@ public class MainTest {
         db.runMigration();
 
 
-        //run migrate
+
 
         DBOrderRepository orderRepository = new DBOrderRepository(db);
         DBUserRepository userRepository = new DBUserRepository(db);
@@ -87,7 +87,20 @@ public class MainTest {
         //find order
         try {
             Order order = api.findOrder(3);
+            UsersChoice orderChoice = new UsersChoice((int)order.getWidth(), (int)order.getLength(), order.getRoofType(),
+                    order.getShedOrNo(), order.getWallsOrNo(), order.getCustomerPhone(), order.getCustomerEmail(),
+                    material, 1.0, order.getShedLength(), order.getShedWidth(), material);
             assertTrue(order!=null);
+            assertEquals(choice.getLength(), orderChoice.getLength());
+            assertEquals(choice.getWidth(), orderChoice.getWidth());
+            assertEquals(choice.getRoofChoice(), orderChoice.getRoofChoice());
+            assertEquals(choice.getShedOrNo(), orderChoice.getShedOrNo());
+            assertEquals(choice.getCustomerPhone(), orderChoice.getCustomerPhone());
+            assertEquals(choice.getCustomerEmail(), orderChoice.getCustomerEmail());
+            assertEquals(choice.getShedLength(), orderChoice.getShedLength());
+            assertEquals(choice.getShedwidth(), orderChoice.getShedwidth());
+
+
         } catch (NoSuchOrderExists noSuchOrderExists) {
             noSuchOrderExists.printStackTrace();
         }

@@ -1,0 +1,27 @@
+@startuml
+
+Title Bestillingssystem
+
+State index.jsp
+State createOrder.jsp
+State constructionOverview.jsp
+State shedTooBigException
+State SVG.jsp
+State BOM.jsp
+State displaySingleOrder.jsp
+
+[*] -> index.jsp
+index.jsp -->createOrder.jsp: Start byg!
+createOrder.jsp --> constructionOverview.jsp: Indtastning ok
+createOrder.jsp --> createOrder.jsp: Indtastning ikke ok
+constructionOverview.jsp --> SVG.jsp: Indtastning ok
+constructionOverview.jsp --> shedTooBigException: Skurstr. større end carport
+shedTooBigException --> constructionOverview.jsp: retur
+SVG.jsp --> BOM.jsp: accepteret
+SVG.jsp --> createOrder.jsp: afslået
+BOM.jsp --> displaySingleOrder.jsp
+displaySingleOrder.jsp --> [*]
+
+
+
+@enduml
