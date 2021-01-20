@@ -8,9 +8,9 @@ import domain.orders.NoSuchOrderExists;
 import domain.orders.Order;
 import infrastructure.*;
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
+import org.junit.Before;
+import org.junit.Test;
+
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -22,12 +22,11 @@ import java.sql.SQLException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@Tag("IntegrationTest")
 public class MainTest {
 
     FogTraelast api;
 
-    static void resetTestDB() {
+    private static void resetTestDB() {
         String URL = "jdbc:mysql://localhost:3306/fogtraelasttest?serverTimezone=CET";
         String USER = "fogtraelasttest";
 
@@ -51,8 +50,8 @@ public class MainTest {
 
 
 
-    @BeforeEach
-    void setupAPI(){
+    @Before
+    public void setUp(){
         resetTestDB();
 
         String URL = "jdbc:mysql://localhost:3306/fogtraelasttest?serverTimezone=CET";

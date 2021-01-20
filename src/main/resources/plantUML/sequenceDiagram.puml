@@ -1,0 +1,75 @@
+@startuml
+title Sequence diagram - Creating order
+actor       customer       as customer
+boundary    svg.jsp    as svg
+boundary    BOM.jsp    as BOM.jsp
+entity      BOM_Kladde     as BOMServlet
+participant BOMService as BOMService
+participant BOM as BOM
+participant RoofSizeCalculator as RoofSizeCalculator
+participant NoWasteHelper as NoWasteHelper
+participant FlatRoofMaterialCalculator as FlatRoofMaterialCalculator
+participant CarportMaterialCalculator as CarportMaterialCalculator
+participant Economy as Economy
+control     FogTraelast     as api
+participant    DBMaterialRepository    as DBMR
+participant    DBOrderRepository    as DBOR
+database DB as DB
+
+customer -> svg : clicks to view BOM
+svg -> BOMServlet : doPost()
+/'BOMServlet -> BOMServlet : getting "construction" and "secondUserChoice" \nfrom sessionScope
+BOMServlet -> BOMService : instantiating and initializing object
+BOMService -> BOMServlet :'/
+BOMServlet -> api : allLenghtsForMaterials() and allWidhtsForMaterials()
+api -> DBMR : allLenghtsForMaterials() \nand allWidhtsForMaterials()
+DBMR -> DB :allLenghtsForMaterials() \nand allWidhtsForMaterials()
+DB -> DBMR :lengths and widths
+DBMR --> api :lengths and widths
+api --> BOMServlet : lengths and width
+BOMServlet -> BOMService : calculateBom(construction, widths, lengths)
+/'BOMService -> BOM : initializing \nand instantiating'/
+BOMService -> RoofSizeCalculator : Measuring RoofSurface and RoofHeigth
+RoofSizeCalculator --> BOMService : roof measures
+BOMService -> NoWasteHelper : quantitiesPlatesAreaCalculated()
+NoWasteHelper --> BOMService :quantitiesPlates
+loop foreach woodMaterial
+BOMService ->  FlatRoofMaterialCalculator: getting material quanitity and measures
+FlatRoofMaterialCalculator -->  BOMService: material quanitity and measures
+end
+loop foreach material
+BOMService ->  CarportMaterialCalculator: getting material quanitity and measures
+CarportMaterialCalculator -->  BOMService: material quanitity and measures
+end
+BOMService --> BOMServlet :returning BOM
+/'BOMServlet -> BOMServlet :session object "bomI"
+BOMServlet -> BOMServlet :session object "SVGCarport"'/
+BOMServlet -> api :createOrder()
+api -> DBOR :insertOrderIntoDB()
+DBOR -> DB :insertOrderIntoDB()
+BOMServlet -> api :insertSVGintoOrder()
+api -> DBOR :insertSVGIntoOrder()
+DBOR -> DB :insertSVGIntoOrder()
+/'BOMServlet -> BOMServlet :request object "orderID"'/
+loop foreach BOMItem in "bomI"
+BOMServlet -> api :findMaterialByCategoryID()
+api -> DBMR :findMaterialByCategoryID()
+DBMR -> DB :findMaterialByCategoryID()
+DBMR --> api :materialsByCategoryID
+api --> BOMServlet :materialsByCategoryID
+BOMServlet -> api :storeBOM()
+api -> DBMR :storeBOM()
+DBMR -> DB : inserting BOMItem
+end
+BOMServlet -> api :findBOMPriceByOrderID()
+api -> DBMR :findBOMPriceByOrderID()
+DBMR -> DB :findBOMPriceByOrderID()
+DB --> DBMR :priceTotal
+DBMR --> api :priceTotal
+api --> BOMServlet :priceTotal
+'BOMServlet -> Economy :instantiating and initializing object
+BOMServlet -> Economy :withCoverage()
+Economy --> BOMServlet :price
+BOMServlet -> BOM.jsp :render()
+BOM.jsp -> customer: showing BOM
+@enduml

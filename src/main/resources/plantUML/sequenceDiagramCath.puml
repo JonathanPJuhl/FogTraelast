@@ -1,0 +1,78 @@
+@startuml
+title Sequence diagram - Creating order
+actor       customer       as customer
+boundary    createOrder.jsp    as cO
+boundary    customizedOptionsPage.jsp    as cOP
+boundary    svg.jsp    as svg.jsp
+entity      Orders      as O
+entity      SVG      as SVG
+entity      BOM_Kladde      as BOM_Kladde
+participant UsersChoice as UC
+participant ConstructionFactory as ConstructionFactory
+participant Roof as Roof
+participant Carport as Carport
+participant Construction as Construction
+participant Shed as Shed
+participant SVGCarport as SVGCarport
+participant BOMService as BOMService
+control     API     as api
+database    DBMaterialRepository    as DBMR
+
+customer -> cO : chooses values
+cO -> O : doPost()
+O -> UC : intializing object
+UC --> O
+O -> O : session object:\ntmpConstruction
+O -> cOP : setting user\noptions depending \non tmpConstruction
+cOP -> customer : showing possible options
+customer -> cOP : chooses values
+cOP -> O : doPost()
+O -> UC : intializing object
+UC --> O
+O -> O : session object:\nsecondUserchoice
+O -> ConstructionFactory: createRoof()
+ConstructionFactory -> Roof : intializing object\n(Flat- or Pitched-)
+Roof --> ConstructionFactory
+ConstructionFactory --> O : returning Roof object deping on choice
+O -> ConstructionFactory : createCarport()
+ConstructionFactory -> Carport : intializing Carport
+Carport --> ConstructionFactory
+ConstructionFactory --> O : returning Carport object
+O -> ConstructionFactory : createConstruction(Roof, Carport)
+ConstructionFactory -> Construction : intializing Construction(Roof, Carport)
+Construction --> ConstructionFactory
+ConstructionFactory --> O : returning Construction object
+O -> ConstructionFactory : createShed()
+ConstructionFactory -> Shed : intializing Shed object
+Shed --> ConstructionFactory
+ConstructionFactory --> O : returning Shed object
+O -> Shed : addCladdingToShed()
+Shed --> O
+O -> Construction : addShed()
+O -> O : session object:\nconstruction
+O -> SVG : redirects
+SVG -> ConstructionFactory : instantiates oject
+ConstructionFactory -> Roof : intializing object\n(Flat- or Pitched-)
+Roof --> ConstructionFactory
+ConstructionFactory --> SVG : returning Roof object deping on choice
+SVG -> ConstructionFactory : createCarport()
+ConstructionFactory -> Carport : intializing Carport
+Carport --> ConstructionFactory
+ConstructionFactory --> SVG : returning Carport object
+SVG -> ConstructionFactory : createConstruction(Roof, Carport)
+ConstructionFactory -> Construction : intializing Construction(Roof, Carport)
+Construction --> ConstructionFactory
+ConstructionFactory --> SVG : returning Construction object
+SVG -> ConstructionFactory : createShed()
+ConstructionFactory -> Shed : intializing Shed object
+Shed --> ConstructionFactory
+ConstructionFactory --> SVG : returning Shed object
+SVG -> SVGCarport : instantiates and intializing object
+SVG -> SVG : setting request objects\n SVGScalehight, \n SVGScaleWidth and \n construction1
+SVG -> svg.jsp : setting session object: \n svgCarport
+svg.jsp -> customer : showing svg drawing
+customer -> svg.jsp
+svg.jsp -> BOM_Kladde : doPost()
+BOM_Kladde -> BOMService : in
+
+@enduml
